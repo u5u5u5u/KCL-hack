@@ -16,3 +16,7 @@
 　 例 "change: text_style"<br>
 ・追加　=>　 add: hogehoge<br>
 　 例 "add: title_className"
+
+**日記**
+
+; <うーん、ゆうと、おまえのポテンシャル信じてるぜ！>
