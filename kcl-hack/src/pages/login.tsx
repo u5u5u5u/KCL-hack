@@ -5,16 +5,22 @@ import Link from "next/link";
 export default function Home() {
   return (
     <main>
-      <Link href="/hoge">
+      <div className="h-screen flex justify-center items-center">
         <div className="text-center">
-          <button className="text-3xl text-blue-500">サインアップ</button>
+          <Link href="/google">
+            <button className="text-6xl text-blue-500 font-mono mx-10">
+              signIn
+            </button>
+          </Link>
         </div>
-      </Link>
-      <Link href="/hoge">
         <div className="text-center">
-          <button className="text-3xl text-blue-500">サインイン</button>
+          <Link href="/google">
+            <button className="text-6xl text-blue-500 font-mono mx-10">
+              signUp
+            </button>
+          </Link>
         </div>
-      </Link>
+      </div>
     </main>
   );
 }

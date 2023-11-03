@@ -12,8 +12,8 @@ export default function Home() {
           </h1>
           <div className="text-center mt-20">
             <Link href="/login">
-              <button className="text-3xl text-blue-500 font-mono">
-                ログイン
+              <button className="text-5xl text-blue-500 font-mono">
+                logIn
               </button>
             </Link>
           </div>
