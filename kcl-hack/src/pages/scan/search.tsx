@@ -1,13 +1,13 @@
 "use client";
 import React, { useState } from "react";
 import Link from "next/link";
+import { YAHHO_API_KEY } from "../../constant/env";
 
 export default function Home() {
   const [number, setNum] = useState<string>("");
   const [name, setNam] = useState<string>("");
   const [price, setPri] = useState<number>();
   const [image, setIma] = useState<string>("");
-  const yahookey = "dj00aiZpPVpKZG9FdVNJbW5SRCZzPWNvbnN1bWVyc2VjcmV0Jng9ZWE-";
 
   const changeNum = (event: React.ChangeEvent<HTMLInputElement>) => {
     console.log(event);
@@ -17,7 +17,7 @@ export default function Home() {
   async function fetchname() {
     try {
       const res = await fetch(
-        `https://shopping.yahooapis.jp/ShoppingWebService/V3/itemSearch?appid=${yahookey}&jan_code=${number}`
+        `https://shopping.yahooapis.jp/ShoppingWebService/V3/itemSearch?appid=${YAHHO_API_KEY}&jan_code=${number}`
       );
       if (!res.ok) {
         throw new Error("fetchに失敗しました");
@@ -26,7 +26,7 @@ export default function Home() {
       console.log(data);
       setNam(data.hits[0].name);
       setPri(data.hits[0].price);
-      setIma(data.hits[0].image.large);
+      setIma(data.hits[0].image.small);
     } catch (error) {
       console.error("エラーです:", error);
     }
@@ -60,7 +60,7 @@ export default function Home() {
             </button>
           </div>
           <div>
-            <img className="" src={image} />
+            <img src={image} />
           </div>
           <p className="text-4xl my-5">商品名 : {name}</p>
           <p className="text-4xl">価格 : {price} 円</p>
@@ -77,4 +77,3 @@ export default function Home() {
     </main>
   );
 }
-4909411073114;
