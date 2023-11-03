@@ -10,7 +10,7 @@ export default function Home() {
           <button className="text-3xl text-blue-500">マッチング</button>
         </div>
       </Link>
-      <Link href="/hoge">
+      <Link href="/box">
         <div className="text-center">
           <button className="text-3xl text-blue-500">キャラ一覧</button>
         </div>
