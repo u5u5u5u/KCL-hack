@@ -8,6 +8,9 @@ export default function Home() {
       <Link href="/search">
         <button>scanへ移動する</button>
       </Link>
+      <Link href="/login">
+        <button>loginへ移動する</button>
+      </Link>
     </main>
   );
 }
