@@ -18,6 +18,11 @@ export default function Home() {
           </Link>
         </div>
       </div>
+      <div className="text-center">
+        <Link href="/home">
+          <button>戻る</button>
+        </Link>
+      </div>
     </main>
   );
 }
