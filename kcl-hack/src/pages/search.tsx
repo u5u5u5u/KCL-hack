@@ -1,13 +1,13 @@
 "use client";
 import React, { useState } from "react";
 import Link from "next/link";
+import { YAHHO_API_KEY } from "../constant/env";
 
 export default function Home() {
   const [number, setNum] = useState<string>("");
   const [name, setNam] = useState<string>("");
   const [price, setPri] = useState<number>();
   const [image, setIma] = useState<string>("");
-  const yahookey = "dj00aiZpPVpKZG9FdVNJbW5SRCZzPWNvbnN1bWVyc2VjcmV0Jng9ZWE-";
 
   const changeNum = (event: React.ChangeEvent<HTMLInputElement>) => {
     console.log(event);
@@ -17,7 +17,7 @@ export default function Home() {
   async function fetchname() {
     try {
       const res = await fetch(
-        `https://shopping.yahooapis.jp/ShoppingWebService/V3/itemSearch?appid=${yahookey}&jan_code=${number}`
+        `https://shopping.yahooapis.jp/ShoppingWebService/V3/itemSearch?appid=${YAHHO_API_KEY}&jan_code=${number}`
       );
       if (!res.ok) {
         throw new Error("fetchに失敗しました");
@@ -39,6 +39,7 @@ export default function Home() {
     setNum("");
     setIma("");
     setPri(NaN);
+    console.log(YAHHO_API_KEY);
   };
 
   return (
