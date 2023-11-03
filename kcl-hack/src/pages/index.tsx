@@ -7,8 +7,8 @@ export default function Home() {
     <main>
       <div className="h-screen flex justify-center items-center">
         <div className="flex flex-col">
-          <h1 className="text-9xl text-red-600 text-center font-serif italic">
-            BAGOLA;
+          <h1 className="text-9xl text-red-600 text-center font-serif">
+            <span className="italic">BAGOLA</span>;
           </h1>
           <div className="text-center mt-20">
             <Link href="/login">
