@@ -3,11 +3,11 @@ import React, { useState } from "react";
 import Link from "next/link";
 
 export default function Home() {
-  const [image, setI] = useState<string>("");
+  const [userName, setUsername] = useState<string>("");
 
-  const changeNum = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const changeUserName = (event: React.ChangeEvent<HTMLInputElement>) => {
     console.log(event);
-    setI(event.target.value);
+    setUsername(event.target.value);
   };
   return (
     <main>
@@ -23,7 +23,11 @@ export default function Home() {
         </div>
         <div className="text-center">
           <label>
-            <input type="text" placeholder="名無しさん"></input>
+            <input
+              type="text"
+              value={userName}
+              onChange={changeUserName}
+            ></input>
             <input type="submit" value="決定"></input>
           </label>
         </div>
