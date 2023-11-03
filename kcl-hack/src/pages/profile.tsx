@@ -41,6 +41,11 @@ export default function Home() {
           </label>
         </div>
       </form>
+      <Link href="/home">
+        <div className="text-center">
+          <button className="text-3xl text-blue-500">ホームに戻る</button>
+        </div>
+      </Link>
     </main>
   );
 }

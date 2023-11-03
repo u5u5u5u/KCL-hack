@@ -20,6 +20,11 @@ export default function Home() {
           <button className="text-3xl text-blue-500">設定</button>
         </div>
       </Link>
+      <Link href="/home">
+        <div className="text-center">
+          <button className="text-3xl text-blue-500">ホームに戻る</button>
+        </div>
+      </Link>
     </main>
   );
 }
