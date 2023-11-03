@@ -1,12 +1,22 @@
-"use client"; import React, { useState } from "react"; import Link from
-"next/link"; export default function Home() { return (
-<main>
-  <div>
-    <h2>名前 たま</h2>
-    <h2>HP 65</h2>
-    <h2>攻撃 65633654</h2>
-    <h2>防御 0</h2>
-    <h2>素早さ 2</h2>
-  </div>
-</main>
-); }
+"use client";
+import React, { useState } from "react";
+import Link from "next/link";
+
+var name = "たま";
+var attack = 999999;
+var HP = 200;
+var defence = 25;
+var speed = 10;
+export default function Home() {
+  return (
+    <main>
+      <div>
+        <h2>名前 {name}</h2>
+        <h2>HP {HP}</h2>
+        <h2>こうげき {attack}</h2>
+        <h2>ぼうぎょ {defence}</h2>
+        <h2>すばやさ {speed}</h2>
+      </div>
+    </main>
+  );
+}
