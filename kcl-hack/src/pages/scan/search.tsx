@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import Link from "next/link";
 
 export default function Home() {
-  const [number, setNum] = useState<string>("Janコードを入力");
+  const [number, setNum] = useState<string>("");
   const [name, setNam] = useState<string>("");
   const [price, setPri] = useState<number>();
   const [image, setIma] = useState<string>("");
@@ -26,7 +26,7 @@ export default function Home() {
       console.log(data);
       setNam(data.hits[0].name);
       setPri(data.hits[0].price);
-      setIma(data.hits[0].image.small);
+      setIma(data.hits[0].image.large);
     } catch (error) {
       console.error("エラーです:", error);
     }
@@ -43,16 +43,38 @@ export default function Home() {
 
   return (
     <main>
-      <Link href="/home">
-        <button>homeへ戻る</button>
-      </Link>
-      <input type="text" value={number} onChange={changeNum} />
-      <button onClick={sendNum}>送信</button>
-      <p>
-        <img src={image} />
-      </p>
-      <p>商品名 : {name}</p>
-      <p>価格 : {price} 円</p>
+      <div className="h-screen flex justify-center items-center">
+        <div className="flex flex-col">
+          <h2 className="text-6xl text-center mb-10">
+            <span className="font-mono">JANコード</span>を入力
+          </h2>
+          <div className="flex justify-center mb-6">
+            <input
+              className="text-6xl text-red-500 mr-10"
+              type="text"
+              value={number}
+              onChange={changeNum}
+            />
+            <button className="text-5xl" onClick={sendNum}>
+              送信
+            </button>
+          </div>
+          <div>
+            <img className="" src={image} />
+          </div>
+          <p className="text-4xl my-5">商品名 : {name}</p>
+          <p className="text-4xl">価格 : {price} 円</p>
+          <div className="text-6xl text-center my-10">
+            <button>登録</button>
+          </div>
+          <div className="text-3xl text-center my-5">
+            <Link href="/home">
+              <button>戻る</button>
+            </Link>
+          </div>
+        </div>
+      </div>
     </main>
   );
 }
+4909411073114;
