@@ -26,7 +26,7 @@ export default function Home() {
       console.log(data);
       setNam(data.hits[0].name);
       setPri(data.hits[0].price);
-      setIma(data.hits[0].image.large);
+      setIma(data.hits[0].image.small);
     } catch (error) {
       console.error("エラーです:", error);
     }
@@ -60,7 +60,7 @@ export default function Home() {
             </button>
           </div>
           <div>
-            <img className="" src={image} />
+            <img src={image} />
           </div>
           <p className="text-4xl my-5">商品名 : {name}</p>
           <p className="text-4xl">価格 : {price} 円</p>
@@ -77,4 +77,3 @@ export default function Home() {
     </main>
   );
 }
-4909411073114;
