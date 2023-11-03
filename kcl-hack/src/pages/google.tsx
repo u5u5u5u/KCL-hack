@@ -115,12 +115,20 @@ const Page = () => {
   const handleLogin = () => dispatch({ type: "login" });
   const handleLogout = () => dispatch({ type: "logout" });
   return (
-    <div>
-      <button onClick={handleLogin}>ログイン</button>
-      <button onClick={handleLogout}>ログアウト</button>
-      <div>User: {credential?.user.displayName}</div>
-      <div>State: {state}</div>
-      <div>Error: {String(error)}</div>
+    <div className="h-screen flex justify-center items-center">
+      <div className="flex flex-col">
+        <button className="text-6xl font-mono my-10" onClick={handleLogin}>
+          logIn
+        </button>
+        <div className="text-3xl my-3">
+          User: {credential?.user.displayName}
+        </div>
+        <div className="text-3xl text-left my-3">State: {state}</div>
+        <div className="text-3xl my-3">Error: {String(error)}</div>
+        <button className="text-4xl font-mono my-10" onClick={handleLogout}>
+          logOut
+        </button>
+      </div>
     </div>
   );
 };
