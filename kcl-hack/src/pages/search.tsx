@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import Link from "next/link";
 
 export default function Home() {
-  const [number, setNum] = useState<string>("Janコードを入力");
+  const [number, setNum] = useState<string>("");
   const [name, setNam] = useState<string>("");
   const [price, setPri] = useState<number>();
   const [image, setIma] = useState<string>("");
