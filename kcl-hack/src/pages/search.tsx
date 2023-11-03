@@ -43,8 +43,8 @@ export default function Home() {
 
   return (
     <main>
-      <Link href="/">
-        <button>pageへ戻る</button>
+      <Link href="/home">
+        <button>homeへ戻る</button>
       </Link>
       <input type="text" value={number} onChange={changeNum} />
       <button onClick={sendNum}>送信</button>
