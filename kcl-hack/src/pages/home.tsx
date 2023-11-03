@@ -10,7 +10,7 @@ export default function Home() {
           <button className="text-3xl text-blue-500">プロフィール</button>
         </div>
       </Link>
-      <Link href="/scan-select">
+      <Link href="/scan/scan-select">
         <div className="text-center">
           <button className="text-3xl text-blue-500">バーコード読み取り</button>
         </div>
