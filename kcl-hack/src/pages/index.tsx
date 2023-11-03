@@ -5,19 +5,12 @@ import Link from "next/link";
 export default function Home() {
   return (
     <main>
-      <h2 className="text-center">SCAN</h2>
-      <div className="flex justify-center items-stretch">
-        <div className="px-4 py-4">
-          <Link href="/search">
-            <button>読み取り</button>
-          </Link>
+      <h1 className="text-9xl text-red-600 text-center italic">BAGOLA;</h1>
+      <Link href="/login">
+        <div className="text-center">
+          <button className="text-3xl text-blue-500">ログイン</button>
         </div>
-        <div className="px-4 py-4">
-          <Link href="/search">
-            <button>入力</button>
-          </Link>
-        </div>
-      </div>
+      </Link>
     </main>
   );
 }
