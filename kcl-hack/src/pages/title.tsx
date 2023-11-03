@@ -5,9 +5,9 @@ import Link from "next/link";
 export default function Home() {
   return (
     <main>
-      <h2>BAGOLA</h2>
+      <h2>BAGOLA;</h2>
       <Link href="/search">
-        <button>login</button>
+        <button>ログイン</button>
       </Link>
     </main>
   );
