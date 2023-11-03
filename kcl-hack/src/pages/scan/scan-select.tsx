@@ -1,7 +1,6 @@
 "use client";
 import React, { useState } from "react";
 import Link from "next/link";
-import * as React from "react";
 import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
 
@@ -10,20 +9,25 @@ export default function Home() {
     <main>
       <div className="h-screen flex justify-center items-center">
         <div className="flex flex-col">
-          <h2 className="text-7xl text-center font-mono my-10">SCAN</h2>
+          <h2 className="text-7xl text-center font-mono my-20">SCAN</h2>
           <div className="flex justify-center items-stretch">
-            <div className="text-5xl border px-5 mx-5 py-5 my-5">
+            <Stack spacing={2} direction="row">
               <Link href="/scan/search">
-                <button>読み取り</button>
+                <Button className="text-4xl p-5 mx-10" variant="outlined">
+                  読み取り
+                </Button>
               </Link>
-            </div>
-            <div className="text-5xl mx-20 my-5">
+            </Stack>
+
+            <Stack spacing={2} direction="row">
               <Link href="/scan/search">
-                <button>入力</button>
+                <Button className="text-4xl p-5 mx-20" variant="outlined">
+                  入力
+                </Button>
               </Link>
-            </div>
+            </Stack>
           </div>
-          <div className="text-3xl text-center my-10">
+          <div className="text-3xl text-center my-20">
             <Link href="/home">
               <button>戻る</button>
             </Link>
