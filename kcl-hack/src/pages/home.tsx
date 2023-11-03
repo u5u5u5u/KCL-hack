@@ -5,7 +5,7 @@ import Link from "next/link";
 export default function Home() {
   return (
     <main>
-      <Link href="/hoge">
+      <Link href="/profile">
         <div className="text-center">
           <button className="text-3xl text-blue-500">プロフィール</button>
         </div>
