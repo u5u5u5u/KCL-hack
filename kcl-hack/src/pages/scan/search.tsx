@@ -1,7 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import Link from "next/link";
-import { YAHHO_API_KEY } from "../../constant/env";
+import { YAHOO_API_KEY } from "../../constant/env";
 
 export default function Home() {
   const [number, setNum] = useState<string>("");
@@ -17,7 +17,7 @@ export default function Home() {
   async function fetchname() {
     try {
       const res = await fetch(
-        `https://shopping.yahooapis.jp/ShoppingWebService/V3/itemSearch?appid=${YAHHO_API_KEY}&jan_code=${number}`
+        `https://shopping.yahooapis.jp/ShoppingWebService/V3/itemSearch?appid=${YAHOO_API_KEY}&jan_code=${number}`
       );
       if (!res.ok) {
         throw new Error("fetchに失敗しました");
