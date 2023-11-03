@@ -5,7 +5,7 @@ import Link from "next/link";
 export default function Home() {
   return (
     <main>
-      <Link href="/search">
+      <Link href="/login">
         <button>scanへ移動する</button>
       </Link>
     </main>
