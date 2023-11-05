@@ -2,19 +2,26 @@
 import { useState, ChangeEvent } from "react";
 import Link from "next/link";
 import { YAHOO_API_KEY } from "../../constant/env";
-import { getProjectManagement } from "firebase-admin/project-management";
-import { set } from "firebase/database";
-export default function Home() {
-  const [number, setNum] = useState<number>();
-  const [name, setNam] = useState<string>("");
-  const [price, setPri] = useState<number>();
-  const [image, setIma] = useState<string>("");
+import { firebaseConfig } from "@/lib/firebase/firebase";
+import { initializeApp } from "firebase/app";
+import { getDatabase, ref, set } from "firebase/database";
+import firebase from "firebase/compat/app";
+import "firebase/compat/database";
 
+const UUID = localStorage.getItem("uuid");
+
+export default function Home() {
+  //status
   const [Hp, setHP] = useState<number>();
   const [Attack, setAttack] = useState<number>();
   const [Defence, setDefence] = useState<number>();
   const [Speed, setSpeed] = useState<number>();
   const [Jan, setJan] = useState<number>();
+
+  const [number, setNum] = useState<number>();
+  const [name, setNam] = useState<string>("");
+  const [price, setPri] = useState<number>();
+  const [image, setIma] = useState<string>("");
 
   function jan_get(jan: number) {
     var HP = 0;
@@ -233,6 +240,20 @@ export default function Home() {
     }
   }
 
+  firebase.initializeApp(firebaseConfig);
+  var database = firebase.database();
+  var statusRef = database.ref(`User/${UUID}/${Jan}/status`);
+
+  const sendStatus = () => {
+    console.log("send");
+    statusRef.set({
+      HP: Hp,
+      Attack: Attack,
+      Defence: Defence,
+      Speed: Speed,
+    });
+  };
+
   const sendNum = () => {
     console.log(number);
     fetchname();
@@ -266,7 +287,7 @@ export default function Home() {
           <p className="text-4xl my-5">商品名 : {name}</p>
           <p className="text-4xl">価格 : {price} 円</p>
           <div className="text-6xl text-center my-10">
-            <button>登録</button>
+            <button onClick={sendStatus}>登録</button>
           </div>
           <div className="text-3xl text-center my-5">
             <Link href="/home">
