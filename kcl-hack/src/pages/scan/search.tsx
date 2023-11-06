@@ -239,19 +239,22 @@ export default function Home() {
       console.error("エラーです:", error);
     }
   }
-
-  firebase.initializeApp(firebaseConfig);
-  var database = firebase.database();
-  var statusRef = database.ref(`User/${UUID}/${Jan}/status`);
-
-  const sendStatus = () => {
-    console.log("send");
-    statusRef.set({
-      HP: Hp,
-      Attack: Attack,
-      Defence: Defence,
-      Speed: Speed,
-    });
+  const sendStatus = async () => {
+    try {
+      const db = getDatabase();
+      //var database = firebase.database();
+      //var statusRef = database.ref(`User/${UUID}/${Jan}/status`);
+      await set(ref(db, `User/${UUID}/${Jan}`), {
+        HP: Hp,
+        Attack: Attack,
+        Defence: Defence,
+        Speed: Speed,
+        CharaImage: image,
+      });
+      console.log("send");
+    } catch (error) {
+      console.error("エラーです:", error);
+    }
   };
 
   const sendNum = () => {

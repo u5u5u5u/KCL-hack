@@ -18,21 +18,12 @@ import {
   FIREBASE_STORAGE_BUCKET,
   FIREBASE_MEASUREMENT_ID,
 } from "@/constant/env";
+import { firebaseConfig } from "@/lib/firebase/firebase";
 //https://console.firebase.google.com/
 // プロジェクトを追加
 // Authetication -> Sign-in method -> Googleを有効にする
 // プロジェクトの概要 -> アプリの追加 -> ウェブ -> アプリの作成
 // firebaseConfig の内容を持ってくる
-
-const firebaseConfig = {
-  apiKey: FIREBASE_API_KEY,
-  authDomain: FIREBASE_AUTH_DOMAIN,
-  //   databaseURL: FIREBASE_APP_ID,
-  projectId: FIREBASE_PROJECT_ID,
-  storageBucket: FIREBASE_STORAGE_BUCKET,
-  messagingSenderId: FIREBASE_MESSAGING_SENDER_ID,
-  appId: FIREBASE_APP_ID,
-};
 
 const useAuth = (auth: Auth) => {
   const [state, setState] = useState<
