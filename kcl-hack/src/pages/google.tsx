@@ -47,6 +47,8 @@ const useAuth = (auth: Auth) => {
               .then((result) => {
                 setCredential(result);
                 setState("logined");
+                var uuid = result.user.uid;
+                localStorage.setItem("uuid", uuid);
               })
               .catch((e) => {
                 setError(e);
