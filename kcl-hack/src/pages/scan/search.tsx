@@ -2,19 +2,32 @@
 import { useState, ChangeEvent } from "react";
 import Link from "next/link";
 import { YAHOO_API_KEY } from "../../constant/env";
+import { firebaseConfig } from "@/lib/firebase/firebase";
+import { initializeApp } from "firebase/app";
+import { getDatabase, ref, set } from "firebase/database";
+import firebase from "firebase/compat/app";
+import "firebase/compat/database";
+
+const UUID = localStorage.getItem("uuid");
+
 export default function Home() {
-  const [number, setNum] = useState<string>("");
+  //status
+  const [Hp, setHP] = useState<number>();
+  const [Attack, setAttack] = useState<number>();
+  const [Defence, setDefence] = useState<number>();
+  const [Speed, setSpeed] = useState<number>();
+  const [Jan, setJan] = useState<number>();
+
+  const [number, setNum] = useState<number>();
   const [name, setNam] = useState<string>("");
   const [price, setPri] = useState<number>();
   const [image, setIma] = useState<string>("");
 
-  var jan = 10000000;
-  var attack;
-  var HP;
-  var defence;
-  var speed;
-
   function jan_get(jan: number) {
+    var HP = 0;
+    var attack = 0;
+    var defence = 0;
+    var speed = 0;
     if (jan > 99999999) {
       var jan013 = jan % 10;
       var jan012 = ((jan % 100) - jan013) / 10;
@@ -197,7 +210,11 @@ export default function Home() {
         ((jan007 * 1000 + jan007 * 100 + jan010 * 10 + jan008) % 499) + 100;
       speed = ((jan008 * 100 + jan010 * 10 + jan006) % 97) + 50;
     }
-    return [HP, attack, defence, speed];
+    setHP(HP);
+    setAttack(attack);
+    setDefence(defence);
+    setSpeed(speed);
+    setJan(number);
   }
   const changeNum = (event: ChangeEvent<HTMLInputElement>) => {
     console.log(event);
@@ -217,10 +234,28 @@ export default function Home() {
       setNam(data.hits[0].name);
       setPri(data.hits[0].price);
       setIma(data.hits[0].image.small);
+      jan_get(number);
     } catch (error) {
       console.error("エラーです:", error);
     }
   }
+  const sendStatus = async () => {
+    try {
+      const db = getDatabase();
+      //var database = firebase.database();
+      //var statusRef = database.ref(`User/${UUID}/${Jan}/status`);
+      await set(ref(db, `User/${UUID}/${Jan}`), {
+        HP: Hp,
+        Attack: Attack,
+        Defence: Defence,
+        Speed: Speed,
+        CharaImage: image,
+      });
+      console.log("send");
+    } catch (error) {
+      console.error("エラーです:", error);
+    }
+  };
 
   const sendNum = () => {
     console.log(number);
@@ -230,8 +265,6 @@ export default function Home() {
     setIma("");
     setPri(NaN);
   };
-
-  var [HP, attack, defence, speed] = jan_get(jan);
 
   return (
     <main>
@@ -257,7 +290,7 @@ export default function Home() {
           <p className="text-4xl my-5">商品名 : {name}</p>
           <p className="text-4xl">価格 : {price} 円</p>
           <div className="text-6xl text-center my-10">
-            <button>登録</button>
+            <button onClick={sendStatus}>登録</button>
           </div>
           <div className="text-3xl text-center my-5">
             <Link href="/home">
@@ -268,12 +301,12 @@ export default function Home() {
       </div>
 
       <div>
-        <h2>コード {jan}</h2>
+        <h2>コード {Jan}</h2>
 
-        <h2>HP {HP}</h2>
-        <h2>こうげき {attack}</h2>
-        <h2>ぼうぎょ {defence}</h2>
-        <h2>すばやさ {speed}</h2>
+        <h2>HP {Hp}</h2>
+        <h2>こうげき {Attack}</h2>
+        <h2>ぼうぎょ {Defence}</h2>
+        <h2>すばやさ {Speed}</h2>
       </div>
     </main>
   );
