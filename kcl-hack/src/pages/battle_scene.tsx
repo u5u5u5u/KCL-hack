@@ -1,22 +1,40 @@
 "use client";
 import React, { useState } from "react";
 import Link from "next/link";
+
+var name1 = "Player";
+var HP1 = 1000;
+var attack1 = 600;
+var defence1 = 100;
+var spped1 = 40;
+var name2 = "Rival";
+var HP2 = 1000;
+var attack2 = 200;
+var defence2 = 900;
+var spped2 = 40;
+var damage1 = attack1 / defence2;
+var damage2 = attack2 / defence1;
+var strength1 = 500;
+var strength2 = 300;
+
 export default function Home() {
   return (
     <main>
-      <div className="p-10 text-red-500 float-right">
-        <h2 className="text-4xl p-10">ユーザーネーム</h2>
-        <h2>HP</h2>
-        <h2>こうげき</h2>
-        <h2>ぼうぎょ</h2>
-        <h2>すばやさ</h2>
+      <div className="p-10 text-blue-600 float-left">
+        <h2 className="text-4xl p-10">{name1}</h2>
+        <h2>HP {HP1}</h2>
+        <h2>こうげき {attack1}</h2>
+        <h2>ぼうぎょ {defence1}</h2>
+        <h2>すばやさ {spped1}</h2>
+        <h2>あたえるダメージ {Math.trunc(damage1 * strength1)}</h2>
       </div>
-      <div className="p-10 text-blue-600">
-        <h2 className="text-4xl p-10">ユーザーネーム</h2>
-        <h2>HP</h2>
-        <h2>こうげき</h2>
-        <h2>ぼうぎょ</h2>
-        <h2>すばやさ</h2>
+      <div className="p-10 text-red-500 float-right">
+        <h2 className="text-4xl p-10">{name2}</h2>
+        <h2>HP {HP2}</h2>
+        <h2>こうげき {attack2}</h2>
+        <h2>ぼうぎょ {defence2}</h2>
+        <h2>すばやさ {spped2}</h2>
+        <h2>あたえるダメージ {Math.trunc(damage2 * strength2)}</h2>
       </div>
       <div className="text-center p-10">
         <h2>コマンドを選んでください</h2>
