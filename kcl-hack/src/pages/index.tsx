@@ -12,7 +12,7 @@ export default function Home() {
             <span className={styles.main_title_text}>BAGOLA</span>;
           </h1>
           <div className="content">
-            <Link href="/login">
+            <Link href="/google">
               <Button label="logIn" />
             </Link>
           </div>
