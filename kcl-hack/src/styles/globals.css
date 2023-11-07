@@ -30,6 +30,20 @@ main {
   font-weight: bold;
 }
 
+ul {
+  padding: 0;
+}
+
+li {
+  list-style: none;
+}
+
+.sub-title {
+  font-size: 5rem;
+  font-family: century;
+  margin-top: 0;
+}
+
 /* index.tsx */
 .main-title {
   color: #dd0000;
@@ -43,6 +57,9 @@ main {
 }
 
 /* home.tsx */
-li {
-  list-style: none;
+
+/* scan-select.tsx */
+.inner {
+  display: flex;
+  justify-content: center;
 }
