@@ -21,15 +21,6 @@ main {
   margin-bottom: 2rem;
 }
 
-.advance-button {
-  background: transparent;
-  border: none;
-  color: #4689ff;
-  font-family: "Lucida Console", century;
-  font-size: 3rem;
-  font-weight: bold;
-}
-
 ul {
   padding: 0;
 }

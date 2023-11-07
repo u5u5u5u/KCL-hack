@@ -1,5 +1,6 @@
 "use client";
 import Link from "next/link";
+import Button from "../components/button";
 import styles from "../components/index.module.css";
 
 export default function Home() {
@@ -12,7 +13,7 @@ export default function Home() {
           </h1>
           <div className="content">
             <Link href="/login">
-              <button className="advance-button">logIn</button>
+              <Button label="logIn" />
             </Link>
           </div>
         </div>
