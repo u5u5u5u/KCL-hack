@@ -1,6 +1,6 @@
 import React, { ReactNode } from "react";
+import router from "next/router";
 import styles from "./header.module.css";
-import Link from "next/link";
 
 interface HeaderProps {
   children: ReactNode;
@@ -9,9 +9,7 @@ interface HeaderProps {
 const Header = ({ children }: HeaderProps) => {
   return (
     <div>
-      <Link href="/home">
-        <span className={styles.arrow}></span>
-      </Link>
+      <span className={styles.arrow} onClick={() => router.back()}></span>
     </div>
   );
 };
