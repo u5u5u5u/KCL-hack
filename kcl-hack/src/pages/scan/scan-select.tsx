@@ -1,9 +1,11 @@
 "use client";
 import Link from "next/link";
+import Header from "../../components/header";
 
 export default function Home() {
   return (
     <main>
+      <Header children="SCAN" />
       <div className="container">
         <div className="wrapper">
           <h2 className="sub-title">SCAN</h2>
