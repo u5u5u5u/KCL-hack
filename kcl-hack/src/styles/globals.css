@@ -43,13 +43,3 @@ li {
   font-family: century;
   margin-top: 0;
 }
-
-/* index.tsx */
-
-/* home.tsx */
-
-/* scan-select.tsx */
-.inner {
-  display: flex;
-  justify-content: center;
-}
