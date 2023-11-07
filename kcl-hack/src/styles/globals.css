@@ -45,16 +45,6 @@ li {
 }
 
 /* index.tsx */
-.main-title {
-  color: #dd0000;
-  font-size: 10rem;
-  font-family: century;
-}
-
-.main-title-text {
-  font-style: italic;
-  margin-right: 1rem;
-}
 
 /* home.tsx */
 
