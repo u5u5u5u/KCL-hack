@@ -5,8 +5,8 @@ import Link from "next/link";
 export default function Home() {
   return (
     <main>
-      <div className="home-page">
-        <div className="container">
+      <div className="container">
+        <div className="wrapper">
           <h1 className="main-title">
             <span className="main-title-text">BAGOLA</span>;
           </h1>
