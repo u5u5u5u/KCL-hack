@@ -29,15 +29,14 @@ main {
 
 .content {
   text-align: center;
+  margin-bottom: 2rem;
 }
 
 .advance-button {
-  border: none;
   background: transparent;
-}
-
-.sub-title {
-  font-size: 3rem;
-  font-family: "Lucida Console", century;
+  border: none;
   color: #4689ff;
+  font-family: "Lucida Console", century;
+  font-size: 3rem;
+  font-weight: bold;
 }

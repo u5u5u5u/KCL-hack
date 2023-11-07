@@ -12,7 +12,7 @@ export default function Home() {
           </h1>
           <div className="content">
             <Link href="/login">
-              <button className="advance-button sub-title">logIn</button>
+              <button className="advance-button">logIn</button>
             </Link>
           </div>
         </div>

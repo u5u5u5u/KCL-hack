@@ -5,30 +5,26 @@ import Link from "next/link";
 export default function Home() {
   return (
     <main>
-      <div className="h-screen flex justify-center items-center">
-        <div className="flex flex-col">
-          <div className="text-center my-10">
+      <div className="container">
+        <div className="wrapper">
+          <div className="content">
             <Link href="/profile">
-              <button className="text-6xl text-blue-500 font-mono">
-                プロフィール
-              </button>
+              <button className="advance-button">プロフィール</button>
             </Link>
           </div>
-          <div className="text-center my-10">
+          <div className="content">
             <Link href="/scan/scan-select">
-              <button className="text-6xl text-blue-500 font-mono">
-                スキャン
-              </button>
+              <button className="advance-button">スキャン</button>
             </Link>
           </div>
-          <div className="text-center my-10">
+          <div className="content">
             <Link href="/hoge">
-              <button className="text-6xl text-blue-500 font-mono">設定</button>
+              <button className="advance-button">設定</button>
             </Link>
           </div>
-          <div className="text-center my-10">
+          <div className="content">
             <Link href="/battle">
-              <button className="text-6xl text-blue-500 font-mono">対戦</button>
+              <button className="advance-button">対戦</button>
             </Link>
           </div>
         </div>
