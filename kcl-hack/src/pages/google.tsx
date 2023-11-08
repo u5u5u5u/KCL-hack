@@ -47,9 +47,6 @@ const useAuth = (auth: Auth) => {
               .then((result) => {
                 setCredential(result);
                 setState("logined");
-                const uuid = result.user.uid;
-                localStorage.setItem("uuid", uuid);
-                console.log(uuid);
               })
               .catch((e) => {
                 setError(e);
@@ -60,9 +57,6 @@ const useAuth = (auth: Auth) => {
               .then((result) => {
                 setCredential(result);
                 setState("logined");
-                const uuid = result.user.uid;
-                localStorage.setItem("uuid", uuid);
-                console.log(uuid);
               })
               .catch((e) => {
                 setError(e);

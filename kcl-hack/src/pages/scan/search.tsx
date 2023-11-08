@@ -2,13 +2,9 @@
 import { useState, ChangeEvent } from "react";
 import Link from "next/link";
 import { YAHOO_API_KEY } from "../../constant/env";
-import { firebaseConfig } from "@/lib/firebase/firebase";
-import { initializeApp } from "firebase/app";
 import { getDatabase, ref, set } from "firebase/database";
-import firebase from "firebase/compat/app";
+import { getAuth } from "firebase/auth";
 import "firebase/compat/database";
-
-const UUID = localStorage.getItem("uuid");
 
 export default function Home() {
   //status
@@ -239,8 +235,18 @@ export default function Home() {
       console.error("エラーです:", error);
     }
   }
+
+  async function getUid() {
+    const auth = getAuth();
+    const user = auth.currentUser;
+    if (user !== null) {
+      return user.uid;
+    }
+  }
+
   const sendStatus = async () => {
     try {
+      const UUID = await getUid();
       const db = getDatabase();
       //var database = firebase.database();
       //var statusRef = database.ref(`User/${UUID}/${Jan}/status`);
