@@ -5,21 +5,19 @@ import Link from "next/link";
 export default function Home() {
   return (
     <main>
-      <div className="h-screen flex justify-center items-center">
-        <div className="flex flex-col">
-          <h1 className="text-9xl text-red-600 text-center font-serif">
-            <span className="italic">BAGOLA</span>;
+      <div className="container">
+        <div className="wrapper">
+          <h1 className="main-title">
+            <span className="main-title-text">BAGOLA</span>;
           </h1>
-          <div className="text-center mt-20">
+          <div className="content">
             <Link href="/login">
-              <button className="text-5xl text-blue-500 font-mono">
-                logIn
-              </button>
+              <button className="advance-button">logIn</button>
             </Link>
           </div>
         </div>
       </div>
-      <div className="text-center">
+      <div>
         <Link href="/home">
           <button>ホームへ</button>
         </Link>
