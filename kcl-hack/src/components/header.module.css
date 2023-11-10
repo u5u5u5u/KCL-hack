@@ -1,0 +1,25 @@
+.arrow {
+  display: inline-block;
+  vertical-align: middle;
+  color: #333;
+  line-height: 1;
+  position: relative;
+  width: 1em;
+  height: 0.1em;
+  background: currentColor;
+}
+
+.arrow::before {
+  content: "";
+  width: 0.65em;
+  height: 0.65em;
+  border: 0.1em solid currentColor;
+  border-right: 0;
+  border-bottom: 0;
+  transform: rotate(-45deg);
+  transform-origin: top left;
+  position: absolute;
+  top: 50%;
+  left: -0.05em;
+  box-sizing: border-box;
+}
