@@ -1,23 +1,21 @@
 "use client";
-import React, { useState } from "react";
 import Link from "next/link";
+import Header from "../components/header";
+import Button from "../components/button";
 
 export default function Home() {
   return (
     <main>
-      <div className="h-screen flex justify-center items-center">
-        <div className="text-center">
+      <Header children="login" />
+      <div className="container">
+        <div>
           <Link href="/google">
-            <button className="text-6xl text-blue-500 font-mono mx-10">
-              signIn
-            </button>
+            <Button label="signIn" />
           </Link>
         </div>
         <div className="text-center">
           <Link href="/google">
-            <button className="text-6xl text-blue-500 font-mono mx-10">
-              signUp
-            </button>
+            <Button label="signUp" />
           </Link>
         </div>
       </div>

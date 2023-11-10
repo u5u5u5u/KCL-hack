@@ -21,15 +21,6 @@ main {
   margin-bottom: 2rem;
 }
 
-.advance-button {
-  background: transparent;
-  border: none;
-  color: #4689ff;
-  font-family: "Lucida Console", century;
-  font-size: 3rem;
-  font-weight: bold;
-}
-
 ul {
   padding: 0;
 }
@@ -42,24 +33,4 @@ li {
   font-size: 5rem;
   font-family: century;
   margin-top: 0;
-}
-
-/* index.tsx */
-.main-title {
-  color: #dd0000;
-  font-size: 10rem;
-  font-family: century;
-}
-
-.main-title-text {
-  font-style: italic;
-  margin-right: 1rem;
-}
-
-/* home.tsx */
-
-/* scan-select.tsx */
-.inner {
-  display: flex;
-  justify-content: center;
 }

@@ -1,18 +1,19 @@
 "use client";
-import React, { useState } from "react";
 import Link from "next/link";
+import Button from "../components/button";
+import styles from "../components/index.module.css";
 
 export default function Home() {
   return (
     <main>
       <div className="container">
         <div className="wrapper">
-          <h1 className="main-title">
-            <span className="main-title-text">BAGOLA</span>;
+          <h1 className={styles.main_title}>
+            <span className={styles.main_title_text}>BAGOLA</span>;
           </h1>
           <div className="content">
             <Link href="/login">
-              <button className="advance-button">logIn</button>
+              <Button label="logIn" />
             </Link>
           </div>
         </div>
