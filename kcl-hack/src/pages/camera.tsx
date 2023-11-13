@@ -1,6 +1,7 @@
 import { useRef, useState, useCallback } from "react";
 import Webcam from "react-webcam";
 import Link from "next/link";
+import Header from "../components/header";
 
 const videoConstraints = {
   width: 720,
@@ -20,24 +21,13 @@ export const Camera = () => {
   }, [webcamRef]);
 
   return (
-    <>
-      <header>
-        <h1>カメラアプリ</h1>
-      </header>
-      <main>
-        <div>
-          <Link href="/home">
-            <button className="text-2xl text-blue-500 font-mono">
-              ホームに戻る
-            </button>
-          </Link>
-        </div>
-      </main>
+    <main>
+      <Header children="CAMERA" />
       {isCaptureEnable || (
         <button onClick={() => setCaptureEnable(true)}>開始</button>
       )}
       {isCaptureEnable && (
-        <>
+        <main>
           <div>
             <button onClick={() => setCaptureEnable(false)}>終了</button>
           </div>
@@ -52,7 +42,7 @@ export const Camera = () => {
             />
           </div>
           <button onClick={capture}>キャプチャ</button>
-        </>
+        </main>
       )}
       {url && (
         <>
@@ -70,7 +60,7 @@ export const Camera = () => {
           </div>
         </>
       )}
-    </>
+    </main>
   );
 };
 

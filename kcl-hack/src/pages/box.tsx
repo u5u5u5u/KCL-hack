@@ -1,10 +1,12 @@
 "use client";
 import React, { useState } from "react";
 import Link from "next/link";
+import Header from "../components/header";
 
 export default function Home() {
   return (
     <main>
+      <Header children="CHARACTERS" />
       <div className="flex flex-col pb-52">
         <h1 className="text-9xl text-red-600 text-center">キャラ一覧だを</h1>
       </div>

@@ -5,6 +5,8 @@ import { YAHOO_API_KEY } from "../../constant/env";
 import { getDatabase, ref, set } from "firebase/database";
 import { getAuth } from "firebase/auth";
 import "firebase/compat/database";
+import Header from "../../components/header";
+import styles from "../../components/search.module.css";
 
 export default function Home() {
   //status
@@ -274,20 +276,19 @@ export default function Home() {
 
   return (
     <main>
-      <div className="h-screen flex justify-center items-center">
-        <div className="flex flex-col">
-          <h2 className="text-6xl text-center mb-10">
-            <span className="font-mono">JANコード</span>を入力
-          </h2>
+      <Header children="入力" />
+      <div className="container">
+        <div className="wrapper">
           <div className="flex justify-center mb-6">
             <input
               className="text-6xl text-red-500 mr-10"
               type="text"
               value={number}
               onChange={changeNum}
+              placeholder="JANコード"
             />
-            <button className="text-5xl" onClick={sendNum}>
-              送信
+            <button className="button" onClick={sendNum}>
+              検索
             </button>
           </div>
           <div>
@@ -295,14 +296,9 @@ export default function Home() {
           </div>
           <p className="text-4xl my-5">商品名 : {name}</p>
           <p className="text-4xl">価格 : {price} 円</p>
-          <div className="text-6xl text-center my-10">
-            <button onClick={sendStatus}>登録</button>
-          </div>
-          <div className="text-3xl text-center my-5">
-            <Link href="/home">
-              <button>戻る</button>
-            </Link>
-          </div>
+          <button className={styles.button} onClick={sendStatus}>
+            登録
+          </button>
         </div>
       </div>
 

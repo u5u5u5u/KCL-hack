@@ -1,6 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import Link from "next/link";
+import Header from "../components/header";
 
 export default function Home() {
   const [userName, setUsername] = useState<string>("");
@@ -11,8 +12,9 @@ export default function Home() {
   };
   return (
     <main>
-      <div className="h-screen flex justify-center items-center">
-        <div className="flex flex-col">
+      <Header children="PROFILE" />
+      <div className="container">
+        <div className="wrapper">
           <div className="text-center text-6xl my-10">
             <Link href="/hoge">
               <button>設定</button>
