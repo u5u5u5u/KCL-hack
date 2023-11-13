@@ -6,12 +6,9 @@ import Header from "../components/header";
 export default function Home() {
   return (
     <main>
-      <Header children="CHARACTERS" />
-      <div className="flex flex-col pb-52">
-        <h1 className="text-9xl text-red-600 text-center">キャラ一覧だを</h1>
-      </div>
-      <div className="px-20 flex-wrap flex">
-        <div className="w-80 h-80 px-10 py-1">
+      <Header children="キャラ一覧だを" />
+      <div>
+        <div>
           <Link href="/detail">
             <img src="https://farm5.static.flickr.com/4011/4504949513_df8494b480_o.jpg"></img>
           </Link>

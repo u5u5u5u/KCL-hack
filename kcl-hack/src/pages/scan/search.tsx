@@ -278,10 +278,8 @@ export default function Home() {
       <Header children="入力" />
       <div className="container">
         <div className="wrapper">
-          <div className="flex justify-center mb-6">
+          <div>
             <input
-              className="text-6xl text-red-500 mr-10"
-              type="text"
               value={number}
               onChange={changeNum}
               placeholder="JANコード"
@@ -293,21 +291,23 @@ export default function Home() {
           <div>
             <img src={image} />
           </div>
-          <p className="text-4xl my-5">商品名 : {name}</p>
-          <p className="text-4xl">価格 : {price} 円</p>
+          <ul>
+            <li>商品名 : {name}</li>
+            <li>価格 : {price}円</li>
+          </ul>
           <button className={styles.button} onClick={sendStatus}>
             登録
           </button>
         </div>
       </div>
-
       <div>
-        <h2>コード {Jan}</h2>
-
-        <h2>HP {Hp}</h2>
-        <h2>こうげき {Attack}</h2>
-        <h2>ぼうぎょ {Defence}</h2>
-        <h2>すばやさ {Speed}</h2>
+        <ul>
+          <li>コード {Jan}</li>
+          <li>HP {Hp}</li>
+          <li>こうげき {Attack}</li>
+          <li>ぼうぎょ {Defence}</li>
+          <li>すばやさ {Speed}</li>
+        </ul>
       </div>
     </main>
   );
