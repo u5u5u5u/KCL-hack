@@ -2,15 +2,22 @@
 import Link from "next/link";
 import Button from "../components/button";
 import styles from "../components/index.module.css";
+import Image from "next/image";
 
 export default function Home() {
   return (
     <main>
       <div className="container">
         <div className="wrapper">
-          <h1 className={styles.main_title}>
-            <span className={styles.main_title_text}>BAGOLA</span>;
-          </h1>
+          <div>
+            <Image
+              className={styles.logo_large}
+              src="/BAGOLA_logo.png"
+              width={1000}
+              height={283}
+              alt="BAGOLA"
+            />
+          </div>
           <div className="content">
             <Link href="/google">
               <Button label="logIn" />
