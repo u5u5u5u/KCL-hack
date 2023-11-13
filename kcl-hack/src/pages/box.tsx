@@ -1,7 +1,7 @@
 "use client";
-import React, { useState } from "react";
 import Link from "next/link";
 import Header from "../components/header";
+import Footer from "../components/footer";
 
 export default function Home() {
   return (
@@ -37,6 +37,7 @@ export default function Home() {
           <button className="text-3xl text-blue-500">戻りません</button>
         </div>
       </Link>
+      <Footer />
     </main>
   );
 }

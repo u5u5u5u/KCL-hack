@@ -1,7 +1,7 @@
 import { useRef, useState, useCallback } from "react";
 import Webcam from "react-webcam";
-import Link from "next/link";
 import Header from "../components/header";
+import Footer from "../components/footer";
 
 const videoConstraints = {
   width: 720,
@@ -60,6 +60,7 @@ export const Camera = () => {
           </div>
         </>
       )}
+      <Footer />
     </main>
   );
 };

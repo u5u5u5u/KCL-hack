@@ -6,6 +6,7 @@ import { getAuth } from "firebase/auth";
 import "firebase/compat/database";
 import Header from "../../components/header";
 import styles from "../../components/search.module.css";
+import Footer from "../../components/footer";
 
 export default function Home() {
   //status
@@ -309,6 +310,7 @@ export default function Home() {
           <li>すばやさ {Speed}</li>
         </ul>
       </div>
+      <Footer />
     </main>
   );
 }

@@ -27,6 +27,7 @@ import { firebaseConfig } from "@/lib/firebase/firebase";
 
 import Header from "../components/header";
 import style from "../components/google.module.css";
+import Footer from "../components/footer";
 
 const useAuth = (auth: Auth) => {
   const [state, setState] = useState<
@@ -129,6 +130,7 @@ const Page = () => {
           </button>
         </div>
       </div>
+      <Footer />
     </main>
   );
 };

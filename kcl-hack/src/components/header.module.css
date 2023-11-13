@@ -5,6 +5,10 @@
   height: 10%;
 }
 
+.logo_small {
+  margin-top: 1rem;
+}
+
 .arrow {
   display: inline-block;
   vertical-align: middle;
@@ -33,6 +37,8 @@
 }
 
 .title {
+  position: absolute;
+  right: 45%;
   font-size: 3rem;
   font-family: century;
   text-align: center;
