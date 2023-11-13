@@ -3,7 +3,6 @@ import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { getDatabase, ref, child, get } from "firebase/database";
 import { getAuth } from "firebase/auth";
-import { dark } from "@mui/material/styles/createPalette";
 import { fail } from "assert";
 
 interface Character {
