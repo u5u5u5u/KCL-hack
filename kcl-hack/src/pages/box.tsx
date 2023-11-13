@@ -1,11 +1,11 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
-import { getDatabase, ref, child, get } from "firebase/database";
+import { getDatabase, ref, child, get, set } from "firebase/database";
 import { getAuth } from "firebase/auth";
 import { fail } from "assert";
 
-interface Character {
+interface Status {
   Attack: number;
   CharaImage: string;
   Defence: number;
@@ -14,8 +14,8 @@ interface Character {
 }
 
 export default function Home() {
-  const [characters, setCharacters] = useState<Character[]>([]);
-  const [Jan, setJan] = useState<number>();
+  const [selectedId, setSelectedId] = useState(null);
+  const [characters, setCharacters] = useState({});
   const dbRef = ref(getDatabase());
 
   async function getUid() {
@@ -29,11 +29,11 @@ export default function Home() {
   useEffect(() => {
     const fetchCharacters = async () => {
       const UUID = await getUid();
-      get(child(dbRef, `User/${UUID}`))
+      get(child(dbRef, `User/${UUID}/`))
         .then((snapshot) => {
           if (snapshot.exists()) {
             const data = snapshot.val();
-            setCharacters(Object.values(data));
+            setCharacters(data.Charadata);
           } else {
             console.log("No data available");
             const fail = 1;
@@ -47,9 +47,22 @@ export default function Home() {
     fetchCharacters();
   }, [fail]);
 
-  const selectCharacters = (selectJan: number) => {
-    setJan(selectJan);
-    console.log(selectJan);
+  const handleClick = (id) => {
+    setSelectedId(id);
+    console.log(`Selected ID: ${id}`);
+  };
+
+  const sendSelectedId = async () => {
+    try {
+      const UUID = await getUid();
+      const db = getDatabase();
+      await set(ref(db, `User/${UUID}/SelectChara`), {
+        SelectId: selectedId,
+      });
+      console.log("send");
+    } catch (error) {
+      console.error("エラーです:", error);
+    }
   };
 
   return (
@@ -58,16 +71,21 @@ export default function Home() {
         <h1 className="text-9xl text-red-600 text-center">キャラ一覧だを</h1>
       </div>
       <div className="px-20 flex-wrap flex">
-        {characters.map((character, index) => (
-          <div key={index}>
-            <img src={character.CharaImage} alt="Character" />
-            <p>Attack: {character.Attack}</p>
-            <p>Defence: {character.Defence}</p>
-            <p>HP: {character.HP}</p>
-            <p>Speed: {character.Speed}</p>
-            <button onClick={() => selectCharacters(index)}>選択する</button>
-          </div>
-        ))}
+        <div>
+          {Object.entries(characters).map(([id, chara]) => (
+            <div key={id}>
+              <h2>{chara.Status.Name}</h2>
+              <img src={chara.Status.CharaImage} alt={chara.Status.Name} />
+              <p>Attack: {chara.Status.Attack}</p>
+              <p>Defence: {chara.Status.Defence}</p>
+              <p>HP: {chara.Status.HP}</p>
+              <p>Speed: {chara.Status.Speed}</p>
+              <button onClick={() => handleClick(id)}>Select</button>
+            </div>
+          ))}
+          {selectedId && <p>Selected ID: {selectedId}</p>}
+        </div>
+        <button onClick={sendSelectedId}>決定</button>
       </div>
       <Link href="/battle">
         <div className="text-center">
