@@ -25,6 +25,7 @@ import { firebaseConfig } from "@/lib/firebase/firebase";
 // プロジェクトの概要 -> アプリの追加 -> ウェブ -> アプリの作成
 // firebaseConfig の内容を持ってくる
 
+import Header from "../components/header";
 import style from "../components/google.module.css";
 
 const useAuth = (auth: Auth) => {
@@ -107,8 +108,10 @@ const Page = () => {
   }, [credential]);
   const handleLogin = () => dispatch({ type: "login" });
   const handleLogout = () => dispatch({ type: "logout" });
+
   return (
     <main>
+      <Header children="LOGIN" />
       <div className="container">
         <div className="wrapper">
           <button className={style.button} onClick={handleLogin}>

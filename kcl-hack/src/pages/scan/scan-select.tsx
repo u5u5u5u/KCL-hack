@@ -8,7 +8,6 @@ export default function Home() {
       <Header children="SCAN" />
       <div className="container">
         <div className="wrapper">
-          <h2 className="sub-title">SCAN</h2>
           <ul className="">
             <li className="content">
               <Link href="/camera">

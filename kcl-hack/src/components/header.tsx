@@ -1,4 +1,5 @@
 import React, { ReactNode } from "react";
+import Link from "next/link";
 import router from "next/router";
 import styles from "./header.module.css";
 
@@ -8,9 +9,17 @@ interface HeaderProps {
 
 const Header = ({ children }: HeaderProps) => {
   return (
-    <div>
-      <span className={styles.arrow} onClick={() => router.back()}></span>
-    </div>
+    <header className={styles.container}>
+      <div>
+        <span className={styles.arrow} onClick={() => router.back()}></span>
+      </div>
+      <div className={styles.title}>{children}</div>
+      <div>
+        <Link href="/home">
+          <span className={styles.home}></span>
+        </Link>
+      </div>
+    </header>
   );
 };
 
