@@ -1,6 +1,5 @@
 "use client";
 import { useState, ChangeEvent } from "react";
-import Link from "next/link";
 import { YAHOO_API_KEY } from "../../constant/env";
 import { getDatabase, ref, set } from "firebase/database";
 import { getAuth } from "firebase/auth";
@@ -232,7 +231,7 @@ export default function Home() {
       setNam(data.hits[0].name);
       setPri(data.hits[0].price);
       setIma(data.hits[0].image.small);
-      jan_get(number);
+      jan_get(Number(number));
     } catch (error) {
       console.error("エラーです:", error);
     }
@@ -271,7 +270,7 @@ export default function Home() {
     setNam("");
     setNum("");
     setIma("");
-    setPri(NaN);
+    setPri("");
   };
 
   return (
