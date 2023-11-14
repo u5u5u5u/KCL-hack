@@ -49,7 +49,7 @@ export default function Home() {
     fetchCharacters();
   }, [fail]);
 
-  const handleClick = (id) => {
+  const handleClick = (id: any) => {
     setSelectedId(id);
     console.log(`Selected ID: ${id}`);
   };
@@ -70,9 +70,9 @@ export default function Home() {
   return (
     <main>
       <Header children="キャラ一覧だを" />
-      <div className="px-20 flex-wrap flex">
+      <div>
         <div>
-          {Object.entries(characters).map(([id, chara]) => (
+          {Object.entries(characters).map(([id, chara]: any) => (
             <div key={id}>
               <h2>{chara.Status.Name}</h2>
               <img src={chara.Status.CharaImage} alt={chara.Status.Name} />
@@ -88,8 +88,8 @@ export default function Home() {
         <button onClick={sendSelectedId}>決定</button>
       </div>
       <Link href="/battle">
-        <div className="text-center">
-          <button className="text-3xl text-blue-500">戻りません</button>
+        <div>
+          <button>戻りません</button>
         </div>
       </Link>
       <Footer />
