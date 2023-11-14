@@ -1,10 +1,12 @@
 "use client";
 import { useState, ChangeEvent } from "react";
-import Link from "next/link";
 import { YAHOO_API_KEY } from "../../constant/env";
 import { getDatabase, ref, set } from "firebase/database";
 import { getAuth } from "firebase/auth";
 import "firebase/compat/database";
+import Header from "../../components/header";
+import styles from "../../components/search.module.css";
+import Footer from "../../components/footer";
 
 export default function Home() {
   //status
@@ -230,7 +232,7 @@ export default function Home() {
       setNam(data.hits[0].name);
       setPri(data.hits[0].price);
       setIma(data.hits[0].image.small);
-      jan_get(number);
+      jan_get(Number(number));
     } catch (error) {
       console.error("エラーです:", error);
     }
@@ -270,51 +272,46 @@ export default function Home() {
     setNam("");
     setNum("");
     setIma("");
-    setPri(NaN);
+    setPri("");
   };
 
   return (
     <main>
-      <div className="h-screen flex justify-center items-center">
-        <div className="flex flex-col">
-          <h2 className="text-6xl text-center mb-10">
-            <span className="font-mono">JANコード</span>を入力
-          </h2>
-          <div className="flex justify-center mb-6">
+      <Header children="入力" />
+      <div className="container">
+        <div className="wrapper">
+          <div>
             <input
-              className="text-6xl text-red-500 mr-10"
-              type="text"
               value={number}
               onChange={changeNum}
+              placeholder="JANコード"
             />
-            <button className="text-5xl" onClick={sendNum}>
-              送信
+            <button className="button" onClick={sendNum}>
+              検索
             </button>
           </div>
           <div>
             <img src={image} />
           </div>
-          <p className="text-4xl my-5">商品名 : {name}</p>
-          <p className="text-4xl">価格 : {price} 円</p>
-          <div className="text-6xl text-center my-10">
-            <button onClick={sendStatus}>登録</button>
-          </div>
-          <div className="text-3xl text-center my-5">
-            <Link href="/home">
-              <button>戻る</button>
-            </Link>
-          </div>
+          <ul>
+            <li>商品名 : {name}</li>
+            <li>価格 : {price}円</li>
+          </ul>
+          <button className={styles.button} onClick={sendStatus}>
+            登録
+          </button>
         </div>
       </div>
-
       <div>
-        <h2>コード {Jan}</h2>
-
-        <h2>HP {Hp}</h2>
-        <h2>こうげき {Attack}</h2>
-        <h2>ぼうぎょ {Defence}</h2>
-        <h2>すばやさ {Speed}</h2>
+        <ul>
+          <li>コード {Jan}</li>
+          <li>HP {Hp}</li>
+          <li>こうげき {Attack}</li>
+          <li>ぼうぎょ {Defence}</li>
+          <li>すばやさ {Speed}</li>
+        </ul>
       </div>
+      <Footer />
     </main>
   );
 }

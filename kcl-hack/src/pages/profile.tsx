@@ -1,6 +1,8 @@
 "use client";
 import React, { useState } from "react";
 import Link from "next/link";
+import Header from "../components/header";
+import Footer from "../components/footer";
 
 export default function Home() {
   const [userName, setUsername] = useState<string>("");
@@ -11,56 +13,46 @@ export default function Home() {
   };
   return (
     <main>
-      <div className="h-screen flex justify-center items-center">
-        <div className="flex flex-col">
-          <div className="text-center text-6xl my-10">
+      <Header children="PROFILE" />
+      <div className="container">
+        <div className="wrapper">
+          <div>
             <Link href="/hoge">
               <button>設定</button>
             </Link>
           </div>
           <form action="#" method="post">
-            <div className="text-center text-3xl my-3">
+            <div>
               <h2>ユーザーネーム</h2>
             </div>
             <div className="text-center">
               <label>
                 <input
-                  className="text-4xl text-blue-500 mx-5"
                   type="text"
                   value={userName}
                   onChange={changeUserName}
                 ></input>
-                <input
-                  className="text-3xl border rounded-2xl p-2"
-                  type="submit"
-                  value="決定"
-                ></input>
+                <input type="submit" value="決定"></input>
               </label>
             </div>
-            <div className="text-center text-3xl my-3">
+            <div>
               <h2>一言</h2>
             </div>
-            <div className="text-center">
+            <div>
               <label>
-                <textarea
-                  className="text-4xl text-blue-500 mx-5"
-                  placeholder=" よろしくお願いします"
-                ></textarea>
-                <input
-                  className="text-3xl border rounded-2xl p-2"
-                  type="submit"
-                  value="決定"
-                ></input>
+                <textarea placeholder="よろしくお願いします"></textarea>
+                <input type="submit" value="決定"></input>
               </label>
             </div>
           </form>
-          <div className="text-center text-3xl my-5">
+          <div>
             <Link href="/home">
               <button>戻る</button>
             </Link>
           </div>
         </div>
       </div>
+      <Footer />
     </main>
   );
 }

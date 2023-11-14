@@ -4,6 +4,9 @@ import Link from "next/link";
 import { getDatabase, ref, child, get, set } from "firebase/database";
 import { getAuth } from "firebase/auth";
 import { fail } from "assert";
+import Header from "../components/header";
+import Footer from "../components/footer";
+import styles from "../components/box.module.css";
 
 interface Status {
   Attack: number;
@@ -47,7 +50,7 @@ export default function Home() {
     fetchCharacters();
   }, [fail]);
 
-  const handleClick = (id) => {
+  const handleClick = (id: any) => {
     setSelectedId(id);
     console.log(`Selected ID: ${id}`);
   };
@@ -67,19 +70,32 @@ export default function Home() {
 
   return (
     <main>
-      <div className="flex flex-col pb-52">
-        <h1 className="text-9xl text-red-600 text-center">キャラ一覧だを</h1>
-      </div>
-      <div className="px-20 flex-wrap flex">
-        <div>
-          {Object.entries(characters).map(([id, chara]) => (
+      <Header children="キャラ一覧だを" />
+      <div>
+        {/* CSS適用されてない */}
+        <div className={styles.wrapper}>
+          {Object.entries(characters).map(([id, chara]: any) => (
             <div key={id}>
-              <h2>{chara.Status.Name}</h2>
+              <p>{chara.Status.Name}</p>
               <img src={chara.Status.CharaImage} alt={chara.Status.Name} />
-              <p>Attack: {chara.Status.Attack}</p>
-              <p>Defence: {chara.Status.Defence}</p>
-              <p>HP: {chara.Status.HP}</p>
-              <p>Speed: {chara.Status.Speed}</p>
+              <table>
+                <tr>
+                  <td>Attack:</td>
+                  <td>{chara.Status.Attack}</td>
+                </tr>
+                <tr>
+                  <td>Defence:</td>
+                  <td>{chara.Status.Defence}</td>
+                </tr>
+                <tr>
+                  <td>HP:</td>
+                  <td>{chara.Status.HP}</td>
+                </tr>
+                <tr>
+                  <td>Speed:</td>
+                  <td>{chara.Status.Speed}</td>
+                </tr>
+              </table>
               <button onClick={() => handleClick(id)}>Select</button>
             </div>
           ))}
@@ -88,10 +104,11 @@ export default function Home() {
         <button onClick={sendSelectedId}>決定</button>
       </div>
       <Link href="/battle">
-        <div className="text-center">
-          <button className="text-3xl text-blue-500">戻りません</button>
+        <div>
+          <button>戻りません</button>
         </div>
       </Link>
+      <Footer />
     </main>
   );
 }
