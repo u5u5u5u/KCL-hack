@@ -9,15 +9,6 @@ import {
   signOut,
   Auth,
 } from "@firebase/auth";
-import {
-  FIREBASE_APP_ID,
-  FIREBASE_API_KEY,
-  FIREBASE_AUTH_DOMAIN,
-  FIREBASE_MESSAGING_SENDER_ID,
-  FIREBASE_PROJECT_ID,
-  FIREBASE_STORAGE_BUCKET,
-  FIREBASE_MEASUREMENT_ID,
-} from "@/constant/env";
 import { firebaseConfig } from "@/lib/firebase/firebase";
 //https://console.firebase.google.com/
 // プロジェクトを追加
