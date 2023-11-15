@@ -1,8 +1,9 @@
-/* スクロール無効化
 body {
+  /* スクロール無効化
   overflow: hidden;
+  */
+  margin: 0;
 }
-*/
 main {
   height: 100vh;
 }
