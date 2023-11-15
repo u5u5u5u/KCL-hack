@@ -11,7 +11,7 @@ export default function Home() {
       <div className="container">
         <ul className="wrapper">
           <li className="content">
-            <Link href="/battle_scene">
+            <Link href="/matching">
               <Button label="Matching" />
             </Link>
           </li>
