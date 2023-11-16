@@ -59,4 +59,23 @@
 
 .button {
   height: 15%;
+  display: inline-block;
+  padding: 0.3rem 0.75rem;
+  margin-left: 1rem;
+  font-size: 1.8rem;
+  font-weight: bold;
+  font-family: "Lucida Console", century;
+  text-align: center;
+  text-decoration: none;
+  color: #4689ff;
+  background-color: #ffffff;
+  border: none;
+  border-radius: 0.2rem;
+  cursor: pointer;
+  transition: background-color 0.5s ease-in-out;
+}
+
+.button:hover {
+  color: #ffffff;
+  background-color: #4689ff;
 }

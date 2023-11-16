@@ -100,9 +100,11 @@ export default function Home() {
                 <td className={styles.data2}>{chara.Status.Speed}</td>
               </tr>
             </table>
-            <button className={styles.button} onClick={() => handleClick(id)}>
-              Select
-            </button>
+            <div>
+              <button className={styles.button} onClick={() => handleClick(id)}>
+                Select
+              </button>
+            </div>
           </div>
         ))}
         {selectedId && <p>Selected ID: {selectedId}</p>}
