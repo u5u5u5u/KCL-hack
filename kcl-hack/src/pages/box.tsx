@@ -77,11 +77,13 @@ export default function Home() {
             <div className={styles.name}>
               <h1>{chara.Status.Name}</h1>
             </div>
-            <img
-              className={styles.image}
-              src={chara.Status.CharaImage}
-              alt={chara.Status.Name}
-            />
+            <div>
+              <img
+                className={styles.image}
+                src={chara.Status.CharaImage}
+                alt={chara.Status.Name}
+              />
+            </div>
             <table className={styles.status}>
               <tr>
                 <td className={styles.data1}>Attack:</td>
