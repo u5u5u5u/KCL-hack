@@ -77,7 +77,7 @@ export default function Home() {
             <div className={styles.name}>
               <h1>{chara.Status.Name}</h1>
             </div>
-            <div>
+            <div className={styles.image_box}>
               <img
                 className={styles.image}
                 src={chara.Status.CharaImage}
@@ -102,7 +102,7 @@ export default function Home() {
                 <td className={styles.data2}>{chara.Status.Speed}</td>
               </tr>
             </table>
-            <div>
+            <div className={styles.button_box}>
               <button className={styles.button} onClick={() => handleClick(id)}>
                 Select
               </button>
