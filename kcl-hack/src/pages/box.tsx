@@ -71,43 +71,45 @@ export default function Home() {
   return (
     <main>
       <Header children="キャラ一覧だを" />
-      <div>
-        {/* CSS適用されてない */}
-        <div className={styles.wrapper}>
-          {Object.entries(characters).map(([id, chara]: any) => (
-            <div key={id}>
-              <p>{chara.Status.Name}</p>
-              <img src={chara.Status.CharaImage} alt={chara.Status.Name} />
-              <table>
-                <tr>
-                  <td>Attack:</td>
-                  <td>{chara.Status.Attack}</td>
-                </tr>
-                <tr>
-                  <td>Defence:</td>
-                  <td>{chara.Status.Defence}</td>
-                </tr>
-                <tr>
-                  <td>HP:</td>
-                  <td>{chara.Status.HP}</td>
-                </tr>
-                <tr>
-                  <td>Speed:</td>
-                  <td>{chara.Status.Speed}</td>
-                </tr>
-              </table>
-              <button onClick={() => handleClick(id)}>Select</button>
+      <div className={styles.wrapper}>
+        {Object.entries(characters).map(([id, chara]: any) => (
+          <div className={styles.content} key={id}>
+            <div className={styles.name}>
+              <h1>{chara.Status.Name}</h1>
             </div>
-          ))}
-          {selectedId && <p>Selected ID: {selectedId}</p>}
-        </div>
+            <img
+              className={styles.image}
+              src={chara.Status.CharaImage}
+              alt={chara.Status.Name}
+            />
+            <table className={styles.status}>
+              <tr>
+                <td className={styles.data1}>Attack:</td>
+                <td className={styles.data2}>{chara.Status.Attack}</td>
+              </tr>
+              <tr>
+                <td className={styles.data1}>Defence:</td>
+                <td className={styles.data2}>{chara.Status.Defence}</td>
+              </tr>
+              <tr>
+                <td className={styles.data1}>HP:</td>
+                <td className={styles.data2}>{chara.Status.HP}</td>
+              </tr>
+              <tr>
+                <td className={styles.data1}>Speed:</td>
+                <td className={styles.data2}>{chara.Status.Speed}</td>
+              </tr>
+            </table>
+            <button className={styles.button} onClick={() => handleClick(id)}>
+              Select
+            </button>
+          </div>
+        ))}
+        {selectedId && <p>Selected ID: {selectedId}</p>}
+      </div>
+      <div>
         <button onClick={sendSelectedId}>決定</button>
       </div>
-      <Link href="/battle">
-        <div>
-          <button>戻りません</button>
-        </div>
-      </Link>
       <Footer />
     </main>
   );
