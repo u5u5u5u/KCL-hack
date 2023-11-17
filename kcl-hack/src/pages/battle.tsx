@@ -22,8 +22,8 @@ export default function Home() {
             </Link>
           </li>
           <li className="content">
-            <Link href="/hoge">
-              <button>設定</button>
+            <Link href="/battle_setting">
+              <Button label="Setting" />
             </Link>
           </li>
         </ul>
