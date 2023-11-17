@@ -109,10 +109,14 @@ export default function Home() {
             </div>
           </div>
         ))}
-        {selectedId && <p>Selected ID: {selectedId}</p>}
       </div>
-      <div>
-        <button onClick={sendSelectedId}>決定</button>
+      {selectedId && (
+        <div className={styles.select_id}>Selected ID: {selectedId}</div>
+      )}
+      <div className={styles.button_box}>
+        <button className="button" onClick={sendSelectedId}>
+          決定
+        </button>
       </div>
       <Footer />
     </main>
