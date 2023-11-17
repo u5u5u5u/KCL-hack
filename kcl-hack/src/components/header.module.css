@@ -7,6 +7,7 @@
 
 .logo_small {
   margin-top: 1rem;
+  margin-left: 1rem;
 }
 
 .arrow {
@@ -18,7 +19,6 @@
   width: 2.5em;
   height: 0.25em;
   background: currentColor;
-  margin-left: 1rem;
 }
 
 .arrow::before {
