@@ -10,6 +10,7 @@ import {
   Auth,
 } from "@firebase/auth";
 import { firebaseConfig } from "@/lib/firebase/firebase";
+import {useNavigate} from "react-router-dom";
 //https://console.firebase.google.com/
 // プロジェクトを追加
 // Authetication -> Sign-in method -> Googleを有効にする
@@ -82,6 +83,7 @@ const auth = getAuth(initializeApp(firebaseConfig));
 const provider = new GoogleAuthProvider();
 
 const Page = () => {
+  const navigate = useNavigate();
   const { state, dispatch, credential, error } = useAuth(auth);
   useEffect(() => {
     const token = sessionStorage.getItem("token");
@@ -98,7 +100,10 @@ const Page = () => {
       sessionStorage.removeItem("token");
     }
   }, [credential]);
-  const handleLogin = () => dispatch({ type: "login" });
+  const handleLogin = () =>{ 
+    dispatch({ type: "login" });
+    navigate("/Home");
+};
   const handleLogout = () => dispatch({ type: "logout" });
 
   return (
