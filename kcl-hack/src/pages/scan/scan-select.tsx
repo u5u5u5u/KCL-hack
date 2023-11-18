@@ -1,6 +1,8 @@
 "use client";
 import Link from "next/link";
 import Header from "../../components/header";
+import Button from "../../components/button";
+import Footer from "../../components/footer";
 
 export default function Home() {
   return (
@@ -8,26 +10,21 @@ export default function Home() {
       <Header children="SCAN" />
       <div className="container">
         <div className="wrapper">
-          <h2 className="sub-title">SCAN</h2>
           <ul className="">
             <li className="content">
               <Link href="/camera">
-                <button className="advance-button">読み取り</button>
+                <Button label="読み取り" />
               </Link>
             </li>
             <li className="content">
               <Link href="/scan/search">
-                <button className="advance-button">入力</button>
+                <Button label="入力" />
               </Link>
             </li>
           </ul>
-          <div className="text-3xl text-center my-10">
-            <Link href="/home">
-              <button>戻る</button>
-            </Link>
-          </div>
         </div>
       </div>
+      <Footer />
     </main>
   );
 }

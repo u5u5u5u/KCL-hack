@@ -1,29 +1,27 @@
 "use client";
 import Link from "next/link";
+import Header from "../components/header";
+import Button from "../components/button";
 
 export default function Home() {
   return (
     <main>
+      <Header children="HOME" />
       <div className="container">
         <ul className="wrapper">
           <li className="content">
             <Link href="/profile">
-              <button className="advance-button">プロフィール</button>
+              <Button label="PROFILE" />
             </Link>
           </li>
           <li className="content">
             <Link href="/scan/scan-select">
-              <button className="advance-button">スキャン</button>
-            </Link>
-          </li>
-          <li className="content">
-            <Link href="/hoge">
-              <button className="advance-button">設定</button>
+              <Button label="SCAN" />
             </Link>
           </li>
           <li className="content">
             <Link href="/battle">
-              <button className="advance-button">対戦</button>
+              <Button label="BATTLE" />
             </Link>
           </li>
         </ul>

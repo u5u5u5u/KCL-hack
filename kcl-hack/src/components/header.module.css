@@ -1,25 +1,103 @@
+.container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 10%;
+}
+
+.logo_small {
+  margin-top: 1rem;
+  margin-left: 1rem;
+}
+
 .arrow {
   display: inline-block;
   vertical-align: middle;
   color: #333;
   line-height: 1;
   position: relative;
-  width: 1em;
-  height: 0.1em;
+  width: 2.5em;
+  height: 0.25em;
   background: currentColor;
 }
 
 .arrow::before {
   content: "";
-  width: 0.65em;
-  height: 0.65em;
-  border: 0.1em solid currentColor;
+  width: 1.5em;
+  height: 1.5em;
+  border: 0.25em solid currentColor;
   border-right: 0;
   border-bottom: 0;
   transform: rotate(-45deg);
   transform-origin: top left;
   position: absolute;
   top: 50%;
-  left: -0.05em;
+  left: -0.15em;
   box-sizing: border-box;
+}
+
+.title {
+  right: 45%;
+  font-size: 3rem;
+  font-family: century;
+  text-align: center;
+  margin-top: 1rem;
+}
+
+.home {
+  background: linear-gradient(to left, currentColor 5px, transparent 0)
+      no-repeat 0 bottom/4px 2px,
+    linear-gradient(to left, currentColor 5px, transparent 0) no-repeat right
+      bottom/4px 2px;
+  box-sizing: border-box;
+  position: relative;
+  display: block;
+  transform: scale(var(--ggs, 1));
+  width: 40px;
+  height: 25px;
+  border: 0.3rem solid;
+  border-top: 0;
+  border-bottom: 0;
+  border-top-right-radius: 3px;
+  border-top-left-radius: 3px;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+  margin: 2rem 2rem -2px auto;
+  color: #000;
+}
+
+.home::after,
+.home::before {
+  content: "";
+  display: block;
+  box-sizing: border-box;
+  position: absolute;
+}
+
+.home::before {
+  border-top: 0.3rem solid;
+  border-left: 0.3rem solid;
+  border-top-left-radius: 4px;
+  transform: rotate(45deg);
+  top: -13px;
+  border-radius: 3px;
+  width: 28px;
+  height: 28px;
+  left: 1px;
+}
+
+.home::after {
+  width: 24px;
+  height: 22px;
+  border: 0.3rem solid;
+  border-radius: 100px;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+  border-bottom: 0;
+  left: 4px;
+  bottom: 0;
+}
+
+.ml_175 {
+  margin-left: 175px;
 }

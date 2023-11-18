@@ -1,9 +1,11 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import Link from "next/link";
 import { getDatabase, ref, child, get, set } from "firebase/database";
 import { getAuth } from "firebase/auth";
 import { fail } from "assert";
+import Header from "../components/header";
+import Footer from "../components/footer";
+import styles from "../components/box.module.css";
 
 interface Status {
   Attack: number;
@@ -46,7 +48,7 @@ export default function Home() {
     fetchCharacters();
   }, [fail]);
 
-  const handleClick = (id) => {
+  const handleClick = (id: any) => {
     setSelectedId(id);
     console.log(`Selected ID: ${id}`);
   };
@@ -66,31 +68,57 @@ export default function Home() {
 
   return (
     <main>
-      <div className="flex flex-col pb-52">
-        <h1 className="text-9xl text-red-600 text-center">キャラ一覧だを</h1>
-      </div>
-      <div className="px-20 flex-wrap flex">
-        <div>
-          {Object.entries(characters).map(([id, chara]) => (
-            <div key={id}>
-              <h2>{chara.Status.Name}</h2>
-              <img src={chara.Status.CharaImage} alt={chara.Status.Name} />
-              <p>Attack: {chara.Status.Attack}</p>
-              <p>Defence: {chara.Status.Defence}</p>
-              <p>HP: {chara.Status.HP}</p>
-              <p>Speed: {chara.Status.Speed}</p>
-              <button onClick={() => handleClick(id)}>Select</button>
+      <Header children="キャラ一覧だを" />
+      <div className={styles.wrapper}>
+        {Object.entries(characters).map(([id, chara]: any) => (
+          <div className={styles.content} key={id}>
+            <div className={styles.name}>
+              <h1>{chara.Status.Name}</h1>
             </div>
-          ))}
-          {selectedId && <p>Selected ID: {selectedId}</p>}
-        </div>
-        <button onClick={sendSelectedId}>決定</button>
+            <div className={styles.image_box}>
+              <img
+                className={styles.image}
+                src={chara.Status.CharaImage}
+                alt={chara.Status.Name}
+              />
+            </div>
+            <table className={styles.status}>
+              <tr>
+                <td className={styles.data1}>Attack:</td>
+                <td className={styles.data2}>{chara.Status.Attack}</td>
+              </tr>
+              <tr>
+                <td className={styles.data1}>Defence:</td>
+                <td className={styles.data2}>{chara.Status.Defence}</td>
+              </tr>
+              <tr>
+                <td className={styles.data1}>HP:</td>
+                <td className={styles.data2}>{chara.Status.HP}</td>
+              </tr>
+              <tr>
+                <td className={styles.data1}>Speed:</td>
+                <td className={styles.data2}>{chara.Status.Speed}</td>
+              </tr>
+            </table>
+            <div className={styles.button_box}>
+              <button className={styles.button} onClick={() => handleClick(id)}>
+                Select
+              </button>
+            </div>
+          </div>
+        ))}
       </div>
-      <Link href="/battle">
-        <div className="text-center">
-          <button className="text-3xl text-blue-500">戻りません</button>
+      {selectedId && (
+        <div>
+          <div className={styles.select_id}>Selected ID: {selectedId}</div>
+          <div className={styles.button_box}>
+            <button className="button" onClick={sendSelectedId}>
+              決定
+            </button>
+          </div>
         </div>
-      </Link>
+      )}
+      <Footer />
     </main>
   );
 }

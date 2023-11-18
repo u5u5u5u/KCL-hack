@@ -1,0 +1,51 @@
+.container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 10%;
+}
+
+.back {
+  position: fixed;
+  bottom: 0;
+  left: 1rem;
+}
+
+.back:hover {
+  cursor: pointer;
+}
+
+.arrow {
+  display: inline-block;
+  vertical-align: middle;
+  color: #333;
+  line-height: 1;
+  position: relative;
+  width: 2.5em;
+  height: 0.25em;
+  background: currentColor;
+  margin: 3rem 1rem;
+}
+
+.arrow::before {
+  content: "";
+  width: 1.5em;
+  height: 1.5em;
+  border: 0.25em solid currentColor;
+  border-right: 0;
+  border-bottom: 0;
+  transform: rotate(-45deg);
+  transform-origin: top left;
+  position: absolute;
+  top: 50%;
+  left: -0.15em;
+  box-sizing: border-box;
+}
+
+.title {
+  right: 45%;
+  font-size: 3rem;
+  font-family: century;
+  text-align: center;
+  margin-top: 1rem;
+}

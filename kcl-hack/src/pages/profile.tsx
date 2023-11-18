@@ -6,6 +6,8 @@ import { getAuth } from "firebase/auth";
 import { useEffect } from "react";
 import { fail } from "assert";
 import "firebase/compat/database";
+import Header from "../components/header";
+import Footer from "../components/footer";
 
 export default function Home() {
   const [userName, setUsername] = useState<string>("");
@@ -67,31 +69,31 @@ export default function Home() {
 
   return (
     <main>
-      <div className="h-screen flex justify-center items-center">
-        <div className="flex flex-col">
-          <div className="text-center text-6xl my-10">
+      <Header children="PROFILE" />
+      <div className="container">
+        <div className="wrapper">
+          <div>
             <Link href="/hoge">
               <button>設定</button>
             </Link>
           </div>
           <form action="#" method="post">
-            <div className="text-center text-3xl my-3">
+            <div>
               <h2>ユーザーネーム</h2>
             </div>
             <div className="text-center">
               <label>
                 <input
-                  className="text-4xl text-blue-500 mx-5"
                   type="text"
                   value={userName}
                   onChange={changeUserName}
                 ></input>
               </label>
             </div>
-            <div className="text-center text-3xl my-3">
+            <div>
               <h2>一言</h2>
             </div>
-            <div className="text-center">
+            <div>
               <label>
                 <input
                   className="text-4xl text-blue-500 mx-5"
@@ -109,13 +111,14 @@ export default function Home() {
               </label>
             </div>
           </form>
-          <div className="text-center text-3xl my-5">
+          <div>
             <Link href="/home">
               <button>戻る</button>
             </Link>
           </div>
         </div>
       </div>
+      <Footer />
     </main>
   );
 }

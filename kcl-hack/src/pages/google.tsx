@@ -9,21 +9,16 @@ import {
   signOut,
   Auth,
 } from "@firebase/auth";
-import {
-  FIREBASE_APP_ID,
-  FIREBASE_API_KEY,
-  FIREBASE_AUTH_DOMAIN,
-  FIREBASE_MESSAGING_SENDER_ID,
-  FIREBASE_PROJECT_ID,
-  FIREBASE_STORAGE_BUCKET,
-  FIREBASE_MEASUREMENT_ID,
-} from "@/constant/env";
 import { firebaseConfig } from "@/lib/firebase/firebase";
 //https://console.firebase.google.com/
 // プロジェクトを追加
 // Authetication -> Sign-in method -> Googleを有効にする
 // プロジェクトの概要 -> アプリの追加 -> ウェブ -> アプリの作成
 // firebaseConfig の内容を持ってくる
+
+import Header from "../components/header";
+import style from "../components/google.module.css";
+import Footer from "../components/footer";
 
 const useAuth = (auth: Auth) => {
   const [state, setState] = useState<
@@ -105,22 +100,29 @@ const Page = () => {
   }, [credential]);
   const handleLogin = () => dispatch({ type: "login" });
   const handleLogout = () => dispatch({ type: "logout" });
+
   return (
-    <div className="h-screen flex justify-center items-center">
-      <div className="flex flex-col">
-        <button className="text-6xl font-mono my-10" onClick={handleLogin}>
-          logIn
-        </button>
-        <div className="text-3xl my-3">
-          User: {credential?.user.displayName}
+    <main>
+      <Header children="LOGIN" />
+      <div className="container">
+        <div className="wrapper">
+          <button className={style.button} onClick={handleLogin}>
+            logIn
+          </button>
+          <ul>
+            <li className={style.text}>
+              UserName: {credential?.user.displayName}
+            </li>
+            <li className={style.text}>State: {state}</li>
+            <li className={style.text}>Error: {String(error)}</li>
+          </ul>
+          <button className={style.button} onClick={handleLogout}>
+            logOut
+          </button>
         </div>
-        <div className="text-3xl text-left my-3">State: {state}</div>
-        <div className="text-3xl my-3">Error: {String(error)}</div>
-        <button className="text-4xl font-mono my-10" onClick={handleLogout}>
-          logOut
-        </button>
       </div>
-    </div>
+      <Footer />
+    </main>
   );
 };
 
