@@ -45,7 +45,6 @@ export default function Home() {
           console.error(error);
         });
     };
-
     fetchCharacters();
   }, [fail]);
 
