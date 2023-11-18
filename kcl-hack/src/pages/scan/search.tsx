@@ -248,8 +248,6 @@ export default function Home() {
     try {
       const UUID = await getUid();
       const db = getDatabase();
-      //var database = firebase.database();
-      //var statusRef = database.ref(`User/${UUID}/${Jan}/status`);
       await set(ref(db, `User/${UUID}/Charadata/${Jan}/Status`), {
         Name: name,
         HP: Hp,
