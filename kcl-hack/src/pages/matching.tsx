@@ -1,5 +1,5 @@
 "use client";
-
+import {useRouter} from 'next/router'
 import React, { useState} from "react";
 import { getDatabase, ref, child, get, set, update } from "firebase/database";
 import { getAuth } from "firebase/auth";
@@ -11,6 +11,8 @@ interface Member {
   Member1: string;
   Member2: string;
 }
+
+
 
 
 export default function Home() {
@@ -127,11 +129,19 @@ export default function Home() {
       });
     }
     console.log("send");
+    handleClick();
   } catch (error) {
     console.error("エラーです:", error);
   }
   };
   }
+
+  
+  const router = useRouter();
+  const handleClick = () => {
+      router.push(`/${roomNum}`)
+  }
+
 
   return (
     <main>
@@ -161,9 +171,7 @@ export default function Home() {
             Member2:{member2}
           </div>
           <div style={{ visibility: visible ? "visible" : "hidden" }}>
-            <Link href="/buttle_sence">
               <button onClick={join}>PLAY</button>
-            </Link>
           </div>
         </div>
       </div>
