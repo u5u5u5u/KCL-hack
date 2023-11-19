@@ -2,7 +2,6 @@
 import React, { useState, useEffect } from "react";
 import { getDatabase, ref, child, get, set } from "firebase/database";
 import { getAuth } from "firebase/auth";
-import { fail } from "assert";
 import Header from "../components/header";
 import Footer from "../components/footer";
 import styles from "../components/box.module.css";
@@ -38,7 +37,6 @@ export default function Home() {
             setCharacters(data.Charadata);
           } else {
             console.log("No data available");
-            const fail = 1;
           }
         })
         .catch((error) => {
@@ -46,7 +44,7 @@ export default function Home() {
         });
     };
     fetchCharacters();
-  }, [fail]);
+  }, );
 
   const handleClick = (id: any) => {
     setSelectedId(id);
