@@ -4,7 +4,6 @@ import Link from "next/link";
 import { getDatabase, ref, set , child, get} from "firebase/database";
 import { getAuth } from "firebase/auth";
 import { useEffect } from "react";
-import { fail } from "assert";
 import "firebase/compat/database";
 import Header from "../components/header";
 import Footer from "../components/footer";
@@ -25,7 +24,6 @@ export default function Home() {
             setIntro(data.content);
           } else {
             console.log("No data available");
-            const fail = 1;
           }
         })
         .catch((error) => {
@@ -33,7 +31,7 @@ export default function Home() {
         });
     };
     fetchProfile();
-  }, [fail]);
+  }, []);
 
   const changeUserName = (event: React.ChangeEvent<HTMLInputElement>) => {
     console.log(event);
@@ -58,8 +56,8 @@ export default function Home() {
       const UUID = await getUid();
       const db = getDatabase();
       await set(ref(db, `User/${UUID}/Profile/`), {
-        name: userName,
-        content : userIntro
+        Name: userName,
+        Content : userIntro
       });
       console.log("send");
     } catch (error) {
