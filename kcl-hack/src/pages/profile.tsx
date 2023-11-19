@@ -20,8 +20,8 @@ export default function Home() {
         .then((snapshot) => {
           if (snapshot.exists()) {
             const data = snapshot.val();
-            setUsername(data.name);
-            setIntro(data.content);
+            setUsername(data.Name);
+            setIntro(data.Content);
           } else {
             console.log("No data available");
           }
@@ -65,6 +65,10 @@ export default function Home() {
     }
   };
 
+const test = () => {
+  console.log(userName);
+}
+
   return (
     <main>
       <Header children="PROFILE" />
@@ -75,7 +79,6 @@ export default function Home() {
               <button>設定</button>
             </Link>
           </div>
-          <form action="#" method="post">
             <div>
               <h2>ユーザーネーム</h2>
             </div>
@@ -108,7 +111,6 @@ export default function Home() {
                 ></input>
               </label>
             </div>
-          </form>
           <div>
             <Link href="/home">
               <button>戻る</button>
