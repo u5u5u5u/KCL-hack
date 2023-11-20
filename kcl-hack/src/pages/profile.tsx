@@ -98,11 +98,6 @@ export default function Home() {
               決定
             </button>
           </div>
-          <div>
-            <Link href="/home">
-              <button>戻る</button>
-            </Link>
-          </div>
         </div>
       </div>
       <Footer />
