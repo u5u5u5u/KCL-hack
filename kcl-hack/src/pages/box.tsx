@@ -17,6 +17,7 @@ interface Status {
 export default function Home() {
   const [selectedId, setSelectedId] = useState(null);
   const [characters, setCharacters] = useState({});
+  const [redirect, setRedirect] = useState<boolean>(false);
   const dbRef = ref(getDatabase());
 
   async function getUid() {
@@ -37,6 +38,7 @@ export default function Home() {
             setCharacters(data.Charadata);
           } else {
             console.log("No data available");
+            setRedirect(true);
           }
         })
         .catch((error) => {
@@ -44,7 +46,7 @@ export default function Home() {
         });
     };
     fetchCharacters();
-  }, );
+  }, [redirect]);
 
   const handleClick = (id: any) => {
     setSelectedId(id);
