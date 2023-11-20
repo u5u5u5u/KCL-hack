@@ -7,6 +7,7 @@ import { useEffect } from "react";
 import "firebase/compat/database";
 import Header from "../components/header";
 import Footer from "../components/footer";
+import styles from "../components/profile.module.css";
 
 export default function Home() {
   const [userName, setUsername] = useState<string>("");
@@ -93,12 +94,9 @@ export default function Home() {
             ></input>
           </div>
           <div>
-            <input
-              className=""
-              type="submit"
-              value="決定"
-              onClick={sendProfile}
-            ></input>
+            <button className={styles.button} onClick={sendProfile}>
+              決定
+            </button>
           </div>
           <div>
             <Link href="/home">
