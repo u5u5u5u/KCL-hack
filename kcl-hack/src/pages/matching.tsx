@@ -17,7 +17,7 @@ export default function Home() {
   const [roomNum, setRoomNum] = useState<string>();
   const [member1, setMember1] = useState<string>();
   const [member2, setMember2] = useState<string>();
-  const [memberUUID, setMemberUUID] = useState<Member>(); //いる？
+  const [memberUUID, setMemberUUID] = useState<Member>();
   const [roomStatus, setRoomStatus] = useState<string>();
   const [visible, setVisible] = useState<boolean>(false);
   const dbRef = ref(getDatabase());
