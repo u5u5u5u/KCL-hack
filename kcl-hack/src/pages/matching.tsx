@@ -130,12 +130,6 @@ export default function Home() {
         console.error("エラーです:", error);
       }
     }
-    
-    console.log("send");
-    handleClick();
-  } catch (error) {
-    console.error("エラーです:", error);
-  }
   };
 
   
