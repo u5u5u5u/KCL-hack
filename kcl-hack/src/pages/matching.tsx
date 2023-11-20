@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { ChangeEvent, useState } from "react";
 import { getDatabase, ref, child, get, set, update } from "firebase/database";
 import { getAuth } from "firebase/auth";
 import Header from "../components/header";
@@ -17,7 +17,7 @@ export default function Home() {
   const [roomNum, setRoomNum] = useState<string>();
   const [member1, setMember1] = useState<string>();
   const [member2, setMember2] = useState<string>();
-  const [memberUUID, setMemberUUID] = useState<Member>();
+  const [memberUUID, setMemberUUID] = useState<Member>(); //いる？
   const [roomStatus, setRoomStatus] = useState<string>();
   const [visible, setVisible] = useState<boolean>(false);
   const dbRef = ref(getDatabase());
