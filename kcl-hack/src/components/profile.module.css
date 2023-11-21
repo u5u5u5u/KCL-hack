@@ -19,3 +19,28 @@
   color: #ffffff;
   background-color: #4689ff;
 }
+
+.label {
+  font-size: 1.5rem;
+  font-weight: 600;
+  font-family: century;
+  margin: 3rem auto 0.5rem auto;
+}
+
+.user_name {
+  font-size: 1.5rem;
+  width: 100%;
+  height: 3rem;
+  border-radius: 0.5rem;
+  box-sizing: border-box;
+}
+
+.one_word {
+  font-size: 1.5rem;
+  width: 100%;
+  height: 3rem;
+  border-radius: 0.5rem;
+  padding: 0.5rem;
+  box-sizing: border-box;
+  white-space: pre-wrap;
+}
