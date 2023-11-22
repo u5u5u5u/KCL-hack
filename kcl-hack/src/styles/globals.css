@@ -53,6 +53,7 @@ input {
   font-family: "Lucida Console", century;
   text-align: center;
   text-decoration: none;
+  letter-spacing: 0.05em;
   color: #4689ff;
   background-color: #ffffff;
   border: none;
