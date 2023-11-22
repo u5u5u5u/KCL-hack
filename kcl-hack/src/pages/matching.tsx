@@ -125,17 +125,12 @@ export default function Home() {
             Member2: UUID,
           });
         }
+        handleClick();
         console.log("send");
       } catch (error) {
         console.error("エラーです:", error);
       }
     }
-    
-    console.log("send");
-    handleClick();
-  } catch (error) {
-    console.error("エラーです:", error);
-  }
   };
 
   

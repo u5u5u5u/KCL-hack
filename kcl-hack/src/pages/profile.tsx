@@ -12,11 +12,15 @@ import styles from "../components/profile.module.css";
 export default function Home() {
   const [userName, setUsername] = useState<string>("");
   const [userIntro, setIntro] = useState<string>("");
+  const [userUUID, setUUID] = useState<string>("");
+  const [redirect, setRedirect] = useState<boolean>(false);
   const dbRef = ref(getDatabase());
 
   useEffect(() => {
     const fetchProfile = async () => {
       const UUID = await getUid();
+      console.log(UUID);
+      setUUID(UUID);
       get(child(dbRef, `User/${UUID}/Profile/`))
         .then((snapshot) => {
           if (snapshot.exists()) {
@@ -25,6 +29,7 @@ export default function Home() {
             setIntro(data.Content);
           } else {
             console.log("No data available");
+            setRedirect(true);
           }
         })
         .catch((error) => {
@@ -32,7 +37,7 @@ export default function Home() {
         });
     };
     fetchProfile();
-  }, []);
+  }, [redirect]);
 
   const changeUserName = (event: React.ChangeEvent<HTMLInputElement>) => {
     console.log(event);
@@ -64,10 +69,6 @@ export default function Home() {
     } catch (error) {
       console.error("エラーです:", error);
     }
-  };
-
-  const test = () => {
-    console.log(userName);
   };
 
   return (
