@@ -1,12 +1,13 @@
 "use client";
 import React, { useState } from "react";
 import Link from "next/link";
-import { getDatabase, ref, set , child, get} from "firebase/database";
+import { getDatabase, ref, set, child, get } from "firebase/database";
 import { getAuth } from "firebase/auth";
 import { useEffect } from "react";
 import "firebase/compat/database";
 import Header from "../components/header";
 import Footer from "../components/footer";
+import styles from "../components/profile.module.css";
 
 export default function Home() {
   const [userName, setUsername] = useState<string>("");
@@ -62,7 +63,7 @@ export default function Home() {
       const db = getDatabase();
       await set(ref(db, `User/${UUID}/Profile/`), {
         Name: userName,
-        Content : userIntro
+        Content: userIntro,
       });
       console.log("send");
     } catch (error) {
@@ -70,53 +71,33 @@ export default function Home() {
     }
   };
 
-
   return (
     <main>
       <Header children="PROFILE" />
       <div className="container">
         <div className="wrapper">
-          <div>
-            <Link href="/hoge">
-              <button>設定</button>
-            </Link>
+          <div className="wrapper">
+            <label>ユーザーネーム</label>
+            <input
+              type="text"
+              value={userName}
+              onChange={changeUserName}
+            ></input>
           </div>
-            <div>
-              <h2>ユーザーネーム</h2>
-            </div>
-            <div className="text-center">
-              <label>
-                <input
-                  type="text"
-                  value={userName}
-                  onChange={changeUserName}
-                ></input>
-              </label>
-            </div>
-            <div>
-              <h2>一言</h2>
-            </div>
-            <div>
-              <label>
-                <input
-                  className="text-4xl text-blue-500 mx-5"
-                  placeholder=" よろしくお願いします"
-                  type="text"
-                  value={userIntro}
-                  onChange={changeUserIntro}
-                  ></input>
-                <input
-                  className="text-3xl border rounded-2xl p-2"
-                  type="submit"
-                  value="決定"
-                  onClick={sendProfile}
-                ></input>
-              </label>
-            </div>
+          <div className="wrapper">
+            <label>一言</label>
+            <input
+              className=""
+              placeholder="よろしくお願いします"
+              type="text"
+              value={userIntro}
+              onChange={changeUserIntro}
+            ></input>
+          </div>
           <div>
-            <Link href="/home">
-              <button>戻る</button>
-            </Link>
+            <button className={styles.button} onClick={sendProfile}>
+              決定
+            </button>
           </div>
         </div>
       </div>
