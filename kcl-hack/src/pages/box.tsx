@@ -84,19 +84,19 @@ export default function Home() {
             </div>
             <table className={styles.status}>
               <tr>
-                <td className={styles.data1}>Attack:</td>
-                <td className={styles.data2}>{chara.Status.Attack}</td>
-              </tr>
-              <tr>
-                <td className={styles.data1}>Defence:</td>
-                <td className={styles.data2}>{chara.Status.Defence}</td>
-              </tr>
-              <tr>
-                <td className={styles.data1}>HP:</td>
+                <td className={styles.data1}>HP</td>
                 <td className={styles.data2}>{chara.Status.HP}</td>
               </tr>
               <tr>
-                <td className={styles.data1}>Speed:</td>
+                <td className={styles.data1}>Attack</td>
+                <td className={styles.data2}>{chara.Status.Attack}</td>
+              </tr>
+              <tr>
+                <td className={styles.data1}>Defence</td>
+                <td className={styles.data2}>{chara.Status.Defence}</td>
+              </tr>
+              <tr>
+                <td className={styles.data1}>Speed</td>
                 <td className={styles.data2}>{chara.Status.Speed}</td>
               </tr>
             </table>
