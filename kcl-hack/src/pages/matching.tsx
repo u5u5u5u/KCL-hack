@@ -1,6 +1,6 @@
 "use client";
 import {useRouter} from 'next/router'
-import React, { ChangeEvent, useState } from "react";
+import React, { ChangeEvent, useState, useEffect } from "react";
 import { getDatabase, ref, child, get, set, update } from "firebase/database";
 import { getAuth } from "firebase/auth";
 import Header from "../components/header";
@@ -20,6 +20,10 @@ export default function Home() {
   const [memberUUID, setMemberUUID] = useState<Member>();
   const [roomStatus, setRoomStatus] = useState<string>();
   const [visible, setVisible] = useState<boolean>(false);
+  const [userUUID, setUUID] = useState<string>("");
+  const [userChara, setuserChara] = useState<string>("");
+  const [sendStatus, setSendStatus] = useState<Object>();
+  const[redirect, setRedirect] = useState<boolean>(false);
   const dbRef = ref(getDatabase());
 
   const changeNum = (event: ChangeEvent<HTMLInputElement>) => {
@@ -34,6 +38,45 @@ export default function Home() {
       return user.uid;
     }
   }
+
+  useEffect(() => {
+    async function getCharaid () {
+      const UUid = await getUid();
+    console.log(UUid);
+    get(child(dbRef, `User/${UUid}/SelectChara/`))
+      .then((snapshot) => {
+        if (snapshot.exists()) {
+          const data = snapshot.val();
+          setuserChara(data.SelectId);
+          setRedirect(false);
+          setUUID(UUid);
+        } else {
+          console.log("No data available");
+          setRedirect(true);
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+    }
+    getCharaid();
+  },[redirect]);
+
+  useEffect(() => {
+    get(child(dbRef, `User/${userUUID}/Charadata/${userChara}/`))
+      .then((snapshot) => {
+        if (snapshot.exists()) {
+          const data = snapshot.val();
+          console.log(data);
+          setSendStatus(data);
+        } else {
+          console.log("No data available");
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  },[userChara]);
 
   const lookForRoom = async () => {
     const UUID = await getUid();
@@ -120,9 +163,15 @@ export default function Home() {
           await set(ref(db, `Room/${roomNum}/Member/`), {
             Member1: UUID,
           });
+          await set(ref(db, `Room/${roomNum}/ButtleStatus/`), {
+            Member1: sendStatus,
+          });
         } else if (roomStatus === "P2empty") {
           await update(ref(db, `Room/${roomNum}/Member/`), {
             Member2: UUID,
+          });
+          await update(ref(db, `Room/${roomNum}/ButtleStatus/`), {
+            Member2: sendStatus,
           });
         }
         handleClick();

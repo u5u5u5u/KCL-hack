@@ -1,34 +1,40 @@
 "use client";
 import {useRouter} from 'next/router'
 import React, { use, useState, useEffect} from "react";
-import { getDatabase, ref, child, get, set, update, remove } from "firebase/database";
+import { getDatabase, ref, child, get, set, update, remove, onValue } from "firebase/database";
 import { getAuth } from "firebase/auth";
 import Header from "../components/header";
 import Footer from "../components/footer";
 import Link from "next/link";
 
-
-var name1 = "Player";
-var HP1 = 1000;
-var attack1 = 600;
-var defence1 = 100;
-var speed1 = 40;
-var name2 = "Rival";
-var HP2 = 1000;
-var attack2 = 200;
-var defence2 = 900;
-var speed2 = 40;
-var damage1 = attack1 / defence2;
-var damage2 = attack2 / defence1;
-var strength1 = 500;
-var strength2 = 300;
-
 export default function Home() {
-  
-  const dbRef = ref(getDatabase());
+const [ButtleStatus, setButtleStatus] = useState<Object>();
+const [redirect, setRedirect] = useState<boolean>(false);
 
-  const router = useRouter();
-  const roomId = router.query.roomId;
+const dbRef = ref(getDatabase());
+const db = getDatabase();
+const router = useRouter();
+const roomId = router.query.roomId;
+
+
+
+  useEffect(() => {
+    const auth = getAuth();
+      get(child(dbRef, `Room/${roomId}/ButtleStatus/`))
+        .then((snapshot) => {
+          if (snapshot.exists()) {
+            const data = snapshot.val();
+            setButtleStatus(data);
+            console.log(ButtleStatus);
+          } else {
+            console.log("No data available");
+            setRedirect(true);
+          }
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+  }, [redirect]);
 
  async function leftRoom ()  {
   const UUid = await getUid();
@@ -37,7 +43,6 @@ export default function Home() {
         .then((snapshot) => {
           if (snapshot.exists()) {
             const data = snapshot.val();
-            const Player1 = data.Member1;
             const Player2 = data.Member2;
             console.log(data.Member1);
             if (data.Member1 == UUid) {
@@ -79,25 +84,26 @@ export default function Home() {
       }
       return null;
     }
+    
 
   return (
     <main>
       <h1>Room {roomId}</h1>
       <div className="p-10 text-blue-600 float-left">
-        <h2 className="text-4xl p-10">{name1}</h2>
-        <h2>HP {HP1}</h2>
-        <h2>こうげき {attack1}</h2>
-        <h2>ぼうぎょ {defence1}</h2>
-        <h2>すばやさ {speed1}</h2>
-        <h2>あたえるダメージ {Math.trunc(damage1 * strength1)}</h2>
+        <h2 className="text-4xl p-10"></h2>
+        <h2>HP </h2>
+        <h2>Attack </h2>
+        <h2>Defence </h2>
+        <h2>Speed </h2>
+        <h2>あたえるダメージ </h2>
       </div>
       <div className="p-10 text-red-500 float-right">
-        <h2 className="text-4xl p-10">{name2}</h2>
-        <h2>HP {HP2}</h2>
-        <h2>こうげき {attack2}</h2>
-        <h2>ぼうぎょ {defence2}</h2>
-        <h2>すばやさ {speed2}</h2>
-        <h2>あたえるダメージ {Math.trunc(damage2 * strength2)}</h2>
+        <h2 className="text-4xl p-10"></h2>
+        <h2>HP </h2>
+        <h2>こうげき</h2>
+        <h2>ぼうぎょ</h2>
+        <h2>すばやさ</h2>
+        <h2>あたえるダメージ</h2>
       </div>
       <div className="text-center p-10">
         <h2>コマンドを選んでください</h2>
