@@ -300,14 +300,29 @@ export default function Home() {
           </button>
         </div>
       </div>
-      <div>
-        <ul>
-          <li>コード {Jan}</li>
-          <li>HP {Hp}</li>
-          <li>こうげき {Attack}</li>
-          <li>ぼうぎょ {Defence}</li>
-          <li>すばやさ {Speed}</li>
-        </ul>
+      <div className={styles.content}>
+        <table className={styles.status}>
+          <tr>
+            <td className={styles.data1}>Jan Code:</td>
+            <td className={styles.data2}>{Jan}</td>
+          </tr>
+          <tr>
+            <td className={styles.data1}>Attack:</td>
+            <td className={styles.data2}>{Attack}</td>
+          </tr>
+          <tr>
+            <td className={styles.data1}>Defence:</td>
+            <td className={styles.data2}>{Defence}</td>
+          </tr>
+          <tr>
+            <td className={styles.data1}>HP:</td>
+            <td className={styles.data2}>{Hp}</td>
+          </tr>
+          <tr>
+            <td className={styles.data1}>Speed:</td>
+            <td className={styles.data2}>{Speed}</td>
+          </tr>
+        </table>
       </div>
       <Footer />
     </main>
