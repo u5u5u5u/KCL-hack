@@ -316,8 +316,8 @@ export default function Home() {
           {isOpen ? "閉じる" : "検索"}
         </button>
         <div id="contents" className="accordion-body" aria-hidden={!isOpen}>
-          <div className={styles.content}>
-            <table className={styles.status}>
+          <table className={styles.status}>
+            <tbody>
               <tr>
                 <td className={styles.data1}>Jan Code</td>
                 <td className={styles.data2}>{Jan}</td>
@@ -338,8 +338,8 @@ export default function Home() {
                 <td className={styles.data1}>Speed</td>
                 <td className={styles.data2}>{Speed}</td>
               </tr>
-            </table>
-          </div>
+            </tbody>
+          </table>
         </div>
       </div>
       <Footer />
