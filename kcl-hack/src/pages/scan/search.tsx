@@ -309,40 +309,36 @@ export default function Home() {
           aria-controls="contents"
           aria-expanded={isOpen}
           onClick={() => {
-            sendNum();
+            sendNum(number);
             setIsOpen(!isOpen);
           }}
         >
-          {isOpen ? "検索" : "閉じる"}
+          {isOpen ? "閉じる" : "検索"}
         </button>
         <div id="contents" className="accordion-body" aria-hidden={!isOpen}>
           <div className={styles.content}>
-            <div id="contents" className="accordion-body" aria-hidden={!isOpen}>
-              <div className={styles.content}>
-                <table className={styles.status}>
-                  <tr>
-                    <td className={styles.data1}>Jan Code</td>
-                    <td className={styles.data2}>{Jan}</td>
-                  </tr>
-                  <tr>
-                    <td className={styles.data1}>HP</td>
-                    <td className={styles.data2}>{Hp}</td>
-                  </tr>
-                  <tr>
-                    <td className={styles.data1}>Attack</td>
-                    <td className={styles.data2}>{Attack}</td>
-                  </tr>
-                  <tr>
-                    <td className={styles.data1}>Defence</td>
-                    <td className={styles.data2}>{Defence}</td>
-                  </tr>
-                  <tr>
-                    <td className={styles.data1}>Speed</td>
-                    <td className={styles.data2}>{Speed}</td>
-                  </tr>
-                </table>
-              </div>
-            </div>
+            <table className={styles.status}>
+              <tr>
+                <td className={styles.data1}>Jan Code</td>
+                <td className={styles.data2}>{Jan}</td>
+              </tr>
+              <tr>
+                <td className={styles.data1}>HP</td>
+                <td className={styles.data2}>{Hp}</td>
+              </tr>
+              <tr>
+                <td className={styles.data1}>Attack</td>
+                <td className={styles.data2}>{Attack}</td>
+              </tr>
+              <tr>
+                <td className={styles.data1}>Defence</td>
+                <td className={styles.data2}>{Defence}</td>
+              </tr>
+              <tr>
+                <td className={styles.data1}>Speed</td>
+                <td className={styles.data2}>{Speed}</td>
+              </tr>
+            </table>
           </div>
         </div>
       </div>
