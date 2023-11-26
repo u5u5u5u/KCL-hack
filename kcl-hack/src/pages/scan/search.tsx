@@ -21,6 +21,8 @@ export default function Home() {
   const [price, setPri] = useState<number>();
   const [image, setIma] = useState<string>("");
 
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+
   function jan_get(jan: number) {
     var HP = 0;
     var attack = 0;
@@ -284,32 +286,68 @@ export default function Home() {
               onChange={changeNum}
               placeholder="JANコード"
             />
-            <button className="button" onClick={sendNum}>
+            <button
+              className={styles.button}
+              aria-hidden={isOpen}
+              onClick={sendNum}
+            >
               検索
             </button>
           </div>
-          <div>
-            <img src={image} />
+          <div role="group">
+            <div id="contents" className="accordion-body" aria-hidden={!isOpen}>
+              <div className={styles.image}>
+                <img src={image} />
+              </div>
+              <ul>
+                <li>商品名 : {name}</li>
+                <li>価格 : {price}円</li>
+              </ul>
+              <table className={styles.status}>
+                <tbody>
+                  <tr>
+                    <td className={styles.data1}>Jan Code</td>
+                    <td className={styles.data2}>{Jan}</td>
+                  </tr>
+                  <tr>
+                    <td className={styles.data1}>HP</td>
+                    <td className={styles.data2}>{Hp}</td>
+                  </tr>
+                  <tr>
+                    <td className={styles.data1}>Attack</td>
+                    <td className={styles.data2}>{Attack}</td>
+                  </tr>
+                  <tr>
+                    <td className={styles.data1}>Defence</td>
+                    <td className={styles.data2}>{Defence}</td>
+                  </tr>
+                  <tr>
+                    <td className={styles.data1}>Speed</td>
+                    <td className={styles.data2}>{Speed}</td>
+                  </tr>
+                </tbody>
+              </table>
+              <button
+                className={styles.registration_button}
+                onClick={sendStatus}
+              >
+                登録
+              </button>
+            </div>
           </div>
-          <ul>
-            <li>商品名 : {name}</li>
-            <li>価格 : {price}円</li>
-          </ul>
-          <button className={styles.button} onClick={sendStatus}>
-            登録
-          </button>
         </div>
       </div>
-      <div>
-        <ul>
-          <li>コード {Jan}</li>
-          <li>HP {Hp}</li>
-          <li>こうげき {Attack}</li>
-          <li>ぼうぎょ {Defence}</li>
-          <li>すばやさ {Speed}</li>
-        </ul>
-      </div>
       <Footer />
+      <style jsx>{`
+        .accordion-body {
+          height: ${isOpen ? "auto" : 0};
+          transition: height 0.3s ease-out;
+          overflow: hidden;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+        }
+      `}</style>
     </main>
   );
 }

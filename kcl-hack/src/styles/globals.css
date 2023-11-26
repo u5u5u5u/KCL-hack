@@ -18,6 +18,7 @@ main {
 .wrapper {
   display: flex;
   flex-direction: column;
+  justify-content: center;
   align-items: center;
 }
 
@@ -42,6 +43,9 @@ li {
 
 input {
   font-size: 2rem;
+  border: #cccccc 2px solid;
+  border-radius: 2rem;
+  padding: 0.5rem 1rem;
 }
 
 .button {
