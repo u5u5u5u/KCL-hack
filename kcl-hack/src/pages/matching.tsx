@@ -1,7 +1,7 @@
 "use client";
 import {useRouter} from 'next/router'
 import React, { ChangeEvent, useState, useEffect } from "react";
-import { getDatabase, ref, child, get, set, update } from "firebase/database";
+import { getDatabase, ref, child, get, set, update, onValue } from "firebase/database";
 import { getAuth } from "firebase/auth";
 import Header from "../components/header";
 import Footer from "../components/footer";
@@ -166,12 +166,18 @@ export default function Home() {
           await set(ref(db, `Room/${roomNum}/ButtleStatus/`), {
             Member1: sendStatus,
           });
+          await set(ref(db, `Room/${roomNum}/MemberStatus/`), {
+            Member1: "ready",
+          });
         } else if (roomStatus === "P2empty") {
           await update(ref(db, `Room/${roomNum}/Member/`), {
             Member2: UUID,
           });
           await update(ref(db, `Room/${roomNum}/ButtleStatus/`), {
             Member2: sendStatus,
+          });
+          await update(ref(db, `Room/${roomNum}/MemberStatus/`), {
+            Member2: "ready",
           });
         }
         handleClick();
