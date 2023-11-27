@@ -8,7 +8,16 @@ import Footer from "../components/footer";
 import Link from "next/link";
 
 export default function Home() {
-const [ButtleStatus, setButtleStatus] = useState<Object>();
+const [player1HP, setPlayer1HP] = useState<number>(0); 
+const [player1Attack, setPlayer1Attack] = useState<number>(0);
+const [player1Defence, setPlayer1Defence] = useState<number>(0);
+const [player1Speed, setPlayer1Speed] = useState<number>(0);
+const [player1Img, setPlayer1Img] = useState<string>("");
+const [player2HP, setPlayer2HP] = useState<number>(0);
+const [player2Attack, setPlayer2Attack] = useState<number>(0);
+const [player2Defence, setPlayer2Defence] = useState<number>(0);
+const [player2Speed, setPlayer2Speed] = useState<number>(0);
+const [player2Img, setPlayer2Img] = useState<string>("");
 const [redirect, setRedirect] = useState<boolean>(false);
 
 const dbRef = ref(getDatabase());
@@ -20,12 +29,17 @@ const roomId = router.query.roomId;
 
   useEffect(() => {
     const auth = getAuth();
-      get(child(dbRef, `Room/${roomId}/ButtleStatus/`))
+    console.log(roomId);
+      const snapshot= get(child(dbRef, `Room/${roomId}/ButtleStatus/Member1/Status`))
         .then((snapshot) => {
           if (snapshot.exists()) {
+            console.log("available");
             const data = snapshot.val();
-            setButtleStatus(data);
-            console.log(ButtleStatus);
+            setPlayer1HP(data.HP);
+            setPlayer1Attack(data.Attack);
+            setPlayer1Defence(data.Defence);
+            setPlayer1Speed(data.Speed);
+            setPlayer1Img(data.Img);
           } else {
             console.log("No data available");
             setRedirect(true);
@@ -75,7 +89,7 @@ const roomId = router.query.roomId;
           console.error(error);
         });
     };
-
+    
     async function getUid () {
       const auth = getAuth();
       const user = auth.currentUser;
@@ -84,17 +98,16 @@ const roomId = router.query.roomId;
       }
       return null;
     }
-    
 
   return (
     <main>
       <h1>Room {roomId}</h1>
       <div className="p-10 text-blue-600 float-left">
         <h2 className="text-4xl p-10"></h2>
-        <h2>HP </h2>
-        <h2>Attack </h2>
-        <h2>Defence </h2>
-        <h2>Speed </h2>
+        <h2>HP {player1HP}</h2>
+        <h2>Attack {player1Attack}</h2>
+        <h2>Defence {player1Defence}</h2>
+        <h2>Speed {player1Speed}</h2>
         <h2>あたえるダメージ </h2>
       </div>
       <div className="p-10 text-red-500 float-right">
