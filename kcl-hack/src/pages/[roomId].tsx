@@ -32,6 +32,7 @@ const [player2deltaAttack, setPlayer2deltaAttack] = useState<number>(0);
 const [player2deltaDefence, setPlayer2deltaDefence] = useState<number>(0);
 const [player2deltaSpeed, setPlayer2deltaSpeed] = useState<number>(0);
 const [player2Img, setPlayer2Img] = useState<string>("");
+const [selectVisible, setSelectVisible] = useState<boolean>(false);
 const [redirect1, setRedirect1] = useState<boolean>(false);
 const [redirect2, setRedirect2] = useState<boolean>(false);
 
@@ -58,6 +59,57 @@ onValue(ref(db, `Room/${roomId}/MemberStatus/Member2`), (snapshot) => {
   }
 });
 
+useEffect(() => {
+  if (member1Status == "ready" && member2Status == "ready") {
+    if (whoIs == "Member1") {
+      setMember1Status("selecting");
+    }
+    if (whoIs == "Member2") {
+      setMember2Status("selecting");
+    }
+    setSelectVisible(true);
+  }
+  
+  if (member1Status == "selected" && member2Status == "selected") {
+    if (whoIs == "Member1") {
+      setMember1Status("processing");
+    }
+    if (whoIs == "Member2") {
+      setMember2Status("processing");
+    }
+    setSelectVisible(true);
+  }
+
+  console.log("done");
+}, [member1Status,member2Status]);
+
+useEffect(() => {
+  if(whoIs == "Member1"){
+setStatus1();
+  }
+  if(whoIs == "Member2"){
+setStatus2();
+  }
+}, [member1Status,member2Status]);
+
+
+async function setStatus1 ()  {
+  const auth = getAuth();
+  const db = getDatabase();
+  await update(ref(db, `Room/${roomId}/MemberStatus`), {
+    Member1: member1Status,
+  });
+  
+}
+
+async function setStatus2 ()  {
+  const auth = getAuth();
+  const db = getDatabase();
+  await update(ref(db, `Room/${roomId}/MemberStatus`), {
+    Member2: member2Status,
+  });
+  console.log("done");
+}
 
 useEffect(() => {
 async function whoAmI ()  {
@@ -80,14 +132,6 @@ async function whoAmI ()  {
     };
   whoAmI();
 }, [redirectWho]);
-
-useEffect(() => {
-  if (member1Status == "ready" && member2Status == "ready") {
-    setRedirect1(!redirect1);
-    setRedirect2(!redirect2);
-  }
-}, [member1Status,member2Status]);
-
 
   useEffect(() => {
     const auth = getAuth();
@@ -114,7 +158,17 @@ useEffect(() => {
   }, [redirect1]);
 
   function panch () { 
-
+    if (whoIs == "Member1") {
+      if(member1Status == "selecting"){
+        setMember1Status("selected");
+      }
+    }
+    if (whoIs == "Member2") {
+      if(member2Status == "selecting"){
+        setMember2Status("selected");
+      }
+    }
+    setSelectVisible(false);
   };
 
   useEffect(() => {
@@ -157,7 +211,7 @@ useEffect(() => {
                 Member2: null
               });
               update(ref(db, `Room/${roomId}/ButtleStatus`), {
-                Member1:player2Status,
+                Member1:{Status:player2Status},
                 Member2:null
               });
               update(ref(db, `Room/${roomId}/MemberStatus`), {
@@ -230,7 +284,7 @@ useEffect(() => {
         <h2>コマンドを選んでください</h2>
       </div>
       <div className="text-center text-3xl">
-        <h2 onClick={panch}>なぐる</h2>
+      <button className="select1" onClick={panch} style={{ visibility: selectVisible ? "visible" : "hidden" }}>Panch</button>
         <h2>ける</h2>
         <h2>にげる</h2>
       </div>
