@@ -3,10 +3,6 @@ import {useRouter} from 'next/router'
 import React, { use, useState, useEffect} from "react";
 import { getDatabase, ref, child, get, set, update, remove, onValue } from "firebase/database";
 import { getAuth } from "firebase/auth";
-import Header from "../components/header";
-import Footer from "../components/footer";
-import Link from "next/link";
-import test from 'node:test';
 
 export default function Home() {
 const [whoIs , setWhoIs] = useState<string>("spectators");
@@ -62,8 +58,14 @@ onValue(ref(db, `Room/${roomId}/MemberStatus/Member2`), (snapshot) => {
 });
 
 useEffect(() => {
+
+  if (member2Status == "ready"){
+    setRedirect2(false);
+  }
+  
   if (((member1Status == "ready" && member2Status == "ready") || member1Status == "selecting" )|| member2Status == "selecting") {
       setChangeStatus("selecting");
+      console.log("selecting");
       setSelectVisible(true);
     }
   
