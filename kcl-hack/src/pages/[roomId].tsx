@@ -45,7 +45,9 @@ onValue(ref(db, `Room/${roomId}/MemberStatus/Member1`), (snapshot) => {
   const data = snapshot.val();
   console.log(data);
   if (data != member1Status) {
-    setMember1Status(data);
+    if (data != "ready"){
+      setMember1Status(data);
+    }
   }
 });
 
@@ -53,7 +55,9 @@ onValue(ref(db, `Room/${roomId}/MemberStatus/Member2`), (snapshot) => {
   const data = snapshot.val();
   console.log(data);
   if (data != member2Status) {
-    setMember2Status(data);
+    if (data != "ready"){
+      setMember2Status(data);
+    }
   }
 });
 
