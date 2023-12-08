@@ -6,6 +6,7 @@ import { getAuth } from "firebase/auth";
 import Header from "../components/header";
 import Footer from "../components/footer";
 import Link from "next/link";
+import test from 'node:test';
 
 export default function Home() {
 const [whoIs , setWhoIs] = useState<string>("spectators");
@@ -35,6 +36,7 @@ const [player2Img, setPlayer2Img] = useState<string>("");
 const [selectVisible, setSelectVisible] = useState<boolean>(false);
 const [redirect1, setRedirect1] = useState<boolean>(false);
 const [redirect2, setRedirect2] = useState<boolean>(false);
+const [changeStatus, setChangeStatus] = useState<string>();
 
 const dbRef = ref(getDatabase());
 const db = getDatabase();
@@ -61,55 +63,49 @@ onValue(ref(db, `Room/${roomId}/MemberStatus/Member2`), (snapshot) => {
 
 useEffect(() => {
   if (member1Status == "ready" && member2Status == "ready") {
-    if (whoIs == "Member1") {
-      setMember1Status("selecting");
-    }
-    if (whoIs == "Member2") {
-      setMember2Status("selecting");
+      setChangeStatus("selecting");
     }
     setSelectVisible(true);
-  }
   
   if (member1Status == "selected" && member2Status == "selected") {
-    if (whoIs == "Member1") {
-      setMember1Status("processing");
-    }
-    if (whoIs == "Member2") {
       setMember2Status("processing");
     }
     setSelectVisible(true);
-  }
 
-  console.log("done");
+  console.log("changed");
 }, [member1Status,member2Status]);
 
 useEffect(() => {
-  if(whoIs == "Member1"){
-setStatus1();
+  if(changeStatus !=  null){
+  if (whoIs == "Member1") {
+    setStatus1();
   }
-  if(whoIs == "Member2"){
-setStatus2();
+  if (whoIs == "Member2") {
+    setStatus2();
   }
-}, [member1Status,member2Status]);
-
+  console.log("changedone");
+}
+}, [changeStatus]);
 
 async function setStatus1 ()  {
   const auth = getAuth();
   const db = getDatabase();
-  await update(ref(db, `Room/${roomId}/MemberStatus`), {
-    Member1: member1Status,
+  update(ref(db, `Room/${roomId}/MemberStatus`), {
+    Member1: changeStatus,
   });
-  
+  console.log("done"+ changeStatus);
 }
 
 async function setStatus2 ()  {
   const auth = getAuth();
   const db = getDatabase();
-  await update(ref(db, `Room/${roomId}/MemberStatus`), {
-    Member2: member2Status,
+  update(ref(db, `Room/${roomId}/MemberStatus`), {
+    Member2: changeStatus,
   });
   console.log("done");
 }
+
+
 
 useEffect(() => {
 async function whoAmI ()  {
@@ -160,12 +156,13 @@ async function whoAmI ()  {
   function panch () { 
     if (whoIs == "Member1") {
       if(member1Status == "selecting"){
-        setMember1Status("selected");
+        setChangeStatus("selected");
       }
+      console.log("done")
     }
     if (whoIs == "Member2") {
       if(member2Status == "selecting"){
-        setMember2Status("selected");
+        setChangeStatus("selected");
       }
     }
     setSelectVisible(false);
@@ -258,6 +255,10 @@ async function whoAmI ()  {
       return null;
     }
 
+    async function settest () {
+      setChangeStatus("ready");
+    }
+
   return (
     <main>
       <h1>Room {roomId}</h1>
@@ -288,6 +289,9 @@ async function whoAmI ()  {
         <h2>ける</h2>
         <h2>にげる</h2>
       </div>
+      <button onClick={settest}>
+        test
+      </button>
       <button onClick={leftRoom}>
         退室
       </button>
