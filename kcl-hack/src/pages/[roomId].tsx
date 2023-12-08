@@ -67,7 +67,7 @@ useEffect(() => {
     }
     setSelectVisible(true);
   
-  if (member1Status == "selected" && member2Status == "selected") {
+  if (((member1Status == "selected" && member2Status == "selected") || member1Status == "processing" )|| member2Status == "processing") {
       setChangeStatus("processing");
     }
     setSelectVisible(true);
