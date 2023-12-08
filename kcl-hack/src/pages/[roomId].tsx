@@ -38,42 +38,25 @@ const dbRef = ref(getDatabase());
 const db = getDatabase();
 const router = useRouter();
 const roomId = router.query.roomId;
-var firstp1 = true;
-var firstp2 = true;
-
-
 
 onValue(ref(db, `Room/${roomId}/MemberStatus/Member1`), (snapshot) => {
   const data = snapshot.val();
-  console.log(data);
   if (data != member1Status) {
-    if (data == "ready"){
-      if(firstp1){
         setMember1Status(data);
         console.log(data);
-        firstp1 = false;
       }
-    } else {
-      setMember1Status(data);
-      console.log(data);
-    }
-  }
+}, {
+  onlyOnce: true
 });
 
 onValue(ref(db, `Room/${roomId}/MemberStatus/Member2`), (snapshot) => {
   const data = snapshot.val();
   if (data != member2Status) {
-    if (data == "ready"){
-      if(firstp2){
         setMember2Status(data);
         console.log(data);
-        firstp2 = false;
       }
-    } else {
-      setMember2Status(data);
-      console.log(data);
-    }
-  }
+}, {
+  onlyOnce: true
 });
 
 useEffect(() => {
