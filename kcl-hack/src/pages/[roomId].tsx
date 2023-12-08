@@ -50,25 +50,28 @@ onValue(ref(db, `Room/${roomId}/MemberStatus/Member1`), (snapshot) => {
     if (data == "ready"){
       if(firstp1){
         setMember1Status(data);
+        console.log(data);
         firstp1 = false;
       }
     } else {
       setMember1Status(data);
+      console.log(data);
     }
   }
 });
 
 onValue(ref(db, `Room/${roomId}/MemberStatus/Member2`), (snapshot) => {
   const data = snapshot.val();
-  console.log(data);
   if (data != member2Status) {
     if (data == "ready"){
       if(firstp2){
         setMember2Status(data);
+        console.log(data);
         firstp2 = false;
       }
     } else {
       setMember2Status(data);
+      console.log(data);
     }
   }
 });
