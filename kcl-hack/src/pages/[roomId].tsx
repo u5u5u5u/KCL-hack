@@ -62,13 +62,13 @@ onValue(ref(db, `Room/${roomId}/MemberStatus/Member2`), (snapshot) => {
 });
 
 useEffect(() => {
-  if (member1Status == "ready" && member2Status == "ready") {
+  if (member1Status == "ready" && member2Status == "ready" || member1Status == "selecting" || member2Status == "selecting") {
       setChangeStatus("selecting");
     }
     setSelectVisible(true);
   
   if (member1Status == "selected" && member2Status == "selected") {
-      setMember2Status("processing");
+      setChangeStatus("processing");
     }
     setSelectVisible(true);
 
