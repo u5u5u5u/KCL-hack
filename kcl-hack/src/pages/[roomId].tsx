@@ -13,7 +13,7 @@ const [whoIs , setWhoIs] = useState<string>("spectators");
 const [redirectWho, setRedirectWho] = useState<boolean>(false);
 const [member1Status, setMember1Status] = useState<string>("null");
 const [player1Status, setPlayer1Status] = useState<Object>();
-const [player1HP, setPlayer1HP] = useState<number>(0); 
+const [player1HP, setPlayer1HP] = useState<number>(1); 
 const [player1Attack, setPlayer1Attack] = useState<number>(0);
 const [player1Defence, setPlayer1Defence] = useState<number>(0);
 const [player1Speed, setPlayer1Speed] = useState<number>(0);
@@ -24,7 +24,7 @@ const [player1deltaSpeed, setPlayer1deltaSpeed] = useState<number>(0);
 const [player1Img, setPlayer1Img] = useState<string>("");
 const [member2Status, setMember2Status] = useState<string>("null");
 const [player2Status, setPlayer2Status] = useState<Object>();
-const [player2HP, setPlayer2HP] = useState<number>(0);
+const [player2HP, setPlayer2HP] = useState<number>(1);
 const [player2Attack, setPlayer2Attack] = useState<number>(0);
 const [player2Defence, setPlayer2Defence] = useState<number>(0);
 const [player2Speed, setPlayer2Speed] = useState<number>(0);
@@ -64,13 +64,12 @@ onValue(ref(db, `Room/${roomId}/MemberStatus/Member2`), (snapshot) => {
 useEffect(() => {
   if (((member1Status == "ready" && member2Status == "ready") || member1Status == "selecting" )|| member2Status == "selecting") {
       setChangeStatus("selecting");
+      setSelectVisible(true);
     }
-    setSelectVisible(true);
   
   if (((member1Status == "selected" && member2Status == "selected") || member1Status == "processing" )|| member2Status == "processing") {
       setChangeStatus("processing");
     }
-    setSelectVisible(true);
 
   console.log("changed");
 }, [member1Status,member2Status]);
@@ -158,7 +157,6 @@ async function whoAmI ()  {
       if(member1Status == "selecting"){
         setChangeStatus("selected");
       }
-      console.log("done")
     }
     if (whoIs == "Member2") {
       if(member2Status == "selecting"){
