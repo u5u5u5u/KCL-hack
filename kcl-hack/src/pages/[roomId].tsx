@@ -38,6 +38,8 @@ const dbRef = ref(getDatabase());
 const db = getDatabase();
 const router = useRouter();
 const roomId = router.query.roomId;
+var firstp1 = true;
+var firstp2 = true;
 
 
 
@@ -45,7 +47,12 @@ onValue(ref(db, `Room/${roomId}/MemberStatus/Member1`), (snapshot) => {
   const data = snapshot.val();
   console.log(data);
   if (data != member1Status) {
-    if (data != "ready"){
+    if (data == "ready"){
+      if(firstp1){
+        setMember1Status(data);
+        firstp1 = false;
+      }
+    } else {
       setMember1Status(data);
     }
   }
@@ -55,7 +62,12 @@ onValue(ref(db, `Room/${roomId}/MemberStatus/Member2`), (snapshot) => {
   const data = snapshot.val();
   console.log(data);
   if (data != member2Status) {
-    if (data != "ready"){
+    if (data == "ready"){
+      if(firstp2){
+        setMember2Status(data);
+        firstp2 = false;
+      }
+    } else {
       setMember2Status(data);
     }
   }
@@ -104,6 +116,7 @@ async function setStatus1 ()  {
 async function setStatus2 ()  {
   const auth = getAuth();
   const db = getDatabase();
+  if(changeStatus != "ready")
   update(ref(db, `Room/${roomId}/MemberStatus`), {
     Member2: changeStatus,
   });
