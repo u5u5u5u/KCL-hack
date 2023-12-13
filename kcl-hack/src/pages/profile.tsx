@@ -1,6 +1,5 @@
 "use client";
 import React, { useState } from "react";
-import Link from "next/link";
 import { getDatabase, ref, set, child, get } from "firebase/database";
 import { getAuth } from "firebase/auth";
 import { useEffect } from "react";
