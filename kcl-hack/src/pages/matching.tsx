@@ -1,5 +1,5 @@
 "use client";
-import {useRouter} from 'next/router'
+import { useRouter } from "next/router";
 import React, { ChangeEvent, useState } from "react";
 import { getDatabase, ref, child, get, set, update } from "firebase/database";
 import { getAuth } from "firebase/auth";
@@ -133,12 +133,10 @@ export default function Home() {
     }
   };
 
-  
   const router = useRouter();
   const handleClick = () => {
-      router.push(`/${roomNum}`)
-  }
-
+    router.push(`/${roomNum}`);
+  };
 
   return (
     <main>
@@ -169,7 +167,7 @@ export default function Home() {
             Member2:{member2}
           </div>
           <div style={{ visibility: visible ? "visible" : "hidden" }}>
-              <button onClick={join}>PLAY</button>
+            <button onClick={join}>PLAY</button>
           </div>
         </div>
       </div>
