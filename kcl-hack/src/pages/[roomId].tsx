@@ -110,7 +110,6 @@ async function setStatus2 ()  {
 }
 
 
-
 var name1 = "Player";
 var HP1 = 1000;
 var attack1 = 600;
@@ -219,6 +218,87 @@ const w32 = () => {
 };
 const w33 = () => {
   console.log("w33");
+};
+
+const w00 = () => {
+  console.log("w00");
+  HP1 += 100;
+};
+const w01 = () => {
+  console.log("w01");
+  HP1 += 100;
+};
+const w02 = () => {
+  console.log("w02");
+  HP1 += 100;
+};
+const w03 = () => {
+  console.log("w03");
+  HP1 += 100;
+};
+const w04 = () => {
+  console.log("w04");
+  HP1 += 100;
+};
+const w05 = () => {
+  console.log("w05");
+  HP1 += 100;
+};
+const w06 = () => {
+  console.log("w06");
+  HP1 += 100;
+};
+const w07 = () => {
+  console.log("w07");
+  HP1 += 100;
+};
+const w10 = () => {
+  console.log("w10");
+  HP1 += 100;
+};
+const w11 = () => {
+  console.log("w11");
+  HP1 += 100;
+};
+const w12 = () => {
+  console.log("w12");
+  HP1 += 100;
+};
+const w13 = () => {
+  console.log("w13");
+  HP1 += 100;
+};
+const w20 = () => {
+  console.log("w20");
+  HP1 += 100;
+};
+const w21 = () => {
+  console.log("w21");
+  HP1 += 100;
+};
+const w22 = () => {
+  console.log("w22");
+  HP1 += 100;
+};
+const w23 = () => {
+  console.log("w23");
+  HP1 += 100;
+};
+const w30 = () => {
+  console.log("w30");
+  HP1 += 100;
+};
+const w31 = () => {
+  console.log("w31");
+  HP1 += 100;
+};
+const w32 = () => {
+  console.log("w32");
+  HP1 += 100;
+};
+const w33 = () => {
+  console.log("w33");
+  HP1 += 100;
 };
 
 export default function Home() {
@@ -380,6 +460,8 @@ async function whoAmI ()  {
     async function settest () {
       setChangeStatus("ready");
     }
+    return null;
+  }
 
   return (
     <main>
@@ -423,6 +505,27 @@ async function whoAmI ()  {
         <h2>コマンドを選んでください</h2>
       </div>
       <div className="text-center text-3xl">
+        <Button onClick={w00}>w00</Button>
+        <Button onClick={w01}>w01</Button>
+        <Button onClick={w02}>w02</Button>
+        <Button onClick={w03}>w03</Button>
+        <Button onClick={w04}>w04</Button>
+        <Button onClick={w05}>w05</Button>
+        <Button onClick={w06}>w06</Button>
+        <Button onClick={w07}>w07</Button>
+        <Button onClick={w10}>w10</Button>
+        <Button onClick={w11}>w11</Button>
+        <Button onClick={w12}>w12</Button>
+        <Button onClick={w13}>w13</Button>
+        <Button onClick={w20}>w20</Button>
+        <Button onClick={w21}>w21</Button>
+        <Button onClick={w22}>w22</Button>
+        <Button onClick={w23}>w23</Button>
+        <Button onClick={w30}>w30</Button>
+        <Button onClick={w31}>w31</Button>
+        <Button onClick={w32}>w32</Button>
+        <Button onClick={w33}>w33</Button>
+      </div>
       <button onClick={panch} style={{ visibility: selectVisible ? "visible" : "hidden" }}>Panch</button>
       <button onClick={start} style={{ visibility: startVisible ? "visible" : "hidden" }}>Start</button>
         <h2>ける</h2>
