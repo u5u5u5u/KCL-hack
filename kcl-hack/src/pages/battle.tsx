@@ -19,6 +19,8 @@ export default function Home() {
           <li className="content">
             <Link href="/Container">
               <Button label="Characters" />
+            <Link href="/box">
+              <Button label="Box" />
             </Link>
           </li>
           <li className="content">

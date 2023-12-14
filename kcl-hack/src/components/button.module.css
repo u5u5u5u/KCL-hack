@@ -1,7 +1,7 @@
 .button {
   display: inline-block;
   width: 55vh;
-  font-size: 2.5rem;
+  font-size: 2rem;
   font-weight: bold;
   font-family: "Lucida Console", century;
   text-align: center;
@@ -9,14 +9,16 @@
   letter-spacing: 0.05em;
   color: #4689ff;
   background-color: #ffffff;
-  border: none;
-  border-radius: 0.5rem;
+  border: #4689ff solid 0.15rem;
+  border-radius: 5rem;
+  box-shadow: #4689ff 0.2rem 0.2rem 0.1rem;
   cursor: pointer;
-  transition: background-color 0.5s ease-in-out;
-  padding: 0.75rem 1rem;
+  transition: background-color 0.3s;
+  padding: 10px 0;
 }
 
 .button:hover {
   color: #ffffff;
   background-color: #4689ff;
+  box-shadow: none;
 }
