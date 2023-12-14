@@ -24,26 +24,27 @@
 }
 
 .label {
-  font-size: 1.5rem;
+  font-size: 2rem;
   font-weight: 600;
-  font-family: century;
+  font-family: "Lucida Console", century;
   margin: 3rem auto 0.5rem auto;
 }
 
 .user_name {
-  font-size: 1.5rem;
-  width: 100%;
-  height: 3rem;
-  border-radius: 0.5rem;
+  font-size: 2rem;
+  font-family: "Lucida Console", century;
+  border: #cccccc 2px solid;
+  border-radius: 2rem;
   box-sizing: border-box;
+  padding: 0.5rem 1rem;
 }
 
 .one_word {
-  font-size: 1.5rem;
-  width: 100%;
-  height: 3rem;
-  border-radius: 0.5rem;
-  padding: 0.5rem;
+  font-size: 2rem;
+  font-family: "Lucida Console", century;
+  border: #cccccc 2px solid;
+  border-radius: 2rem;
   box-sizing: border-box;
   white-space: pre-wrap;
+  padding: 0.5rem 1rem;
 }
