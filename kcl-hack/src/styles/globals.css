@@ -18,6 +18,7 @@ main {
 .wrapper {
   display: flex;
   flex-direction: column;
+  justify-content: center;
   align-items: center;
 }
 
@@ -42,10 +43,14 @@ li {
 
 input {
   font-size: 2rem;
+  border: #cccccc 2px solid;
+  border-radius: 2rem;
+  padding: 0.5rem 1rem;
 }
 
 .button {
   display: inline-block;
+  width: 20vh;
   padding: 0.3rem 0.75rem;
   margin-left: 1rem;
   font-size: 1.8rem;
@@ -56,13 +61,15 @@ input {
   letter-spacing: 0.05em;
   color: #4689ff;
   background-color: #ffffff;
-  border: none;
-  border-radius: 0.2rem;
+  border: #4689ff solid 0.1rem;
+  border-radius: 2rem;
+  box-shadow: #4689ff 0.2rem 0.2rem 0.1rem;
   cursor: pointer;
-  transition: background-color 0.5s ease-in-out;
+  transition: background-color 0.3s;
 }
 
 .button:hover {
   color: #ffffff;
   background-color: #4689ff;
+  box-shadow: none;
 }

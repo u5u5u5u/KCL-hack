@@ -1,3 +1,40 @@
+.name {
+  height: 25%;
+  font-size: 0.5rem;
+  font-weight: bold;
+  margin: 0;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+}
+
+.name h1 {
+  margin: 0;
+}
+
+.image {
+  height: 100%;
+  padding: 5%;
+}
+
+.status {
+  height: 35%;
+}
+
+.status td {
+  width: 50%;
+  font-weight: bold;
+}
+
+.status .data1 {
+  text-align: left;
+}
+
+.status .data2 {
+  text-align: right;
+}
+
 .button {
   display: inline-block;
   width: 20vh;
@@ -11,13 +48,42 @@
   letter-spacing: 0.05em;
   color: #4689ff;
   background-color: #ffffff;
-  border: none;
-  border-radius: 0.2rem;
+  border: #4689ff solid 0.1rem;
+  border-radius: 2rem;
+  box-shadow: #4689ff 0.2rem 0.2rem 0.1rem;
   cursor: pointer;
-  transition: background-color 0.5s ease-in-out;
+  transition: background-color 0.3s;
 }
 
 .button:hover {
   color: #ffffff;
   background-color: #4689ff;
+  box-shadow: none;
+}
+
+.registration_button {
+  display: inline-block;
+  width: 20vh;
+  padding: 0.3rem 0.75rem;
+  margin-left: 1rem;
+  font-size: 1.8rem;
+  font-weight: bold;
+  font-family: "Lucida Console", century;
+  text-align: center;
+  text-decoration: none;
+  letter-spacing: 0.05em;
+  color: #4689ff;
+  background-color: #ffffff;
+  border: #4689ff solid 0.1rem;
+  border-radius: 2rem;
+  box-shadow: #4689ff 0.2rem 0.2rem 0.1rem;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  margin: 5% auto 0;
+}
+
+.registration_button:hover {
+  color: #ffffff;
+  background-color: #4689ff;
+  box-shadow: none;
 }

@@ -1,6 +1,5 @@
 "use client";
 import React, { useState } from "react";
-import Link from "next/link";
 import { getDatabase, ref, set, child, get } from "firebase/database";
 import { getAuth } from "firebase/auth";
 import { useEffect } from "react";
@@ -77,7 +76,7 @@ export default function Home() {
       <div className="container">
         <div className="wrapper">
           <div className="wrapper">
-            <label className={styles.label}>ユーザーネーム</label>
+            <label className={styles.label}>User Name</label>
             <input
               className={styles.user_name}
               type="text"
@@ -86,7 +85,7 @@ export default function Home() {
             ></input>
           </div>
           <div className="wrapper">
-            <label className={styles.label}>ひとこと</label>
+            <label className={styles.label}>Comment</label>
             <input
               className={styles.one_word}
               placeholder="よろしくお願いします"

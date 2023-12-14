@@ -21,11 +21,17 @@ export default function Home() {
   const [price, setPri] = useState<number>();
   const [image, setIma] = useState<string>("");
 
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+
   function jan_get(jan: number) {
     var HP = 0;
     var attack = 0;
     var defence = 0;
     var speed = 0;
+    var w0 = 0;
+    var w1 = 0;
+    var w2 = 0;
+    var w3 = 0;
     if (jan > 99999999) {
       var jan013 = jan % 10;
       var jan012 = ((jan % 100) - jan013) / 10;
@@ -146,6 +152,11 @@ export default function Home() {
       defence =
         ((jan007 * 1000 + jan005 * 100 + jan002 * 10 + jan001) % 499) + 100;
       speed = ((jan008 * 100 + jan010 * 10 + jan005) % 97) + 50;
+      w0 = (jan005 + jan003 * jan002 - jan005) % 5
+      w1 = (jan013 + jan011 * jan006 - jan002) % 3
+      w2 = (jan009 + jan003 * jan008 - jan004) % 4
+      w3 = (jan001 + jan006 * jan010 - jan007) % 3
+      
     }
     if (jan <= 99999999) {
       var jan013 = jan % 10;
@@ -207,6 +218,10 @@ export default function Home() {
       defence =
         ((jan007 * 1000 + jan007 * 100 + jan010 * 10 + jan008) % 499) + 100;
       speed = ((jan008 * 100 + jan010 * 10 + jan006) % 97) + 50;
+      w0 = (jan006 + jan007 * jan012 - jan013) % 5
+      w1 = (jan013 + jan011 * jan006 - jan008) % 3
+      w2 = (jan009 + jan010 * jan008 - jan009) % 4
+      w3 = (jan007 + jan006 * jan010 - jan011) % 3
     }
     setHP(HP);
     setAttack(attack);
@@ -284,32 +299,68 @@ export default function Home() {
               onChange={changeNum}
               placeholder="JANコード"
             />
-            <button className="button" onClick={sendNum}>
+            <button
+              className={styles.button}
+              aria-hidden={isOpen}
+              onClick={sendNum}
+            >
               検索
             </button>
           </div>
-          <div>
-            <img src={image} />
+          <div role="group">
+            <div id="contents" className="accordion-body" aria-hidden={!isOpen}>
+              <div className={styles.image}>
+                <img src={image} />
+              </div>
+              <ul>
+                <li>商品名 : {name}</li>
+                <li>価格 : {price}円</li>
+              </ul>
+              <table className={styles.status}>
+                <tbody>
+                  <tr>
+                    <td className={styles.data1}>Jan Code</td>
+                    <td className={styles.data2}>{Jan}</td>
+                  </tr>
+                  <tr>
+                    <td className={styles.data1}>HP</td>
+                    <td className={styles.data2}>{Hp}</td>
+                  </tr>
+                  <tr>
+                    <td className={styles.data1}>Attack</td>
+                    <td className={styles.data2}>{Attack}</td>
+                  </tr>
+                  <tr>
+                    <td className={styles.data1}>Defence</td>
+                    <td className={styles.data2}>{Defence}</td>
+                  </tr>
+                  <tr>
+                    <td className={styles.data1}>Speed</td>
+                    <td className={styles.data2}>{Speed}</td>
+                  </tr>
+                </tbody>
+              </table>
+              <button
+                className={styles.registration_button}
+                onClick={sendStatus}
+              >
+                登録
+              </button>
+            </div>
           </div>
-          <ul>
-            <li>商品名 : {name}</li>
-            <li>価格 : {price}円</li>
-          </ul>
-          <button className={styles.button} onClick={sendStatus}>
-            登録
-          </button>
         </div>
       </div>
-      <div>
-        <ul>
-          <li>コード {Jan}</li>
-          <li>HP {Hp}</li>
-          <li>こうげき {Attack}</li>
-          <li>ぼうぎょ {Defence}</li>
-          <li>すばやさ {Speed}</li>
-        </ul>
-      </div>
       <Footer />
+      <style jsx>{`
+        .accordion-body {
+          height: ${isOpen ? "auto" : 0};
+          transition: height 0.3s ease-out;
+          overflow: hidden;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+        }
+      `}</style>
     </main>
   );
 }

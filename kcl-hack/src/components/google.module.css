@@ -10,15 +10,17 @@
   letter-spacing: 0.05em;
   color: #4689ff;
   background-color: #ffffff;
-  border: none;
-  border-radius: 0.2rem;
+  border: #4689ff solid 0.1rem;
+  border-radius: 2rem;
+  box-shadow: #4689ff 0.2rem 0.2rem 0.1rem;
   cursor: pointer;
-  transition: background-color 0.5s ease-in-out;
+  transition: background-color 0.3s;
 }
 
 .button:hover {
   color: #ffffff;
   background-color: #4689ff;
+  box-shadow: none;
 }
 
 .text {
