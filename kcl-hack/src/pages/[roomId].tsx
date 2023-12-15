@@ -62,6 +62,7 @@ export default function Home() {
   const [changeStatus, setChangeStatus] = useState<string>();
   const [selectw, setSelectw] = useState<number>(-1);
   const [selectt, setSelectt] = useState<number>(-1);
+  const [damageSetUped, setDamageSetUped] = useState<boolean>(false);
   const [calDone, setCalDone] = useState<boolean>(false);
   const [mathTrancDone, setMathTrancDone] = useState<boolean>(false);
   const [deltaChanged, setDeltaChanged] = useState<boolean>(false);
@@ -185,7 +186,7 @@ export default function Home() {
 
   useEffect(() => {
     calDeltaStatus();
-  }, [damage1, damage2]);
+  }, [damageSetUped]);
 
   useEffect(() => {
     if (calDone) {
@@ -219,7 +220,6 @@ export default function Home() {
       setPlayer2deltaDefence(0);
       setPlayer2Speed(player2Speed + player2deltaSpeed);
       setPlayer2deltaSpeed(0);
-      setCalDone(false);
       setDeltaChanged(true);
     }
   }, [mathTrancDone]);
@@ -238,6 +238,8 @@ export default function Home() {
         Defence: player2Defence,
         Speed: player2Speed,
       });
+      setDamageSetUped(false);
+      setCalDone(false);
       setMathTrancDone(false);
       setDeltaChanged(false);
       if (
@@ -254,7 +256,7 @@ export default function Home() {
         member2Status == "foMember2Turn"
       ) {
         update(ref(db, `Room/${roomId}/MemberStatus`), {
-          Member1: "laeMember1Turn",
+          Member1: "laMember1Turn",
           Member2: "laMember1Turn",
         });
       }
@@ -346,69 +348,71 @@ export default function Home() {
   }
 
   function calDeltaStatus() {
-    if (selectt == 0) {
-      if (selectw == 0) {
-        console.log("たたく");
-        w00_cal();
-      } else if (selectw == 1) {
-        console.log("ちゅーちゅーする");
-        w01_cal();
-      } else if (selectw == 2) {
-        console.log("ぜんりょくこうげき");
-        w02_cal();
-      } else if (selectw == 3) {
-        console.log("じばく");
-        w03_cal();
-      } else if (selectw == 4) {
-        console.log("ぺちぺちする");
-        w04_cal();
-      } else {
-        console.log("エラーです");
+    if (damageSetUped) {
+      if (selectt == 0) {
+        if (selectw == 0) {
+          console.log("たたく");
+          w00_cal();
+        } else if (selectw == 1) {
+          console.log("ちゅーちゅーする");
+          w01_cal();
+        } else if (selectw == 2) {
+          console.log("ぜんりょくこうげき");
+          w02_cal();
+        } else if (selectw == 3) {
+          console.log("じばく");
+          w03_cal();
+        } else if (selectw == 4) {
+          console.log("ぺちぺちする");
+          w04_cal();
+        } else {
+          console.log("エラーです");
+        }
       }
-    }
-    if (selectt == 1) {
-      if (selectw == 0) {
-        console.log("ねる");
-        w10_cal();
-      } else if (selectw == 1) {
-        console.log("ぐっすりねる");
-        w11_cal();
-      } else if (selectw == 2) {
-        console.log("ぜっき");
-        w12_cal();
-      } else {
-        console.log("エラーです");
+      if (selectt == 1) {
+        if (selectw == 0) {
+          console.log("ねる");
+          w10_cal();
+        } else if (selectw == 1) {
+          console.log("ぐっすりねる");
+          w11_cal();
+        } else if (selectw == 2) {
+          console.log("ぜっき");
+          w12_cal();
+        } else {
+          console.log("エラーです");
+        }
       }
-    }
-    if (selectt == 2) {
-      if (selectw == 0) {
-        console.log("ちょうはつ");
-        w20_cal();
-      } else if (selectw == 1) {
-        console.log("ひきこもる");
-        w21_cal();
-      } else if (selectw == 2) {
-        console.log("こわいおにいさんをつれてくる");
-        w22_cal();
-      } else if (selectw == 3) {
-        console.log("にらむ");
-        w23_cal();
-      } else {
-        console.log("エラーです");
+      if (selectt == 2) {
+        if (selectw == 0) {
+          console.log("ちょうはつ");
+          w20_cal();
+        } else if (selectw == 1) {
+          console.log("ひきこもる");
+          w21_cal();
+        } else if (selectw == 2) {
+          console.log("こわいおにいさんをつれてくる");
+          w22_cal();
+        } else if (selectw == 3) {
+          console.log("にらむ");
+          w23_cal();
+        } else {
+          console.log("エラーです");
+        }
       }
-    }
-    if (selectt == 3) {
-      if (selectw == 0) {
-        console.log("ざんねんでしたー");
-        w30_cal();
-      } else if (selectw == 1) {
-        console.log("ぎあちぇんじ");
-        w31_cal();
-      } else if (selectw == 2) {
-        console.log("みちづれ");
-        w32_cal();
-      } else {
-        console.log("エラーです");
+      if (selectt == 3) {
+        if (selectw == 0) {
+          console.log("ざんねんでしたー");
+          w30_cal();
+        } else if (selectw == 1) {
+          console.log("ぎあちぇんじ");
+          w31_cal();
+        } else if (selectw == 2) {
+          console.log("みちづれ");
+          w32_cal();
+        } else {
+          console.log("エラーです");
+        }
       }
     }
   }
@@ -441,6 +445,7 @@ export default function Home() {
   function calDamege() {
     setDamage1((player1Attack / player2Defence) * 100);
     setDamage2((player2Attack / player1Defence) * 100);
+    setDamageSetUped(true);
   }
 
   function w00_cal() {
@@ -543,8 +548,8 @@ export default function Home() {
       if (player1HPmax - player1HP > 0) {
         setPlayer1deltaHP(player1HPmax - player1HP);
       }
-      setPlayer1deltaDefence(player1Defence - player1Defence / 2);
-      setPlayer1deltaAttack(player1Attack - player1Attack / 2);
+      setPlayer1deltaDefence(player1Defence / 2 - player1Defence);
+      setPlayer1deltaAttack(player1Attack / 2 - player1Attack);
     }
     if (whoIs == "Member2") {
       console.log("w12");
@@ -674,6 +679,7 @@ export default function Home() {
           setPlayer1Defence(data.Defence);
           setPlayer1Speed(data.Speed);
           setPlayer1Img(data.Img);
+          setRedirect1(false);
         } else {
           console.log("No data available");
           setRedirect1(true);
@@ -701,6 +707,7 @@ export default function Home() {
           setPlayer2Defence(data.Defence);
           setPlayer2Speed(data.Speed);
           setPlayer2Img(data.Img);
+          setRedirect2(false);
         } else {
           console.log("No data available");
           setRedirect2(true);
