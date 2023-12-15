@@ -51,6 +51,7 @@ export default function Home() {
   const [redirect1, setRedirect1] = useState<boolean>(false);
   const [redirect2, setRedirect2] = useState<boolean>(false);
   const [redirect3, setRedirect3] = useState<boolean>(false);
+  const [redirect4, setRedirect4] = useState<boolean>(false);
   const [w00, setw00] = useState<number>(0);
   const [w01, setw01] = useState<number>(0);
   const [w02, setw02] = useState<number>(0);
@@ -149,19 +150,25 @@ export default function Home() {
 
       if (
         member1Status == "laMember1Turn" &&
-        member2Status == "laMember2Turn"
+        member2Status == "laMember1Turn"
       ) {
         if (whoIs == "Member1") {
           calDamege();
+          setRedirect4(false);
         }
+      } else {
+        setRedirect4(true);
       }
       if (
         member1Status == "laMember2Turn" &&
-        member2Status == "laMember1Turn"
+        member2Status == "laMember2Turn"
       ) {
         if (whoIs == "Member2") {
           calDamege();
+          setRedirect4(false);
         }
+      } else {
+        setRedirect4(true);
       }
     }
 
