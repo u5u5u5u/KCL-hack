@@ -93,6 +93,7 @@ export default function Home() {
     }
 
     if (member1Status == "selecting" || member2Status == "selecting") {
+      console.log("success");
       setSelectVisible(true);
       getplayerw();
     }
@@ -181,6 +182,7 @@ export default function Home() {
             setw01(data.w01);
             setw02(data.w02);
             setw03(data.w03);
+            lookw();
           } else {
             console.log("No data available");
           }
