@@ -145,6 +145,23 @@ export default function Home() {
           calDamege();
         }
       }
+
+      if (
+        member1Status == "laMember1Turn" &&
+        member2Status == "laMember2Turn"
+      ) {
+        if (whoIs == "Member1") {
+          calDamege();
+        }
+      }
+      if (
+        member1Status == "laMember2Turn" &&
+        member2Status == "laMember1Turn"
+      ) {
+        if (whoIs == "Member2") {
+          calDamege();
+        }
+      }
     }
 
     console.log("changed");
