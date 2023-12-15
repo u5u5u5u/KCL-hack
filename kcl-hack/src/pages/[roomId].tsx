@@ -30,6 +30,10 @@ export default function Home() {
   const [player1deltaAttack, setPlayer1deltaAttack] = useState<number>(0);
   const [player1deltaDefence, setPlayer1deltaDefence] = useState<number>(0);
   const [player1deltaSpeed, setPlayer1deltaSpeed] = useState<number>(0);
+  const [player1w01, setPlayer1w01] = useState<string>("");
+  const [player1w02, setPlayer1w02] = useState<string>("");
+  const [player1w03, setPlayer1w03] = useState<string>("");
+  const [player1w04, setPlayer1w04] = useState<string>("");
   const [player1Img, setPlayer1Img] = useState<string>("");
   const [member2Status, setMember2Status] = useState<string>("null");
   const [player2Status, setPlayer2Status] = useState<Object>();
@@ -138,6 +142,76 @@ export default function Home() {
   var HP2max = HP2;
   var zan;
   var zanmax;
+  var w0 = 0;
+  var w1 = 0;
+  var w2 = 0;
+  var w3 = 0;
+
+  function w0_cal() {
+    if (w0 == 0) {
+      console.log("たたく");
+      w00_cal();
+    } else if (w0 == 1) {
+      console.log("ちゅーちゅーする");
+      w01_cal;
+    } else if (w0 == 2) {
+      console.log("ぜんりょくこうげき");
+      w02_cal;
+    } else if (w0 == 3) {
+      console.log("じばく");
+      w03_cal;
+    } else if (w0 == 4) {
+      console.log("ぺちぺちする");
+      w04_cal;
+    } else {
+      console.log("エラーです");
+    }
+  }
+  function w1_cal() {
+    if (w1 == 0) {
+      console.log("ねる");
+      w10_cal();
+    } else if (w1 == 1) {
+      console.log("ぐっすりねる");
+      w11_cal;
+    } else if (w1 == 2) {
+      console.log("ぜっき");
+      w12_cal;
+    } else {
+      console.log("エラーです");
+    }
+  }
+  function w2_cal() {
+    if (w2 == 0) {
+      console.log("ちょうはつ");
+      w20_cal();
+    } else if (w2 == 1) {
+      console.log("ひきこもる");
+      w21_cal;
+    } else if (w2 == 2) {
+      console.log("こわいおにいさんをつれてくる");
+      w22_cal;
+    } else if (w2 == 3) {
+      console.log("にらむ");
+      w23_cal;
+    } else {
+      console.log("エラーです");
+    }
+  }
+  function w3_cal() {
+    if (w3 == 0) {
+      console.log("ざんねんでしたー");
+      w30_cal();
+    } else if (w3 == 1) {
+      console.log("ぎあちぇんじ");
+      w31_cal;
+    } else if (w3 == 2) {
+      console.log("みちづれ");
+      w32_cal;
+    } else {
+      console.log("エラーです");
+    }
+  }
 
   function w00_cal() {
     console.log("w00"); //相手に1倍ダメージを与える
@@ -314,6 +388,10 @@ export default function Home() {
       });
   }, [redirect2]);
 
+  useEffect(() => {
+    setPlayer1w01("たたく");
+  });
+
   async function leftRoom() {
     const UUid = await getUid();
     const db = getDatabase();
@@ -378,7 +456,6 @@ export default function Home() {
   async function settest() {
     setChangeStatus("ready");
   }
-  return null;
 
   return (
     <main>
@@ -430,23 +507,10 @@ export default function Home() {
       <h2>にげる</h2>
       <button onClick={settest}>test</button>
       <button onClick={leftRoom}>退室</button>
-      <Button onClick={w00_cal}>たたく</Button>
-      <Button onClick={w01_cal}>ちゅーちゅーする</Button>
-      <Button onClick={w02_cal}>ぜんりょくこうげき</Button>
-      <Button onClick={w03_cal}>じばく</Button>
-      <Button onClick={w04_cal}>ぺちぺちする</Button>
-
-      <Button onClick={w10_cal}>ねる</Button>
-      <Button onClick={w11_cal}>ぐっすりねる</Button>
-      <Button onClick={w12_cal}>ぜっき</Button>
-
-      <Button onClick={w20_cal}>ちょうはつ</Button>
-      <Button onClick={w21_cal}>ひきこもる</Button>
-      <Button onClick={w22_cal}>こわいおにいさんをつれてくる</Button>
-      <Button onClick={w23_cal}>にらむ</Button>
-      <Button onClick={w30_cal}>ざんねんでしたー</Button>
-      <Button onClick={w31_cal}>ぎあちぇんじ</Button>
-      <Button onClick={w32_cal}>みちづれ</Button>
+      <Button onClick={w0_cal}>{player1w01}</Button>
+      <Button onClick={w1_cal}>わざ2</Button>
+      <Button onClick={w2_cal}>わざ3</Button>
+      <Button onClick={w3_cal}>わざ4</Button>
     </main>
   );
 }
