@@ -18,6 +18,7 @@
 .content:hover {
   box-shadow: 0.3rem 0.3rem 0.2rem #4689ff;
   transform: translateY(-1rem);
+  transition: transform 0.3s;
 }
 
 .name {
