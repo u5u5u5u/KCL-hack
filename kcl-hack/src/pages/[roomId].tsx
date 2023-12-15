@@ -163,15 +163,7 @@ export default function Home() {
     HP2 -= damage1 / 4;
     attack1 /= 2;
   }
-  function w05_cal() {
-    console.log("w05");
-  }
-  function w06_cal() {
-    console.log("w06");
-  }
-  function w07_cal() {
-    console.log("w07");
-  }
+
   function w10_cal() {
     console.log("w10"); //自分の1倍ダメージぶん自分を回復する
     HP1 += damage1;
@@ -186,9 +178,7 @@ export default function Home() {
     defence1 /= 2;
     attack1 /= 2;
   }
-  function w13_cal() {
-    console.log("w13");
-  }
+
   function w20_cal() {
     console.log("w20"); //相手のこうげきを2倍、ぼうぎょを0.5倍する
     attack2 *= 2;
@@ -225,9 +215,6 @@ export default function Home() {
     console.log("w32"); //自分と相手のHPをそれぞれ1にする
     HP1 = 1;
     HP2 = 1;
-  }
-  function w33_cal() {
-    console.log("w33");
   }
 
   useEffect(() => {
@@ -448,13 +435,11 @@ export default function Home() {
       <Button onClick={w02_cal}>ぜんりょくこうげき</Button>
       <Button onClick={w03_cal}>じばく</Button>
       <Button onClick={w04_cal}>ぺちぺちする</Button>
-      <Button onClick={w05_cal}>w05</Button>
-      <Button onClick={w06_cal}>w06</Button>
-      <Button onClick={w07_cal}>w07</Button>
+
       <Button onClick={w10_cal}>ねる</Button>
       <Button onClick={w11_cal}>ぐっすりねる</Button>
       <Button onClick={w12_cal}>ぜっき</Button>
-      <Button onClick={w13_cal}>w13</Button>
+
       <Button onClick={w20_cal}>ちょうはつ</Button>
       <Button onClick={w21_cal}>ひきこもる</Button>
       <Button onClick={w22_cal}>こわいおにいさんをつれてくる</Button>
@@ -462,7 +447,6 @@ export default function Home() {
       <Button onClick={w30_cal}>ざんねんでしたー</Button>
       <Button onClick={w31_cal}>ぎあちぇんじ</Button>
       <Button onClick={w32_cal}>みちづれ</Button>
-      <Button onClick={w33_cal}>w33</Button>
     </main>
   );
 }
