@@ -26,8 +26,8 @@ export default function Home() {
         </div>
       </div>
       <div>
-        <Link href="/home">
-          <button>ホームへ</button>
+        <Link href="/cresit">
+          <button>クレジット</button>
         </Link>
       </div>
     </main>

@@ -92,6 +92,12 @@ export default function Home() {
       }
     }
 
+    if (member1Status == "selecting" || member2Status == "selecting") {
+      console.log("success");
+      setSelectVisible(true);
+      getplayerw();
+    }
+
     if (
       (member1Status == "selected" && member2Status == "selected") ||
       member1Status == "processing" ||
@@ -144,15 +150,17 @@ export default function Home() {
     const auth = getAuth();
     const db = getDatabase();
     if (whoIs == "Member1") {
-      const snapshot = get(child(dbRef, `Room/${roomId}/ButtleStatus/Member1`))
+      const snapshot = get(
+        child(dbRef, `Room/${roomId}/ButtleStatus/Member1/Status`)
+      )
         .then((snapshot) => {
           if (snapshot.exists()) {
             console.log("available");
             const data = snapshot.val();
-            setw00(data.w0);
-            setw01(data.w1);
-            setw02(data.w2);
-            setw03(data.w3);
+            setw00(data.w00);
+            setw01(data.w01);
+            setw02(data.w02);
+            setw03(data.w03);
           } else {
             console.log("No data available");
           }
@@ -162,15 +170,17 @@ export default function Home() {
         });
     }
     if (whoIs == "Member2") {
-      const snapshot = get(child(dbRef, `Room/${roomId}/ButtleStatus/Member2`))
+      const snapshot = get(
+        child(dbRef, `Room/${roomId}/ButtleStatus/Member2/Status`)
+      )
         .then((snapshot) => {
           if (snapshot.exists()) {
             console.log("available");
             const data = snapshot.val();
-            setw00(data.w0);
-            setw01(data.w1);
-            setw02(data.w2);
-            setw03(data.w3);
+            setw00(data.w00);
+            setw01(data.w01);
+            setw02(data.w02);
+            setw03(data.w03);
           } else {
             console.log("No data available");
           }
@@ -487,23 +497,7 @@ export default function Home() {
       Member1: "selecting",
       Member2: "selecting",
     });
-    getplayerw();
     setStartVisible(false);
-    setSelectVisible(true);
-  }
-
-  function panch() {
-    if (whoIs == "Member1") {
-      if (member1Status == "selecting") {
-        setChangeStatus("selected");
-      }
-    }
-    if (whoIs == "Member2") {
-      if (member2Status == "selecting") {
-        setChangeStatus("selected");
-      }
-    }
-    setSelectVisible(false);
   }
 
   useEffect(() => {
@@ -534,6 +528,7 @@ export default function Home() {
   }, [redirect2]);
 
   useEffect(() => {
+    console.log("looking");
     if (w00 == 0) {
       setPlayerw00("たたく");
     } else if (w00 == 1) {
@@ -676,12 +671,6 @@ export default function Home() {
         <h2>コマンドを選んでください</h2>
       </div>
       <button
-        onClick={panch}
-        style={{ visibility: selectVisible ? "visible" : "hidden" }}
-      >
-        Panch
-      </button>
-      <button
         onClick={start}
         style={{ visibility: startVisible ? "visible" : "hidden" }}
       >
@@ -691,10 +680,30 @@ export default function Home() {
       <h2>にげる</h2>
       <button onClick={settest}>test</button>
       <button onClick={leftRoom}>退室</button>
-      <Button onClick={w0_cal}>{playerw00}</Button>
-      <Button onClick={w1_cal}>{playerw01}</Button>
-      <Button onClick={w2_cal}>{playerw02}</Button>
-      <Button onClick={w3_cal}>{playerw03}</Button>
+      <Button
+        onClick={w0_cal}
+        style={{ visibility: selectVisible ? "visible" : "hidden" }}
+      >
+        {playerw00}
+      </Button>
+      <Button
+        onClick={w1_cal}
+        style={{ visibility: selectVisible ? "visible" : "hidden" }}
+      >
+        {playerw01}
+      </Button>
+      <Button
+        onClick={w2_cal}
+        style={{ visibility: selectVisible ? "visible" : "hidden" }}
+      >
+        {playerw02}
+      </Button>
+      <Button
+        onClick={w3_cal}
+        style={{ visibility: selectVisible ? "visible" : "hidden" }}
+      >
+        {playerw03}
+      </Button>
     </main>
   );
 }
