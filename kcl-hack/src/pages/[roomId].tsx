@@ -22,6 +22,7 @@ export default function Home() {
   const [redirectWho, setRedirectWho] = useState<boolean>(false);
   const [member1Status, setMember1Status] = useState<string>("null");
   const [player1Status, setPlayer1Status] = useState<Object>();
+  const [player1Onvalue, setPlayer1Onvalue] = useState<string>("");
   const [player1HP, setPlayer1HP] = useState<number>(1);
   const [player1HPmax, setPlayer1HPmax] = useState<number>(1);
   const [player1Attack, setPlayer1Attack] = useState<number>(0);
@@ -35,6 +36,7 @@ export default function Home() {
   const [player1Img, setPlayer1Img] = useState<string>("");
   const [member2Status, setMember2Status] = useState<string>("null");
   const [player2Status, setPlayer2Status] = useState<Object>();
+  const [player2Onvalue, setPlayer2Onvalue] = useState<string>("");
   const [player2HP, setPlayer2HP] = useState<number>(1);
   const [player2HPmax, setPlayer2HPmax] = useState<number>(1);
   const [player2Attack, setPlayer2Attack] = useState<number>(0);
@@ -76,18 +78,32 @@ export default function Home() {
   onValue(ref(db, `Room/${roomId}/MemberStatus/Member1`), (snapshot) => {
     const data = snapshot.val();
     if (data != member1Status) {
-      setMember1Status(data);
-      console.log(data);
+      setPlayer1Onvalue(data);
     }
   });
+
+  useEffect(() => {
+    if (player1Onvalue != "null") {
+      if (player1Onvalue != member1Status) {
+        setMember1Status(player1Onvalue);
+      }
+    }
+  }, [player1Onvalue]);
 
   onValue(ref(db, `Room/${roomId}/MemberStatus/Member2`), (snapshot) => {
     const data = snapshot.val();
     if (data != member2Status) {
-      setMember2Status(data);
-      console.log(data);
+      setPlayer2Onvalue(data);
     }
   });
+
+  useEffect(() => {
+    if (player2Onvalue != "null") {
+      if (player2Onvalue != member2Status) {
+        setMember2Status(player2Onvalue);
+      }
+    }
+  }, [player2Onvalue]);
 
   useEffect(() => {
     const auth = getAuth();
