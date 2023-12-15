@@ -1,0 +1,81 @@
+.mid {
+  text-align: center;
+  margin-top: 14%;
+}
+
+.big {
+  font-size: 40px;
+}
+
+.small {
+  font-size: 30px;
+}
+
+.phrase_semi {
+  font-size: 20px;
+  color: red;
+}
+.phrase_semi_2 {
+  font-size: 20px;
+  color: red;
+  margin-left: 5%;
+  animation: 1s linear infinite rotation;
+}
+.phrase_yugo {
+  font-size: 20px;
+  color: blue;
+  margin-right: 5%;
+  animation: heartbeat 1.5s infinite ease-in-out;
+}
+.phrase_hamu {
+  font-size: 20px;
+  color: green;
+  animation: bounce 2s linear infinite;
+}
+.side {
+  display: flex;
+  justify-content: center;
+}
+@keyframes bounce {
+  0% {
+    transform: translateY(0);
+  }
+  10% {
+    transform: translateY(-20px);
+  }
+  20% {
+    transform: translateY(0);
+  }
+  30% {
+    transform: translateY(-20px);
+  }
+  40% {
+    transform: translateY(0);
+  }
+}
+@keyframes rotation {
+  0% {
+    transform: rotate(0);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes heartbeat {
+  0% {
+    transform: scale(1);
+  }
+  12% {
+    transform: scale(1.5);
+  }
+  21% {
+    transform: scale(1);
+  }
+  33% {
+    transform: scale(1.2);
+  }
+  54% {
+    transform: scale(1);
+  }
+}
