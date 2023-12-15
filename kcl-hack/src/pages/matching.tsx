@@ -1,7 +1,15 @@
 "use client";
-import {useRouter} from 'next/router'
+import { useRouter } from "next/router";
 import React, { ChangeEvent, useState, useEffect } from "react";
-import { getDatabase, ref, child, get, set, update, onValue } from "firebase/database";
+import {
+  getDatabase,
+  ref,
+  child,
+  get,
+  set,
+  update,
+  onValue,
+} from "firebase/database";
 import { getAuth } from "firebase/auth";
 import Header from "../components/header";
 import Footer from "../components/footer";
@@ -23,7 +31,7 @@ export default function Home() {
   const [userUUID, setUUID] = useState<string>("");
   const [userChara, setuserChara] = useState<string>("");
   const [sendStatus, setSendStatus] = useState<Object>();
-  const[redirect, setRedirect] = useState<boolean>(false);
+  const [redirect, setRedirect] = useState<boolean>(false);
   const dbRef = ref(getDatabase());
 
   const changeNum = (event: ChangeEvent<HTMLInputElement>) => {
@@ -40,33 +48,34 @@ export default function Home() {
   }
 
   useEffect(() => {
-    async function getCharaid () {
+    async function getCharaid() {
       const UUid = await getUid();
-    console.log(UUid);
-    get(child(dbRef, `User/${UUid}/SelectChara/`))
-      .then((snapshot) => {
-        if (snapshot.exists()) {
-          const data = snapshot.val();
-          setuserChara(data.SelectId);
-          setRedirect(false);
-          setUUID(UUid);
-        } else {
-          console.log("No data available");
-          setRedirect(true);
-        }
-      })
-      .catch((error) => {
-        console.error(error);
-      });
+      console.log(UUid);
+      get(child(dbRef, `User/${UUid}/SelectChara/`))
+        .then((snapshot) => {
+          if (snapshot.exists()) {
+            const data = snapshot.val();
+            setuserChara(data.SelectId);
+            setRedirect(false);
+            setUUID(UUid);
+          } else {
+            console.log("No data available");
+            setRedirect(true);
+          }
+        })
+        .catch((error) => {
+          console.error(error);
+        });
     }
     getCharaid();
-  },[redirect]);
+  }, [redirect]);
 
   useEffect(() => {
     get(child(dbRef, `User/${userUUID}/Charadata/${userChara}/`))
       .then((snapshot) => {
         if (snapshot.exists()) {
           const data = snapshot.val();
+          data.Status.HPmax = data.Status.HP;
           console.log(data);
           setSendStatus(data);
         } else {
@@ -76,7 +85,7 @@ export default function Home() {
       .catch((error) => {
         console.error(error);
       });
-  },[userChara]);
+  }, [userChara]);
 
   const lookForRoom = async () => {
     const UUID = await getUid();

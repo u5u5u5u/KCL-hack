@@ -23,6 +23,7 @@ export default function Home() {
   const [member1Status, setMember1Status] = useState<string>("null");
   const [player1Status, setPlayer1Status] = useState<Object>();
   const [player1HP, setPlayer1HP] = useState<number>(1);
+  const [player1HPmax, setPlayer1HPmax] = useState<number>(1);
   const [player1Attack, setPlayer1Attack] = useState<number>(0);
   const [player1Defence, setPlayer1Defence] = useState<number>(0);
   const [player1Speed, setPlayer1Speed] = useState<number>(0);
@@ -30,6 +31,7 @@ export default function Home() {
   const [player1deltaAttack, setPlayer1deltaAttack] = useState<number>(0);
   const [player1deltaDefence, setPlayer1deltaDefence] = useState<number>(0);
   const [player1deltaSpeed, setPlayer1deltaSpeed] = useState<number>(0);
+  const [damage1, setDamage1] = useState<number>(0);
   const [player1w00, setPlayer1w00] = useState<string>("");
   const [player1w01, setPlayer1w01] = useState<string>("");
   const [player1w02, setPlayer1w02] = useState<string>("");
@@ -38,6 +40,7 @@ export default function Home() {
   const [member2Status, setMember2Status] = useState<string>("null");
   const [player2Status, setPlayer2Status] = useState<Object>();
   const [player2HP, setPlayer2HP] = useState<number>(1);
+  const [player2HPmax, setPlayer2HPmax] = useState<number>(1);
   const [player2Attack, setPlayer2Attack] = useState<number>(0);
   const [player2Defence, setPlayer2Defence] = useState<number>(0);
   const [player2Speed, setPlayer2Speed] = useState<number>(0);
@@ -45,6 +48,7 @@ export default function Home() {
   const [player2deltaAttack, setPlayer2deltaAttack] = useState<number>(0);
   const [player2deltaDefence, setPlayer2deltaDefence] = useState<number>(0);
   const [player2deltaSpeed, setPlayer2deltaSpeed] = useState<number>(0);
+  const [damage2, setDamage2] = useState<number>(0);
   const [player2Img, setPlayer2Img] = useState<string>("");
   const [startVisible, setStartVisible] = useState<boolean>(false);
   const [selectVisible, setSelectVisible] = useState<boolean>(false);
@@ -92,6 +96,14 @@ export default function Home() {
       setChangeStatus("processing");
     }
 
+    if (member1Status == "processing" && member2Status == "processing") {
+      if (player1Speed < player2Speed) {
+        setChangeStatus("Member2Turn");
+      } else {
+        setChangeStatus("Member1Turn");
+      }
+    }
+
     console.log("changed");
   }, [member1Status, member2Status]);
 
@@ -134,8 +146,6 @@ export default function Home() {
   var attack2 = 200;
   var defence2 = 900;
   var speed2 = 40;
-  var damage1 = attack1 / defence2;
-  var damage2 = attack2 / defence1;
   var strength1 = 500;
   var strength2 = 300;
   var HP1max = HP1;
@@ -213,82 +223,174 @@ export default function Home() {
     }
   }
 
-  function w00_cal() {
-    console.log("w00"); //相手に1倍ダメージを与える
-    HP2 -= damage1;
-  }
-  function w01_cal() {
-    console.log("w01"); //相手に0.5倍ダメージを与え、与えたダメージの0.5倍自分を回復する
-    HP2 -= damage1 / 2;
-    HP1 += damage1 / 4;
-  }
-  function w02_cal() {
-    console.log("w02"); //相手に2倍ダメージを与え、相手が自分に1倍ダメージを与える
-    HP2 -= damage1 * 2;
-    HP1 -= damage2;
-  }
-  function w03_cal() {
-    console.log("w03"); //相手に5倍ダメージを与え、自分のHPを0にする
-    HP2 -= damage1 * 5;
-    HP1 = 0;
-  }
-  function w04_cal() {
-    console.log("w04"); //相手に0.25倍ダメージを与え、自分のこうげきを2倍にする
-    HP2 -= damage1 / 4;
-    attack1 /= 2;
+  function calDamege() {
+    setDamage1((player1Attack / player2Defence) * 100);
+    setDamage2((player2Attack / player1Defence) * 100);
   }
 
-  function w10_cal() {
-    console.log("w10"); //自分の1倍ダメージぶん自分を回復する
-    HP1 += damage1;
+  function w00_cal() {//相手に1倍ダメージを与える
+    if (whoIs == "Member1") {
+      console.log("w00");
+      setPlayer2deltaHP(-damage1);
+    }
+    if (whoIs == "Member2") {
+      console.log("w00");
+      setPlayer1deltaHP(-damage2);
+    }
   }
-  function w11_cal() {
-    console.log("w11"); //自分のHP上限の0.5倍自分を回復する
-    HP1 += HP1max / 2;
+  function w01_cal() { //相手に0.5倍ダメージを与え、与えたダメージの0.5倍自分を回復する
+    if (whoIs == "Member1") {
+      console.log("w01");
+      setPlayer2deltaHP(-damage1 / 2);
+      setPlayer1deltaHP(damage1 / 4);
+    }
+    if (whoIs == "Member2") {
+      console.log("w01");
+      setPlayer1deltaHP(-damage2 / 2);
+      setPlayer2deltaHP(damage2 / 4);
+    }
   }
-  function w12_cal() {
-    console.log("w12"); //自分のHPを全回復し、自分のこうげきとぼうぎょをそれぞれ0.5倍する
-    HP1 = HP1max;
-    defence1 /= 2;
-    attack1 /= 2;
+  function w02_cal() { //相手に2倍ダメージを与え、相手が自分に1倍ダメージを与える
+    if (whoIs == "Member1") {
+      console.log("w02");
+      setPlayer2deltaHP(-damage1 * 2);
+      setPlayer1deltaHP(-damage2);
+    }
+    if (whoIs == "Member2") {
+      console.log("w02");
+      setPlayer1deltaHP(-damage2 * 2);
+      setPlayer2deltaHP(-damage1);
+    }
+  }
+  function w03_cal() {　//相手に5倍ダメージを与え、自分のHPを0にする
+    if (whoIs == "Member1") {
+      console.log("w03");
+      setPlayer2deltaHP(-damage1 * 5);
+      setPlayer1HP(0);
+    }
+    if (whoIs == "Member2") {
+      console.log("w03");
+      setPlayer1deltaHP(-damage2 * 5);
+      setPlayer2HP(0);
+    }
+  }
+  function w04_cal() { //相手に0.25倍ダメージを与え、自分のこうげきを2倍にする
+    if (whoIs == "Member1") {
+      console.log("w04");
+      setPlayer2deltaHP(-damage1 / 4);
+      setPlayer1Attack(player1Attack / 2);
+    }
+    if (whoIs == "Member2") {
+      console.log("w04");
+      setPlayer1deltaHP(-damage2 / 4);
+      setPlayer2Attack(player2Attack / 2);
+    }
   }
 
-  function w20_cal() {
-    console.log("w20"); //相手のこうげきを2倍、ぼうぎょを0.5倍する
-    attack2 *= 2;
-    defence2 /= 2;
+  function w10_cal() { //自分の1倍ダメージぶん自分を回復する
+    if (whoIs == "Member1") {
+      console.log("w10");
+      setPlayer2deltaHP(damage1);
+    }
+    if (whoIs == "Member2") {
+      console.log("w10");
+      setPlayer1deltaHP(damage2);
+    }
   }
-  function w21_cal() {
-    console.log("w21"); //自分のぼうぎょを2倍する
-    defence1 *= 2;
+  function w11_cal() {//自分のHP上限の0.5倍自分を回復する
+    if (whoIs == "Member1") {
+      console.log("w11");
+      setPlayer1deltaHP(player1HPmax / 2);
+    }
+    if (whoIs == "Member2") {
+      console.log("w11");
+      setPlayer2deltaHP(player2HPmax / 2);
+    }
   }
-  function w22_cal() {
-    console.log("w22"); //相手のこうげきとぼうぎょをそれぞれ0.33倍する
-    damage2 /= 3;
-    defence2 /= 3;
+  function w12_cal() {//自分のHPを全回復し、自分のこうげきとぼうぎょをそれぞれ0.5倍する
+    if (whoIs == "Member1") {
+      console.log("w12");
+      HP1 = HP1max;
+      setPlayer1Defence(player1Defence / 2);
+      setPlayer1Attack(player1Attack / 2);
+    }
+    if (whoIs == "Member2") {
+      console.log("w12");
+      HP2 = HP2max;
+      setPlayer2Defence(player2Defence / 2);
+      setPlayer2Attack(player2Attack / 2);
+    }
   }
-  function w23_cal() {
-    console.log("w23"); //相手のこうげきを0.5倍する
-    damage2 /= 2;
+
+  function w20_cal() {//相手のこうげきを2倍、ぼうぎょを0.5倍する
+    if (whoIs == "Member1") {
+      console.log("w20");
+      setPlayer1Attack(player1Attack * 2);
+      setPlayer2Defence(player2Defence / 2);
+    }
+    if (whoIs == "Member2") {
+      console.log("w20");
+      setPlayer2Attack(player2Attack * 2);
+      setPlayer1Defence(player1Defence / 2);
+    }
   }
-  function w30_cal() {
-    console.log("w30"); //自分のHP上限、HPをそれぞれ相手と入れ替える
-    zan = HP1;
-    zanmax = HP1max;
-    HP1 = HP2;
-    HP1max = HP2max;
-    HP2 = zan;
-    HP2max = zanmax;
+  function w21_cal() {//自分のぼうぎょを2倍する
+    if (whoIs == "Member1") {
+      console.log("w21");
+      setPlayer1Defence(player1Defence * 2);
+    }
+    if (whoIs == "Member2") {
+      console.log("w21");
+      setPlayer2Defence(player2Defence * 2);
+    }
   }
-  function w31_cal() {
-    console.log("w31"); //自分のこうげきを10倍、ぼうぎょを0.1倍する
-    attack1 *= 10;
-    defence1 /= 10;
+  function w22_cal() {//相手のこうげきとぼうぎょをそれぞれ0.33倍する
+    if (whoIs == "Member1") {
+      console.log("w22");
+      setPlayer2Attack(player2Attack / 3);
+      setPlayer1Attack(player1Attack / 3);
+    }
+    if (whoIs == "Member2") {
+      console.log("w22");
+      setPlayer1Attack(player1Attack / 3);
+      setPlayer2Attack(player2Attack / 3);
+    }
   }
-  function w32_cal() {
-    console.log("w32"); //自分と相手のHPをそれぞれ1にする
-    HP1 = 1;
-    HP2 = 1;
+  function w23_cal() { //相手のこうげきを0.5倍する
+    if (whoIs == "Member1") {
+      console.log("w23");
+      setPlayer2Attack(player2Attack / 2);
+    }
+    if (whoIs == "Member2") {
+      console.log("w23");
+      setPlayer1Attack(player1Attack / 2);
+    }
+  }
+  function w30_cal() {//自分のHP上限、HPをそれぞれ相手と入れ替える
+    console.log("w30");
+    const temp = HP1;
+    const tempMax = HP1max;
+    setPlayer1HP(player2HP);
+    setPlayer1HPmax(player2HPmax);
+    setPlayer2HP(temp);
+    setPlayer2HPmax(tempMax);
+  }
+  function w31_cal() {//自分のこうげきを10倍、ぼうぎょを0.1倍する
+    if (whoIs == "Member1") {
+      console.log("w31");
+      setPlayer1Attack(player1Attack * 10);
+      setPlayer1Defence(player1Defence / 10);
+    }
+    if (whoIs == "Member2") {
+      console.log("w31");
+      setPlayer2Attack(player2Attack * 10);
+      setPlayer2Defence(player2Defence / 10);
+    }
+  }
+  function w32_cal() {//自分と相手のHPをそれぞれ100にする
+    console.log("w32");
+    setPlayer1HP(100);
+    setPlayer2HP(100);
   }
 
   useEffect(() => {
@@ -325,6 +427,7 @@ export default function Home() {
           const data = snapshot.val();
           setPlayer1Status(data);
           setPlayer1HP(data.HP);
+          setPlayer1HPmax(data.HPmax);
           setPlayer1Attack(data.Attack);
           setPlayer1Defence(data.Defence);
           setPlayer1Speed(data.Speed);
@@ -374,6 +477,7 @@ export default function Home() {
           const data = snapshot.val();
           setPlayer2Status(data);
           setPlayer2HP(data.HP);
+          setPlayer2HPmax(data.HPmax);
           setPlayer2Attack(data.Attack);
           setPlayer2Defence(data.Defence);
           setPlayer2Speed(data.Speed);
@@ -513,21 +617,19 @@ export default function Home() {
       <div className="p-10 text-red-500 float-right">
         <h2 className="text-4xl p-10"></h2>
         <div>{member2Status}</div>
-        HP {HP1} / {HP1max}
-        <h2>こうげき {attack1}</h2>
-        <h2>ぼうぎょ {defence1}</h2>
-        <h2>すばやさ {speed1}</h2>
-        <h2>あたえるダメージ {Math.trunc(damage1 * strength1)}</h2>
+        HP {player1HP} / {player1HPmax}
+        <h2>こうげき {player1Attack}</h2>
+        <h2>ぼうぎょ {player1Defence}</h2>
+        <h2>すばやさ {player1Speed}</h2>
       </div>
       <div className="p-10 text-red-500 float-right">
         <h2 className="text-4xl p-10">{name2}</h2>
         <h2>
-          HP {HP2} / {HP2max}
+          HP {player2HP} / {player2HPmax}
         </h2>
-        <h2>こうげき {attack2}</h2>
-        <h2>ぼうぎょ {defence2}</h2>
-        <h2>すばやさ {speed2}</h2>
-        <h2>あたえるダメージ {Math.trunc(damage2 * strength2)}</h2>
+        <h2>こうげき {player2Attack}</h2>
+        <h2>ぼうぎょ {player2Defence}</h2>
+        <h2>すばやさ {player2Speed}</h2>
       </div>
       <div className="text-center p-10">
         <h2>コマンドを選んでください</h2>
