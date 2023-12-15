@@ -25,6 +25,11 @@ export default function Home() {
           </div>
         </div>
       </div>
+      <div>
+        <Link href="/cresit">
+          <button>クレジット</button>
+        </Link>
+      </div>
     </main>
   );
 }
