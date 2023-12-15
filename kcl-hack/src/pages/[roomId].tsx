@@ -161,7 +161,6 @@ export default function Home() {
             setw01(data.w01);
             setw02(data.w02);
             setw03(data.w03);
-            lookw();
           } else {
             console.log("No data available");
           }
@@ -182,7 +181,6 @@ export default function Home() {
             setw01(data.w01);
             setw02(data.w02);
             setw03(data.w03);
-            lookw();
           } else {
             console.log("No data available");
           }
@@ -529,7 +527,8 @@ export default function Home() {
       });
   }, [redirect2]);
 
-  function lookw() {
+  useEffect(() => {
+    console.log("looking");
     if (w00 == 0) {
       setPlayerw00("たたく");
     } else if (w00 == 1) {
@@ -572,7 +571,7 @@ export default function Home() {
     } else {
       setPlayerw03("エラーです");
     }
-  }
+  }, [w00, w01, w02, w03]);
 
   async function leftRoom() {
     const UUid = await getUid();
