@@ -156,10 +156,10 @@ export default function Home() {
           if (snapshot.exists()) {
             console.log("available");
             const data = snapshot.val();
-            setw00(data.w0);
-            setw01(data.w1);
-            setw02(data.w2);
-            setw03(data.w3);
+            setw00(data.w00);
+            setw01(data.w01);
+            setw02(data.w02);
+            setw03(data.w03);
             lookw();
           } else {
             console.log("No data available");
@@ -177,10 +177,10 @@ export default function Home() {
           if (snapshot.exists()) {
             console.log("available");
             const data = snapshot.val();
-            setw00(data.w0);
-            setw01(data.w1);
-            setw02(data.w2);
-            setw03(data.w3);
+            setw00(data.w00);
+            setw01(data.w01);
+            setw02(data.w02);
+            setw03(data.w03);
           } else {
             console.log("No data available");
           }
