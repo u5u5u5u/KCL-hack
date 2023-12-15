@@ -23,6 +23,7 @@ export default function Home() {
   const [member1Status, setMember1Status] = useState<string>("null");
   const [player1Status, setPlayer1Status] = useState<Object>();
   const [player1HP, setPlayer1HP] = useState<number>(1);
+  const [player1HPmax, setPlayer1HPmax] = useState<number>(1);
   const [player1Attack, setPlayer1Attack] = useState<number>(0);
   const [player1Defence, setPlayer1Defence] = useState<number>(0);
   const [player1Speed, setPlayer1Speed] = useState<number>(0);
@@ -30,10 +31,12 @@ export default function Home() {
   const [player1deltaAttack, setPlayer1deltaAttack] = useState<number>(0);
   const [player1deltaDefence, setPlayer1deltaDefence] = useState<number>(0);
   const [player1deltaSpeed, setPlayer1deltaSpeed] = useState<number>(0);
+  const [damage1, setDamage1] = useState<number>(0);
   const [player1Img, setPlayer1Img] = useState<string>("");
   const [member2Status, setMember2Status] = useState<string>("null");
   const [player2Status, setPlayer2Status] = useState<Object>();
   const [player2HP, setPlayer2HP] = useState<number>(1);
+  const [player2HPmax, setPlayer2HPmax] = useState<number>(1);
   const [player2Attack, setPlayer2Attack] = useState<number>(0);
   const [player2Defence, setPlayer2Defence] = useState<number>(0);
   const [player2Speed, setPlayer2Speed] = useState<number>(0);
@@ -41,6 +44,7 @@ export default function Home() {
   const [player2deltaAttack, setPlayer2deltaAttack] = useState<number>(0);
   const [player2deltaDefence, setPlayer2deltaDefence] = useState<number>(0);
   const [player2deltaSpeed, setPlayer2deltaSpeed] = useState<number>(0);
+  const [damage2, setDamage2] = useState<number>(0);
   const [player2Img, setPlayer2Img] = useState<string>("");
   const [startVisible, setStartVisible] = useState<boolean>(false);
   const [selectVisible, setSelectVisible] = useState<boolean>(false);
@@ -88,6 +92,14 @@ export default function Home() {
       setChangeStatus("processing");
     }
 
+    if (member1Status == "processing" && member2Status == "processing") {
+      if (player1Speed < player2Speed) {
+        setChangeStatus("Member2Turn");
+      } else {
+        setChangeStatus("Member1Turn");
+      }
+    }
+
     console.log("changed");
   }, [member1Status, member2Status]);
 
@@ -130,8 +142,6 @@ export default function Home() {
   var attack2 = 200;
   var defence2 = 900;
   var speed2 = 40;
-  var damage1 = attack1 / defence2;
-  var damage2 = attack2 / defence1;
   var strength1 = 500;
   var strength2 = 300;
   var HP1max = HP1;
@@ -139,29 +149,34 @@ export default function Home() {
   var zan;
   var zanmax;
 
+  function calDamege() {
+    setDamage1((player1Attack / player2Defence) * 100);
+    setDamage2((player2Attack / player1Defence) * 100);
+  }
+
   function w00_cal() {
     console.log("w00");
-    HP2 -= damage1;
+    setPlayer2deltaHP(-damage1);
   }
   function w01_cal() {
     console.log("w01");
-    HP2 -= damage1 / 2;
-    HP1 += damage1 / 4;
+    setPlayer2deltaHP(-damage1 / 2);
+    setPlayer2deltaHP(damage1 / 4);
   }
   function w02_cal() {
     console.log("w02");
-    HP2 -= damage1 * 2;
-    HP1 -= damage2;
+    setPlayer2deltaHP(-damage1 * 2);
+    setPlayer1deltaHP(-damage2);
   }
   function w03_cal() {
     console.log("w03");
-    HP2 -= damage1 * 5;
-    HP1 = 0;
+    setPlayer2deltaHP(-damage1 * 5);
+    setPlayer1HP(0);
   }
   function w04_cal() {
     console.log("w04");
-    HP2 -= damage1 / 4;
-    attack1 /= 2;
+    setPlayer2deltaHP(-damage1 / 4);
+    setPlayer1Attack(player1Attack / 2);
   }
   function w05_cal() {
     console.log("w05");
@@ -174,57 +189,57 @@ export default function Home() {
   }
   function w10_cal() {
     console.log("w10");
-    HP1 += damage1;
+    setPlayer2deltaHP(damage1);
   }
   function w11_cal() {
     console.log("w11");
-    HP1 += HP1max / 2;
+    setPlayer1deltaHP(player1HPmax / 2);
   }
   function w12_cal() {
     console.log("w12");
     HP1 = HP1max;
-    defence1 /= 2;
-    attack1 /= 2;
+    setPlayer1Defence(player1Defence / 2);
+    setPlayer1Attack(player1Attack / 2);
   }
   function w13_cal() {
     console.log("w13");
   }
   function w20_cal() {
     console.log("w20");
-    attack2 *= 2;
-    defence2 /= 2;
+    setPlayer1Attack(player1Attack * 2);
+    setPlayer2Defence(player2Defence / 2);
   }
   function w21_cal() {
     console.log("w21");
-    defence1 *= 2;
+    setPlayer1Defence(player1Defence * 2);
   }
   function w22_cal() {
     console.log("w22");
-    damage2 /= 3;
-    defence2 /= 3;
+    setPlayer2Attack(player2Attack / 3);
+    setPlayer1Attack(player1Attack / 3);
   }
   function w23_cal() {
     console.log("w23");
-    damage2 /= 2;
+    setPlayer2Attack(player2Attack / 2);
   }
   function w30_cal() {
     console.log("w30");
-    zan = HP1;
-    zanmax = HP1max;
-    HP1 = HP2;
-    HP1max = HP2max;
-    HP2 = zan;
-    HP2max = zanmax;
+    const temp = HP1;
+    const tempMax = HP1max;
+    setPlayer1HP(player2HP);
+    setPlayer1HPmax(player2HPmax);
+    setPlayer2HP(temp);
+    setPlayer2HPmax(tempMax);
   }
   function w31_cal() {
     console.log("w31");
-    attack1 *= 10;
-    defence1 /= 10;
+    setPlayer1Attack(player1Attack * 10);
+    setPlayer1Defence(player1Defence / 10);
   }
   function w32_cal() {
     console.log("w32");
-    HP1 = 1;
-    HP2 = 1;
+    HP1 = 100;
+    HP2 = 100;
   }
   function w33_cal() {
     console.log("w33");
@@ -264,6 +279,7 @@ export default function Home() {
           const data = snapshot.val();
           setPlayer1Status(data);
           setPlayer1HP(data.HP);
+          setPlayer1HPmax(data.HPmax);
           setPlayer1Attack(data.Attack);
           setPlayer1Defence(data.Defence);
           setPlayer1Speed(data.Speed);
@@ -313,6 +329,7 @@ export default function Home() {
           const data = snapshot.val();
           setPlayer2Status(data);
           setPlayer2HP(data.HP);
+          setPlayer2HPmax(data.HPmax);
           setPlayer2Attack(data.Attack);
           setPlayer2Defence(data.Defence);
           setPlayer2Speed(data.Speed);
@@ -391,7 +408,6 @@ export default function Home() {
   async function settest() {
     setChangeStatus("ready");
   }
-  return null;
 
   return (
     <main>
@@ -408,21 +424,19 @@ export default function Home() {
       <div className="p-10 text-red-500 float-right">
         <h2 className="text-4xl p-10"></h2>
         <div>{member2Status}</div>
-        HP {HP1} / {HP1max}
-        <h2>こうげき {attack1}</h2>
-        <h2>ぼうぎょ {defence1}</h2>
-        <h2>すばやさ {speed1}</h2>
-        <h2>あたえるダメージ {Math.trunc(damage1 * strength1)}</h2>
+        HP {player1HP} / {player1HPmax}
+        <h2>こうげき {player1Attack}</h2>
+        <h2>ぼうぎょ {player1Defence}</h2>
+        <h2>すばやさ {player1Speed}</h2>
       </div>
       <div className="p-10 text-red-500 float-right">
         <h2 className="text-4xl p-10">{name2}</h2>
         <h2>
-          HP {HP2} / {HP2max}
+          HP {player2HP} / {player2HPmax}
         </h2>
-        <h2>こうげき {attack2}</h2>
-        <h2>ぼうぎょ {defence2}</h2>
-        <h2>すばやさ {speed2}</h2>
-        <h2>あたえるダメージ {Math.trunc(damage2 * strength2)}</h2>
+        <h2>こうげき {player2Attack}</h2>
+        <h2>ぼうぎょ {player2Defence}</h2>
+        <h2>すばやさ {player2Speed}</h2>
       </div>
       <div className="text-center p-10">
         <h2>コマンドを選んでください</h2>
