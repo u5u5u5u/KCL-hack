@@ -155,28 +155,62 @@ export default function Home() {
   }
 
   function w00_cal() {
-    console.log("w00");
-    setPlayer2deltaHP(-damage1);
+    if (whoIs == "Member1") {
+      console.log("w00");
+      setPlayer2deltaHP(-damage1);
+    }
+    if (whoIs == "Member2") {
+      console.log("w00");
+      setPlayer1deltaHP(-damage2);
+    }
   }
   function w01_cal() {
-    console.log("w01");
-    setPlayer2deltaHP(-damage1 / 2);
-    setPlayer2deltaHP(damage1 / 4);
+    if (whoIs == "Member1") {
+      console.log("w01");
+      setPlayer2deltaHP(-damage1 / 2);
+      setPlayer1deltaHP(damage1 / 4);
+    }
+    if (whoIs == "Member2") {
+      console.log("w01");
+      setPlayer1deltaHP(-damage2 / 2);
+      setPlayer2deltaHP(damage2 / 4);
+    }
   }
   function w02_cal() {
-    console.log("w02");
-    setPlayer2deltaHP(-damage1 * 2);
-    setPlayer1deltaHP(-damage2);
+    if (whoIs == "Member1") {
+      console.log("w02");
+      setPlayer2deltaHP(-damage1 * 2);
+      setPlayer1deltaHP(-damage2);
+    }
+    if (whoIs == "Member2") {
+      console.log("w02");
+      setPlayer1deltaHP(-damage2 * 2);
+      setPlayer2deltaHP(-damage1);
+    }
   }
   function w03_cal() {
-    console.log("w03");
-    setPlayer2deltaHP(-damage1 * 5);
-    setPlayer1HP(0);
+    if (whoIs == "Member1") {
+      console.log("w03");
+      setPlayer2deltaHP(-damage1 * 5);
+      setPlayer1HP(0);
+    }
+    if (whoIs == "Member2") {
+      console.log("w03");
+      setPlayer1deltaHP(-damage2 * 5);
+      setPlayer2HP(0);
+    }
   }
   function w04_cal() {
-    console.log("w04");
-    setPlayer2deltaHP(-damage1 / 4);
-    setPlayer1Attack(player1Attack / 2);
+    if (whoIs == "Member1") {
+      console.log("w04");
+      setPlayer2deltaHP(-damage1 / 4);
+      setPlayer1Attack(player1Attack / 2);
+    }
+    if (whoIs == "Member2") {
+      console.log("w04");
+      setPlayer1deltaHP(-damage2 / 4);
+      setPlayer2Attack(player2Attack / 2);
+    }
   }
   function w05_cal() {
     console.log("w05");
@@ -188,39 +222,85 @@ export default function Home() {
     console.log("w07");
   }
   function w10_cal() {
-    console.log("w10");
-    setPlayer2deltaHP(damage1);
+    if (whoIs == "Member1") {
+      console.log("w10");
+      setPlayer2deltaHP(damage1);
+    }
+    if (whoIs == "Member2") {
+      console.log("w10");
+      setPlayer1deltaHP(damage2);
+    }
   }
   function w11_cal() {
-    console.log("w11");
-    setPlayer1deltaHP(player1HPmax / 2);
+    if (whoIs == "Member1") {
+      console.log("w11");
+      setPlayer1deltaHP(player1HPmax / 2);
+    }
+    if (whoIs == "Member2") {
+      console.log("w11");
+      setPlayer2deltaHP(player2HPmax / 2);
+    }
   }
   function w12_cal() {
-    console.log("w12");
-    HP1 = HP1max;
-    setPlayer1Defence(player1Defence / 2);
-    setPlayer1Attack(player1Attack / 2);
+    if (whoIs == "Member1") {
+      console.log("w12");
+      HP1 = HP1max;
+      setPlayer1Defence(player1Defence / 2);
+      setPlayer1Attack(player1Attack / 2);
+    }
+    if (whoIs == "Member2") {
+      console.log("w12");
+      HP2 = HP2max;
+      setPlayer2Defence(player2Defence / 2);
+      setPlayer2Attack(player2Attack / 2);
+    }
   }
   function w13_cal() {
     console.log("w13");
   }
   function w20_cal() {
-    console.log("w20");
-    setPlayer1Attack(player1Attack * 2);
-    setPlayer2Defence(player2Defence / 2);
+    if (whoIs == "Member1") {
+      console.log("w20");
+      setPlayer1Attack(player1Attack * 2);
+      setPlayer2Defence(player2Defence / 2);
+    }
+    if (whoIs == "Member2") {
+      console.log("w20");
+      setPlayer2Attack(player2Attack * 2);
+      setPlayer1Defence(player1Defence / 2);
+    }
   }
   function w21_cal() {
-    console.log("w21");
-    setPlayer1Defence(player1Defence * 2);
+    if (whoIs == "Member1") {
+      console.log("w21");
+      setPlayer1Defence(player1Defence * 2);
+    }
+    if (whoIs == "Member2") {
+      console.log("w21");
+      setPlayer2Defence(player2Defence * 2);
+    }
   }
   function w22_cal() {
-    console.log("w22");
-    setPlayer2Attack(player2Attack / 3);
-    setPlayer1Attack(player1Attack / 3);
+    if (whoIs == "Member1") {
+      console.log("w22");
+      setPlayer2Attack(player2Attack / 3);
+      setPlayer1Attack(player1Attack / 3);
+    }
+    if (whoIs == "Member2") {
+      console.log("w22");
+      setPlayer1Attack(player1Attack / 3);
+      setPlayer2Attack(player2Attack / 3);
+    }
   }
   function w23_cal() {
-    console.log("w23");
-    setPlayer2Attack(player2Attack / 2);
+    if (whoIs == "Member1") {
+      console.log("w23");
+      setPlayer2Attack(player2Attack / 2);
+    }
+    if (whoIs == "Member2") {
+      console.log("w23");
+      setPlayer1Attack(player1Attack / 2);
+    }
   }
   function w30_cal() {
     console.log("w30");
@@ -232,14 +312,21 @@ export default function Home() {
     setPlayer2HPmax(tempMax);
   }
   function w31_cal() {
-    console.log("w31");
-    setPlayer1Attack(player1Attack * 10);
-    setPlayer1Defence(player1Defence / 10);
+    if (whoIs == "Member1") {
+      console.log("w31");
+      setPlayer1Attack(player1Attack * 10);
+      setPlayer1Defence(player1Defence / 10);
+    }
+    if (whoIs == "Member2") {
+      console.log("w31");
+      setPlayer2Attack(player2Attack * 10);
+      setPlayer2Defence(player2Defence / 10);
+    }
   }
   function w32_cal() {
     console.log("w32");
-    HP1 = 100;
-    HP2 = 100;
+    setPlayer1HP(100);
+    setPlayer2HP(100);
   }
   function w33_cal() {
     console.log("w33");
