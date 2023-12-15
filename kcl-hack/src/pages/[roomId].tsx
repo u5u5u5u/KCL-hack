@@ -176,18 +176,6 @@ export default function Home() {
   }, [member1Status, member2Status]);
 
   useEffect(() => {
-    if (changeStatus != null) {
-      if (whoIs == "Member1") {
-        setStatus1();
-      }
-      if (whoIs == "Member2") {
-        setStatus2();
-      }
-      console.log("changedone");
-    }
-  }, [changeStatus]);
-
-  useEffect(() => {
     getplayerw();
   }, [redirect3]);
 
@@ -245,10 +233,6 @@ export default function Home() {
         Defence: player2Defence,
         Speed: player2Speed,
       });
-      setDamageSetUped(false);
-      setCalDone(false);
-      setMathTrancDone(false);
-      setDeltaChanged(false);
       if (
         member1Status == "foMember1Turn" &&
         member2Status == "foMember1Turn"
@@ -285,6 +269,10 @@ export default function Home() {
           Member2: "selecting",
         });
       }
+      setDamageSetUped(false);
+      setCalDone(false);
+      setMathTrancDone(false);
+      setDeltaChanged(false);
     }
   }, [deltaChanged]);
 
@@ -427,25 +415,25 @@ export default function Home() {
   function w0_cal() {
     setSelectt(0);
     setSelectw(w00);
-    setChangeStatus("selected");
+    selected();
     setSelectVisible(false);
   }
   function w1_cal() {
     setSelectt(1);
     setSelectw(w01);
-    setChangeStatus("selected");
+    selected();
     setSelectVisible(false);
   }
   function w2_cal() {
     setSelectt(2);
     setSelectw(w02);
-    setChangeStatus("selected");
+    selected();
     setSelectVisible(false);
   }
   function w3_cal() {
     setSelectt(3);
     setSelectw(w03);
-    setChangeStatus("selected");
+    selected();
     setSelectVisible(false);
   }
 
@@ -843,6 +831,20 @@ export default function Home() {
       Member2: "selecting",
     });
     setStartVisible(false);
+  }
+
+  function selected() {
+    const db = getDatabase();
+    if (whoIs == "Member1") {
+      update(ref(db, `Room/${roomId}/MemberStatus`), {
+        Member1: "selected",
+      });
+    }
+    if (whoIs == "Member2") {
+      update(ref(db, `Room/${roomId}/MemberStatus`), {
+        Member2: "selected",
+      });
+    }
   }
 
   return (
