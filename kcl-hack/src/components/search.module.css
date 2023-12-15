@@ -61,12 +61,19 @@
   box-shadow: none;
 }
 
+.buttons {
+  height: 40%;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
 .registration_button {
   display: inline-block;
   width: 20vh;
   padding: 0.3rem 0.75rem;
   margin-left: 1rem;
-  font-size: 1.8rem;
+  font-size: 1rem;
   font-weight: bold;
   font-family: "Lucida Console", century;
   text-align: center;

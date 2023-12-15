@@ -351,7 +351,7 @@ export default function Home() {
       <Header children="入力" />
       <div className="container">
         <div className="wrapper">
-          <div>
+          <div style={{ visibility: isOpen ? "hidden" : "visible" }}>
             <input
               value={number}
               onChange={changeNum}
@@ -359,7 +359,6 @@ export default function Home() {
             />
             <button
               className={styles.button}
-              aria-hidden={isOpen}
               onClick={() => {
                 sendNum();
                 setIsOpen(!isOpen);
@@ -368,7 +367,7 @@ export default function Home() {
               検索
             </button>
           </div>
-          <div role="group">
+          <div>
             <div id="contents" className="accordion-body" aria-hidden={!isOpen}>
               <div className={styles.image}>
                 <img src={image} />
@@ -409,12 +408,20 @@ export default function Home() {
                   <li>わざ4 : {w03}</li>
                 </ul>
               </div>
-              <button
-                className={styles.registration_button}
-                onClick={sendStatus}
-              >
-                登録
-              </button>
+              <div className={styles.buttons}>
+                <button
+                  className={styles.registration_button}
+                  onClick={sendStatus}
+                >
+                  登録する
+                </button>
+                <button
+                  className={styles.registration_button}
+                  onClick={() => setIsOpen(!isOpen)}
+                >
+                  登録しない
+                </button>
+              </div>
             </div>
           </div>
         </div>
