@@ -380,11 +380,11 @@ export default function Home() {
                     <img src={image} />
                   </div>
                   <ul>
-                    <li>商品名 : {name}</li>
-                    <li>価格 : {price}円</li>
+                    <li className={styles.name}>{name}</li>
+                    <li className={styles.price}>{price}円</li>
                   </ul>
                 </div>
-                <div>
+                <div className={styles["status-actions"]}>
                   <table className={styles.status}>
                     <tbody>
                       <tr>
@@ -405,12 +405,12 @@ export default function Home() {
                       </tr>
                     </tbody>
                   </table>
-                  <div className={styles.actions}>
-                    <ul>
-                      <li>わざ1 : {w00}</li>
-                      <li>わざ2 : {w01}</li>
-                      <li>わざ3 : {w02}</li>
-                      <li>わざ4 : {w03}</li>
+                  <div className={styles["actions-box"]}>
+                    <ul className={styles.actions}>
+                      <li>{w00}</li>
+                      <li>{w01}</li>
+                      <li>{w02}</li>
+                      <li>{w03}</li>
                     </ul>
                   </div>
                 </div>
@@ -443,7 +443,6 @@ export default function Home() {
         }
         .accordion-body {
           height: ${isOpen ? "auto" : 0};
-          transition: height 0.3s ease-out;
           overflow: hidden;
         }
       `}</style>
