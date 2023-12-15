@@ -153,6 +153,7 @@ export default function Home() {
             setw01(data.w1);
             setw02(data.w2);
             setw03(data.w3);
+            lookw();
           } else {
             console.log("No data available");
           }
@@ -492,20 +493,6 @@ export default function Home() {
     setSelectVisible(true);
   }
 
-  function panch() {
-    if (whoIs == "Member1") {
-      if (member1Status == "selecting") {
-        setChangeStatus("selected");
-      }
-    }
-    if (whoIs == "Member2") {
-      if (member2Status == "selecting") {
-        setChangeStatus("selected");
-      }
-    }
-    setSelectVisible(false);
-  }
-
   useEffect(() => {
     const auth = getAuth();
     console.log(roomId);
@@ -533,7 +520,7 @@ export default function Home() {
       });
   }, [redirect2]);
 
-  useEffect(() => {
+  function lookw() {
     if (w00 == 0) {
       setPlayerw00("たたく");
     } else if (w00 == 1) {
@@ -576,7 +563,7 @@ export default function Home() {
     } else {
       setPlayerw03("エラーです");
     }
-  }, [w00, w01, w02, w03]);
+  }
 
   async function leftRoom() {
     const UUid = await getUid();
@@ -676,12 +663,6 @@ export default function Home() {
         <h2>コマンドを選んでください</h2>
       </div>
       <button
-        onClick={panch}
-        style={{ visibility: selectVisible ? "visible" : "hidden" }}
-      >
-        Panch
-      </button>
-      <button
         onClick={start}
         style={{ visibility: startVisible ? "visible" : "hidden" }}
       >
@@ -691,10 +672,30 @@ export default function Home() {
       <h2>にげる</h2>
       <button onClick={settest}>test</button>
       <button onClick={leftRoom}>退室</button>
-      <Button onClick={w0_cal}>{playerw00}</Button>
-      <Button onClick={w1_cal}>{playerw01}</Button>
-      <Button onClick={w2_cal}>{playerw02}</Button>
-      <Button onClick={w3_cal}>{playerw03}</Button>
+      <Button
+        onClick={w0_cal}
+        style={{ visibility: selectVisible ? "visible" : "hidden" }}
+      >
+        {playerw00}
+      </Button>
+      <Button
+        onClick={w1_cal}
+        style={{ visibility: selectVisible ? "visible" : "hidden" }}
+      >
+        {playerw01}
+      </Button>
+      <Button
+        onClick={w2_cal}
+        style={{ visibility: selectVisible ? "visible" : "hidden" }}
+      >
+        {playerw02}
+      </Button>
+      <Button
+        onClick={w3_cal}
+        style={{ visibility: selectVisible ? "visible" : "hidden" }}
+      >
+        {playerw03}
+      </Button>
     </main>
   );
 }
