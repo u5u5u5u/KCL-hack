@@ -140,26 +140,26 @@ export default function Home() {
   var zanmax;
 
   function w00_cal() {
-    console.log("w00");
+    console.log("w00"); //相手に1倍ダメージを与える
     HP2 -= damage1;
   }
   function w01_cal() {
-    console.log("w01");
+    console.log("w01"); //相手に0.5倍ダメージを与え、与えたダメージの0.5倍自分を回復する
     HP2 -= damage1 / 2;
     HP1 += damage1 / 4;
   }
   function w02_cal() {
-    console.log("w02");
+    console.log("w02"); //相手に2倍ダメージを与え、相手が自分に1倍ダメージを与える
     HP2 -= damage1 * 2;
     HP1 -= damage2;
   }
   function w03_cal() {
-    console.log("w03");
+    console.log("w03"); //相手に5倍ダメージを与え、自分のHPを0にする
     HP2 -= damage1 * 5;
     HP1 = 0;
   }
   function w04_cal() {
-    console.log("w04");
+    console.log("w04"); //相手に0.25倍ダメージを与え、自分のこうげきを2倍にする
     HP2 -= damage1 / 4;
     attack1 /= 2;
   }
@@ -173,15 +173,15 @@ export default function Home() {
     console.log("w07");
   }
   function w10_cal() {
-    console.log("w10");
+    console.log("w10"); //自分の1倍ダメージぶん自分を回復する
     HP1 += damage1;
   }
   function w11_cal() {
-    console.log("w11");
+    console.log("w11"); //自分のHP上限の0.5倍自分を回復する
     HP1 += HP1max / 2;
   }
   function w12_cal() {
-    console.log("w12");
+    console.log("w12"); //自分のHPを全回復し、自分のこうげきとぼうぎょをそれぞれ0.5倍する
     HP1 = HP1max;
     defence1 /= 2;
     attack1 /= 2;
@@ -190,25 +190,25 @@ export default function Home() {
     console.log("w13");
   }
   function w20_cal() {
-    console.log("w20");
+    console.log("w20"); //相手のこうげきを2倍、ぼうぎょを0.5倍する
     attack2 *= 2;
     defence2 /= 2;
   }
   function w21_cal() {
-    console.log("w21");
+    console.log("w21"); //自分のぼうぎょを2倍する
     defence1 *= 2;
   }
   function w22_cal() {
-    console.log("w22");
+    console.log("w22"); //相手のこうげきとぼうぎょをそれぞれ0.33倍する
     damage2 /= 3;
     defence2 /= 3;
   }
   function w23_cal() {
-    console.log("w23");
+    console.log("w23"); //相手のこうげきを0.5倍する
     damage2 /= 2;
   }
   function w30_cal() {
-    console.log("w30");
+    console.log("w30"); //自分のHP上限、HPをそれぞれ相手と入れ替える
     zan = HP1;
     zanmax = HP1max;
     HP1 = HP2;
@@ -217,12 +217,12 @@ export default function Home() {
     HP2max = zanmax;
   }
   function w31_cal() {
-    console.log("w31");
+    console.log("w31"); //自分のこうげきを10倍、ぼうぎょを0.1倍する
     attack1 *= 10;
     defence1 /= 10;
   }
   function w32_cal() {
-    console.log("w32");
+    console.log("w32"); //自分と相手のHPをそれぞれ1にする
     HP1 = 1;
     HP2 = 1;
   }
