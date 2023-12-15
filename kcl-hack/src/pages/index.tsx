@@ -25,11 +25,6 @@ export default function Home() {
           </div>
         </div>
       </div>
-      <div>
-        <Link href="/home">
-          <button>ホームへ</button>
-        </Link>
-      </div>
     </main>
   );
 }
