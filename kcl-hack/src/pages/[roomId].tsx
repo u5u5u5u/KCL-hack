@@ -92,6 +92,11 @@ export default function Home() {
       }
     }
 
+    if (member1Status == "selecting" || member2Status == "selecting") {
+      setSelectVisible(true);
+      getplayerw();
+    }
+
     if (
       (member1Status == "selected" && member2Status == "selected") ||
       member1Status == "processing" ||
@@ -144,7 +149,9 @@ export default function Home() {
     const auth = getAuth();
     const db = getDatabase();
     if (whoIs == "Member1") {
-      const snapshot = get(child(dbRef, `Room/${roomId}/ButtleStatus/Member1`))
+      const snapshot = get(
+        child(dbRef, `Room/${roomId}/ButtleStatus/Member1/Status`)
+      )
         .then((snapshot) => {
           if (snapshot.exists()) {
             console.log("available");
@@ -163,7 +170,9 @@ export default function Home() {
         });
     }
     if (whoIs == "Member2") {
-      const snapshot = get(child(dbRef, `Room/${roomId}/ButtleStatus/Member2`))
+      const snapshot = get(
+        child(dbRef, `Room/${roomId}/ButtleStatus/Member2/Status`)
+      )
         .then((snapshot) => {
           if (snapshot.exists()) {
             console.log("available");
@@ -488,9 +497,7 @@ export default function Home() {
       Member1: "selecting",
       Member2: "selecting",
     });
-    getplayerw();
     setStartVisible(false);
-    setSelectVisible(true);
   }
 
   useEffect(() => {
