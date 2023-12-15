@@ -154,7 +154,6 @@ export default function Home() {
       ) {
         if (whoIs == "Member1") {
           calDamege();
-          setRedirect4(false);
         }
       } else {
         setRedirect4(true);
@@ -165,7 +164,6 @@ export default function Home() {
       ) {
         if (whoIs == "Member2") {
           calDamege();
-          setRedirect4(false);
         }
       } else {
         setRedirect4(true);
@@ -269,7 +267,6 @@ export default function Home() {
           Member2: "selecting",
         });
       }
-      setDamageSetUped(false);
       setCalDone(false);
       setMathTrancDone(false);
       setDeltaChanged(false);
@@ -347,66 +344,85 @@ export default function Home() {
       if (selectt == 0) {
         if (selectw == 0) {
           console.log("たたく");
+          setDamageSetUped(false);
           w00_cal();
         } else if (selectw == 1) {
           console.log("ちゅーちゅーする");
+          setDamageSetUped(false);
           w01_cal();
         } else if (selectw == 2) {
           console.log("ぜんりょくこうげき");
+          setDamageSetUped(false);
           w02_cal();
         } else if (selectw == 3) {
           console.log("じばく");
+          setDamageSetUped(false);
           w03_cal();
         } else if (selectw == 4) {
           console.log("ぺちぺちする");
+          setDamageSetUped(false);
           w04_cal();
         } else {
           console.log("エラーです");
+          setDamageSetUped(false);
         }
       }
       if (selectt == 1) {
         if (selectw == 0) {
           console.log("ねる");
+          setDamageSetUped(false);
           w10_cal();
         } else if (selectw == 1) {
           console.log("ぐっすりねる");
+          setDamageSetUped(false);
           w11_cal();
         } else if (selectw == 2) {
           console.log("ぜっき");
+          setDamageSetUped(false);
           w12_cal();
         } else {
           console.log("エラーです");
+          setDamageSetUped(false);
         }
       }
       if (selectt == 2) {
         if (selectw == 0) {
           console.log("ちょうはつ");
+          setDamageSetUped(false);
           w20_cal();
         } else if (selectw == 1) {
           console.log("ひきこもる");
+          setDamageSetUped(false);
           w21_cal();
         } else if (selectw == 2) {
           console.log("こわいおにいさんをつれてくる");
+          setDamageSetUped(false);
           w22_cal();
         } else if (selectw == 3) {
           console.log("にらむ");
+          setDamageSetUped(false);
           w23_cal();
         } else {
           console.log("エラーです");
+          setDamageSetUped(false);
         }
       }
       if (selectt == 3) {
         if (selectw == 0) {
           console.log("ざんねんでしたー");
+          setDamageSetUped(false);
           w30_cal();
         } else if (selectw == 1) {
           console.log("ぎあちぇんじ");
+          setDamageSetUped(false);
           w31_cal();
         } else if (selectw == 2) {
           console.log("みちづれ");
+          setDamageSetUped(false);
           w32_cal();
         } else {
           console.log("エラーです");
+          setDamageSetUped(false);
         }
       }
     }
