@@ -1,17 +1,25 @@
 "use client";
-import Link from "next/link";
+
 import Header from "../components/header";
-import Button from "../components/button";
+import styles from "../components/cresit.module.css";
 import Footer from "../components/footer";
 
 export default function Home() {
   return (
     <main>
       <Header children="Thank You For Playing" />
-      <h2>監督</h2>
-      <p>;</p>
-      <h2></h2>
-      <p>U5</p>
+      <div className={styles.mid}>
+        <div className={styles.midmid}>
+          <h2 className={styles.big}>監督</h2>
+          <p className={styles.phrase_semi}>;</p>
+          <h2 className={styles.small}>コーディング</h2>
+          <div className={styles.side}>
+            <p className={styles.phrase_yugo}>U5</p>
+            <p className={styles.phrase_hamu}>はむ</p>
+            <p className={styles.phrase_semi_2}>;</p>
+          </div>
+        </div>
+      </div>
 
       <Footer />
     </main>
