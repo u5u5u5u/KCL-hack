@@ -32,10 +32,6 @@ export default function Home() {
   const [player1deltaDefence, setPlayer1deltaDefence] = useState<number>(0);
   const [player1deltaSpeed, setPlayer1deltaSpeed] = useState<number>(0);
   const [damage1, setDamage1] = useState<number>(0);
-  const [player1w00, setPlayer1w00] = useState<string>("");
-  const [player1w01, setPlayer1w01] = useState<string>("");
-  const [player1w02, setPlayer1w02] = useState<string>("");
-  const [player1w03, setPlayer1w03] = useState<string>("");
   const [player1Img, setPlayer1Img] = useState<string>("");
   const [member2Status, setMember2Status] = useState<string>("null");
   const [player2Status, setPlayer2Status] = useState<Object>();
@@ -54,6 +50,14 @@ export default function Home() {
   const [selectVisible, setSelectVisible] = useState<boolean>(false);
   const [redirect1, setRedirect1] = useState<boolean>(false);
   const [redirect2, setRedirect2] = useState<boolean>(false);
+  const [w00, setw00] = useState<number>(0);
+  const [w01, setw01] = useState<number>(0);
+  const [w02, setw02] = useState<number>(0);
+  const [w03, setw03] = useState<number>(0);
+  const [playerw00, setPlayerw00] = useState<string>("");
+  const [playerw01, setPlayerw01] = useState<string>("");
+  const [playerw02, setPlayerw02] = useState<string>("");
+  const [playerw03, setPlayerw03] = useState<string>("");
   const [changeStatus, setChangeStatus] = useState<string>();
 
   const dbRef = ref(getDatabase());
@@ -136,41 +140,61 @@ export default function Home() {
       });
   }
 
-  var name1 = "Player";
-  var HP1 = 1000;
-  var attack1 = 600;
-  var defence1 = 100;
-  var speed1 = 40;
-  var name2 = "Rival";
-  var HP2 = 1000;
-  var attack2 = 200;
-  var defence2 = 900;
-  var speed2 = 40;
-  var strength1 = 500;
-  var strength2 = 300;
-  var HP1max = HP1;
-  var HP2max = HP2;
-  var zan;
-  var zanmax;
-  var w0 = 0;
-  var w1 = 0;
-  var w2 = 0;
-  var w3 = 0;
+  async function getplayerw() {
+    const auth = getAuth();
+    const db = getDatabase();
+    if (whoIs == "Member1") {
+      const snapshot = get(child(dbRef, `Room/${roomId}/ButtleStatus/Member1`))
+        .then((snapshot) => {
+          if (snapshot.exists()) {
+            console.log("available");
+            const data = snapshot.val();
+            setw00(data.w0);
+            setw01(data.w1);
+            setw02(data.w2);
+            setw03(data.w3);
+          } else {
+            console.log("No data available");
+          }
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    }
+    if (whoIs == "Member2") {
+      const snapshot = get(child(dbRef, `Room/${roomId}/ButtleStatus/Member2`))
+        .then((snapshot) => {
+          if (snapshot.exists()) {
+            console.log("available");
+            const data = snapshot.val();
+            setw00(data.w0);
+            setw01(data.w1);
+            setw02(data.w2);
+            setw03(data.w3);
+          } else {
+            console.log("No data available");
+          }
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    }
+  }
 
   function w0_cal() {
-    if (w0 == 0) {
+    if (w00 == 0) {
       console.log("たたく");
       w00_cal();
-    } else if (w0 == 1) {
+    } else if (w00 == 1) {
       console.log("ちゅーちゅーする");
       w01_cal;
-    } else if (w0 == 2) {
+    } else if (w00 == 2) {
       console.log("ぜんりょくこうげき");
       w02_cal;
-    } else if (w0 == 3) {
+    } else if (w00 == 3) {
       console.log("じばく");
       w03_cal;
-    } else if (w0 == 4) {
+    } else if (w00 == 4) {
       console.log("ぺちぺちする");
       w04_cal;
     } else {
@@ -178,13 +202,13 @@ export default function Home() {
     }
   }
   function w1_cal() {
-    if (w1 == 0) {
+    if (w01 == 0) {
       console.log("ねる");
       w10_cal();
-    } else if (w1 == 1) {
+    } else if (w01 == 1) {
       console.log("ぐっすりねる");
       w11_cal;
-    } else if (w1 == 2) {
+    } else if (w01 == 2) {
       console.log("ぜっき");
       w12_cal;
     } else {
@@ -192,16 +216,16 @@ export default function Home() {
     }
   }
   function w2_cal() {
-    if (w2 == 0) {
+    if (w02 == 0) {
       console.log("ちょうはつ");
       w20_cal();
-    } else if (w2 == 1) {
+    } else if (w02 == 1) {
       console.log("ひきこもる");
       w21_cal;
-    } else if (w2 == 2) {
+    } else if (w02 == 2) {
       console.log("こわいおにいさんをつれてくる");
       w22_cal;
-    } else if (w2 == 3) {
+    } else if (w02 == 3) {
       console.log("にらむ");
       w23_cal;
     } else {
@@ -209,13 +233,13 @@ export default function Home() {
     }
   }
   function w3_cal() {
-    if (w3 == 0) {
+    if (w03 == 0) {
       console.log("ざんねんでしたー");
       w30_cal();
-    } else if (w3 == 1) {
+    } else if (w03 == 1) {
       console.log("ぎあちぇんじ");
       w31_cal;
-    } else if (w3 == 2) {
+    } else if (w03 == 2) {
       console.log("みちづれ");
       w32_cal;
     } else {
@@ -318,13 +342,13 @@ export default function Home() {
     //自分のHPを全回復し、自分のこうげきとぼうぎょをそれぞれ0.5倍する
     if (whoIs == "Member1") {
       console.log("w12");
-      HP1 = HP1max;
+      setPlayer1HP(player1HPmax);
       setPlayer1Defence(player1Defence / 2);
       setPlayer1Attack(player1Attack / 2);
     }
     if (whoIs == "Member2") {
       console.log("w12");
-      HP2 = HP2max;
+      setPlayer2HP(player2HPmax);
       setPlayer2Defence(player2Defence / 2);
       setPlayer2Attack(player2Attack / 2);
     }
@@ -381,8 +405,8 @@ export default function Home() {
   function w30_cal() {
     //自分のHP上限、HPをそれぞれ相手と入れ替える
     console.log("w30");
-    const temp = HP1;
-    const tempMax = HP1max;
+    const temp = player1HP;
+    const tempMax = player1HPmax;
     setPlayer1HP(player2HP);
     setPlayer1HPmax(player2HPmax);
     setPlayer2HP(temp);
@@ -463,7 +487,9 @@ export default function Home() {
       Member1: "selecting",
       Member2: "selecting",
     });
+    getplayerw();
     setStartVisible(false);
+    setSelectVisible(true);
   }
 
   function panch() {
@@ -508,49 +534,49 @@ export default function Home() {
   }, [redirect2]);
 
   useEffect(() => {
-    if (w0 == 0) {
-      setPlayer1w00("たたく");
-    } else if (w0 == 1) {
-      setPlayer1w00("ちゅーちゅーする");
-    } else if (w0 == 2) {
-      setPlayer1w00("ぜんりょくこうげき");
-    } else if (w0 == 3) {
-      setPlayer1w00("じばく");
-    } else if (w0 == 4) {
-      setPlayer1w00("ぺちぺちする");
+    if (w00 == 0) {
+      setPlayerw00("たたく");
+    } else if (w00 == 1) {
+      setPlayerw00("ちゅーちゅーする");
+    } else if (w00 == 2) {
+      setPlayerw00("ぜんりょくこうげき");
+    } else if (w00 == 3) {
+      setPlayerw00("じばく");
+    } else if (w00 == 4) {
+      setPlayerw00("ぺちぺちする");
     } else {
-      setPlayer1w00("エラーです");
+      setPlayerw00("エラーです");
     }
-    if (w1 == 0) {
-      setPlayer1w01("ねる");
-    } else if (w1 == 1) {
-      setPlayer1w01("ぐっすりねる");
-    } else if (w1 == 2) {
-      setPlayer1w01("ぜっき");
+    if (w01 == 0) {
+      setPlayerw01("ねる");
+    } else if (w01 == 1) {
+      setPlayerw01("ぐっすりねる");
+    } else if (w01 == 2) {
+      setPlayerw01("ぜっき");
     } else {
-      setPlayer1w01("エラーです");
+      setPlayerw01("エラーです");
     }
-    if (w2 == 0) {
-      setPlayer1w02("ちょうはつ");
-    } else if (w2 == 1) {
-      setPlayer1w02("ひきこもる");
-    } else if (w2 == 2) {
-      setPlayer1w02("こわいおにいさんをつれてくる");
-    } else if (w2 == 3) {
-      setPlayer1w02("にらむ");
+    if (w02 == 0) {
+      setPlayerw02("ちょうはつ");
+    } else if (w02 == 1) {
+      setPlayerw02("ひきこもる");
+    } else if (w02 == 2) {
+      setPlayerw02("こわいおにいさんをつれてくる");
+    } else if (w02 == 3) {
+      setPlayerw02("にらむ");
     } else {
-      setPlayer1w02("エラーです");
+      setPlayerw02("エラーです");
     }
-    if (w3 == 0) {
-      setPlayer1w03("ざんねんでしたー");
-    } else if (w3 == 1) {
-      setPlayer1w03("ぎあちぇんじ");
-    } else if (w3 == 2) {
-      setPlayer1w03("みちづれ");
+    if (w03 == 0) {
+      setPlayerw03("ざんねんでしたー");
+    } else if (w03 == 1) {
+      setPlayerw03("ぎあちぇんじ");
+    } else if (w03 == 2) {
+      setPlayerw03("みちづれ");
     } else {
-      setPlayer1w03("エラーです");
+      setPlayerw03("エラーです");
     }
-  }, [w0, w1, w2, w3]);
+  }, [w00, w01, w02, w03]);
 
   async function leftRoom() {
     const UUid = await getUid();
@@ -638,7 +664,7 @@ export default function Home() {
         <h2>すばやさ {player1Speed}</h2>
       </div>
       <div className="p-10 text-red-500 float-right">
-        <h2 className="text-4xl p-10">{name2}</h2>
+        <h2 className="text-4xl p-10"></h2>
         <h2>
           HP {player2HP} / {player2HPmax}
         </h2>
@@ -665,10 +691,10 @@ export default function Home() {
       <h2>にげる</h2>
       <button onClick={settest}>test</button>
       <button onClick={leftRoom}>退室</button>
-      <Button onClick={w0_cal}>{player1w00}</Button>
-      <Button onClick={w1_cal}>{player1w01}</Button>
-      <Button onClick={w2_cal}>{player1w02}</Button>
-      <Button onClick={w3_cal}>{player1w03}</Button>
+      <Button onClick={w0_cal}>{playerw00}</Button>
+      <Button onClick={w1_cal}>{playerw01}</Button>
+      <Button onClick={w2_cal}>{playerw02}</Button>
+      <Button onClick={w3_cal}>{playerw03}</Button>
     </main>
   );
 }

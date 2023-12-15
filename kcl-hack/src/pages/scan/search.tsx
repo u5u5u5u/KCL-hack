@@ -161,10 +161,10 @@ export default function Home() {
       defence =
         ((jan007 * 1000 + jan005 * 100 + jan002 * 10 + jan001) % 499) + 100;
       speed = ((jan008 * 100 + jan010 * 10 + jan005) % 97) + 50;
-      w0 = (jan005 + jan003 * jan002 - jan005) % 5;
-      w1 = (jan013 + jan011 * jan006 - jan002) % 3;
-      w2 = (jan009 + jan003 * jan008 - jan004) % 4;
-      w3 = (jan001 + jan006 * jan010 - jan007) % 3;
+      w0 = (jan005 + jan003 * jan002 + jan005) % 5;
+      w1 = (jan013 + jan011 * jan006 + jan002) % 3;
+      w2 = (jan009 + jan003 * jan008 + jan004) % 4;
+      w3 = (jan001 + jan006 * jan010 + jan007) % 3;
     }
     if (jan <= 99999999) {
       var jan013 = jan % 10;
@@ -226,10 +226,10 @@ export default function Home() {
       defence =
         ((jan007 * 1000 + jan007 * 100 + jan010 * 10 + jan008) % 499) + 100;
       speed = ((jan008 * 100 + jan010 * 10 + jan006) % 97) + 50;
-      w0 = (jan006 + jan007 * jan012 - jan013) % 5;
-      w1 = (jan013 + jan011 * jan006 - jan008) % 3;
-      w2 = (jan009 + jan010 * jan008 - jan009) % 4;
-      w3 = (jan007 + jan006 * jan010 - jan011) % 3;
+      w0 = (jan006 + jan007 * jan012 + jan013) % 5;
+      w1 = (jan013 + jan011 * jan006 + jan008) % 3;
+      w2 = (jan009 + jan010 * jan008 + jan009) % 4;
+      w3 = (jan007 + jan006 * jan010 + jan011) % 3;
     }
     setHP(HP);
     setAttack(attack);
