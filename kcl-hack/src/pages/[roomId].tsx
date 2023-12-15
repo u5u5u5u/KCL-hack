@@ -30,10 +30,10 @@ export default function Home() {
   const [player1deltaAttack, setPlayer1deltaAttack] = useState<number>(0);
   const [player1deltaDefence, setPlayer1deltaDefence] = useState<number>(0);
   const [player1deltaSpeed, setPlayer1deltaSpeed] = useState<number>(0);
+  const [player1w00, setPlayer1w00] = useState<string>("");
   const [player1w01, setPlayer1w01] = useState<string>("");
   const [player1w02, setPlayer1w02] = useState<string>("");
   const [player1w03, setPlayer1w03] = useState<string>("");
-  const [player1w04, setPlayer1w04] = useState<string>("");
   const [player1Img, setPlayer1Img] = useState<string>("");
   const [member2Status, setMember2Status] = useState<string>("null");
   const [player2Status, setPlayer2Status] = useState<Object>();
@@ -389,7 +389,48 @@ export default function Home() {
   }, [redirect2]);
 
   useEffect(() => {
-    setPlayer1w01("たたく");
+    if (w0 == 0) {
+      setPlayer1w00("たたく");
+    } else if (w0 == 1) {
+      setPlayer1w00("ちゅーちゅーする");
+    } else if (w0 == 2) {
+      setPlayer1w00("ぜんりょくこうげき");
+    } else if (w0 == 3) {
+      setPlayer1w00("じばく");
+    } else if (w0 == 4) {
+      setPlayer1w00("ぺちぺちする");
+    } else {
+      setPlayer1w00("エラーです");
+    }
+    if (w1 == 0) {
+      setPlayer1w01("ねる");
+    } else if (w1 == 1) {
+      setPlayer1w01("ぐっすりねる");
+    } else if (w1 == 2) {
+      setPlayer1w01("ぜっき");
+    } else {
+      setPlayer1w01("エラーです");
+    }
+    if (w2 == 0) {
+      setPlayer1w02("ちょうはつ");
+    } else if (w2 == 1) {
+      setPlayer1w02("ひきこもる");
+    } else if (w2 == 2) {
+      setPlayer1w02("こわいおにいさんをつれてくる");
+    } else if (w2 == 3) {
+      setPlayer1w02("にらむ");
+    } else {
+      setPlayer1w02("エラーです");
+    }
+    if (w3 == 0) {
+      setPlayer1w03("ざんねんでしたー");
+    } else if (w3 == 1) {
+      setPlayer1w03("ぎあちぇんじ");
+    } else if (w3 == 2) {
+      setPlayer1w03("みちづれ");
+    } else {
+      setPlayer1w03("エラーです");
+    }
   });
 
   async function leftRoom() {
@@ -507,10 +548,10 @@ export default function Home() {
       <h2>にげる</h2>
       <button onClick={settest}>test</button>
       <button onClick={leftRoom}>退室</button>
-      <Button onClick={w0_cal}>{player1w01}</Button>
-      <Button onClick={w1_cal}>わざ2</Button>
-      <Button onClick={w2_cal}>わざ3</Button>
-      <Button onClick={w3_cal}>わざ4</Button>
+      <Button onClick={w0_cal}>{player1w00}</Button>
+      <Button onClick={w1_cal}>{player1w01}</Button>
+      <Button onClick={w2_cal}>{player1w02}</Button>
+      <Button onClick={w3_cal}>{player1w03}</Button>
     </main>
   );
 }
