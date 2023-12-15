@@ -31,6 +31,7 @@ export default function Home() {
   const [image, setIma] = useState<string>("");
 
   const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [isError, setIsError] = useState<boolean>(false);
 
   function jan_get(jan: number) {
     var HP = 0;
@@ -302,7 +303,11 @@ export default function Home() {
       setPri(data.hits[0].price);
       setIma(data.hits[0].image.small);
       jan_get(Number(number));
+      setIsOpen(true);
+      setIsError(false);
     } catch (error) {
+      setIsOpen(false);
+      setIsError(true);
       console.error("エラーです:", error);
     }
   }
@@ -361,52 +366,54 @@ export default function Home() {
               className={styles.button}
               onClick={() => {
                 sendNum();
-                setIsOpen(!isOpen);
               }}
             >
               検索
             </button>
           </div>
+          <div className="accordion">この商品はありません</div>
           <div>
-            <div id="contents" className="accordion-body" aria-hidden={!isOpen}>
-              <div className={styles.image}>
-                <img src={image} />
-              </div>
-              <ul>
-                <li>商品名 : {name}</li>
-                <li>価格 : {price}円</li>
-              </ul>
-              <table className={styles.status}>
-                <tbody>
-                  <tr>
-                    <td className={styles.data1}>Jan Code</td>
-                    <td className={styles.data2}>{Jan}</td>
-                  </tr>
-                  <tr>
-                    <td className={styles.data1}>HP</td>
-                    <td className={styles.data2}>{Hp}</td>
-                  </tr>
-                  <tr>
-                    <td className={styles.data1}>Attack</td>
-                    <td className={styles.data2}>{Attack}</td>
-                  </tr>
-                  <tr>
-                    <td className={styles.data1}>Defence</td>
-                    <td className={styles.data2}>{Defence}</td>
-                  </tr>
-                  <tr>
-                    <td className={styles.data1}>Speed</td>
-                    <td className={styles.data2}>{Speed}</td>
-                  </tr>
-                </tbody>
-              </table>
-              <div>
-                <ul>
-                  <li>わざ1 : {w00}</li>
-                  <li>わざ2 : {w01}</li>
-                  <li>わざ3 : {w02}</li>
-                  <li>わざ4 : {w03}</li>
-                </ul>
+            <div className="accordion-body">
+              <div className={styles.information}>
+                <div className={styles["img-name-price"]}>
+                  <div className={styles.image}>
+                    <img src={image} />
+                  </div>
+                  <ul>
+                    <li>商品名 : {name}</li>
+                    <li>価格 : {price}円</li>
+                  </ul>
+                </div>
+                <div>
+                  <table className={styles.status}>
+                    <tbody>
+                      <tr>
+                        <td className={styles.data1}>HP</td>
+                        <td className={styles.data2}>{Hp}</td>
+                      </tr>
+                      <tr>
+                        <td className={styles.data1}>Attack</td>
+                        <td className={styles.data2}>{Attack}</td>
+                      </tr>
+                      <tr>
+                        <td className={styles.data1}>Defence</td>
+                        <td className={styles.data2}>{Defence}</td>
+                      </tr>
+                      <tr>
+                        <td className={styles.data1}>Speed</td>
+                        <td className={styles.data2}>{Speed}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <div className={styles.actions}>
+                    <ul>
+                      <li>わざ1 : {w00}</li>
+                      <li>わざ2 : {w01}</li>
+                      <li>わざ3 : {w02}</li>
+                      <li>わざ4 : {w03}</li>
+                    </ul>
+                  </div>
+                </div>
               </div>
               <div className={styles.buttons}>
                 <button
@@ -417,7 +424,7 @@ export default function Home() {
                 </button>
                 <button
                   className={styles.registration_button}
-                  onClick={() => setIsOpen(!isOpen)}
+                  onClick={() => setIsOpen(false)}
                 >
                   登録しない
                 </button>
@@ -428,13 +435,16 @@ export default function Home() {
       </div>
       <Footer />
       <style jsx>{`
+        .accordion {
+          height: ${isError ? "auto" : 0};
+          font-size: 2rem;
+          overflow: hidden;
+          margin-top: 20px;
+        }
         .accordion-body {
           height: ${isOpen ? "auto" : 0};
           transition: height 0.3s ease-out;
           overflow: hidden;
-          display: flex;
-          flex-direction: column;
-          align-items: center;
         }
       `}</style>
     </main>
