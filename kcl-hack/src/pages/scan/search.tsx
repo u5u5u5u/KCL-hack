@@ -301,7 +301,10 @@ export default function Home() {
             <button
               className={styles.button}
               aria-hidden={isOpen}
-              onClick={sendNum}
+              onClick={() => {
+                sendNum();
+                setIsOpen(!isOpen);
+              }}
             >
               検索
             </button>
