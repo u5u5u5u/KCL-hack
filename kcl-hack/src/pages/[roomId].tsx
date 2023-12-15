@@ -50,6 +50,7 @@ export default function Home() {
   const [selectVisible, setSelectVisible] = useState<boolean>(false);
   const [redirect1, setRedirect1] = useState<boolean>(false);
   const [redirect2, setRedirect2] = useState<boolean>(false);
+  const [redirect3, setRedirect3] = useState<boolean>(false);
   const [w00, setw00] = useState<number>(0);
   const [w01, setw01] = useState<number>(0);
   const [w02, setw02] = useState<number>(0);
@@ -59,6 +60,11 @@ export default function Home() {
   const [playerw02, setPlayerw02] = useState<string>("");
   const [playerw03, setPlayerw03] = useState<string>("");
   const [changeStatus, setChangeStatus] = useState<string>();
+  const [selectw, setSelectw] = useState<number>(-1);
+  const [selectt, setSelectt] = useState<number>(-1);
+  const [calDone, setCalDone] = useState<boolean>(false);
+  const [mathTrancDone, setMathTrancDone] = useState<boolean>(false);
+  const [deltaChanged, setDeltaChanged] = useState<boolean>(false);
 
   const dbRef = ref(getDatabase());
   const db = getDatabase();
@@ -82,35 +88,62 @@ export default function Home() {
   });
 
   useEffect(() => {
-    if (member2Status == "ready") {
-      setRedirect2(false);
-    }
-
-    if (member1Status == "ready" && member2Status == "ready") {
-      if (whoIs == "Member1") {
-        setStartVisible(true);
+    const auth = getAuth();
+    const db = getDatabase();
+    if (whoIs != "spectators") {
+      if (member2Status == "ready") {
+        setRedirect2(false);
       }
-    }
 
-    if (member1Status == "selecting" || member2Status == "selecting") {
-      console.log("success");
-      setSelectVisible(true);
-      getplayerw();
-    }
+      if (member1Status == "ready" && member2Status == "ready") {
+        if (whoIs == "Member1") {
+          setStartVisible(true);
+        }
+      }
 
-    if (
-      (member1Status == "selected" && member2Status == "selected") ||
-      member1Status == "processing" ||
-      member2Status == "processing"
-    ) {
-      setChangeStatus("processing");
-    }
+      if (member1Status == "selecting" || member2Status == "selecting") {
+        console.log("success");
+        setSelectVisible(true);
+        getplayerw();
+      }
 
-    if (member1Status == "processing" && member2Status == "processing") {
-      if (player1Speed < player2Speed) {
-        setChangeStatus("Member2Turn");
-      } else {
-        setChangeStatus("Member1Turn");
+      if (member1Status == "selected" && member2Status == "selected") {
+        update(ref(db, `Room/${roomId}/MemberStatus`), {
+          Member1: "processing",
+          Member2: "processing",
+        });
+      }
+
+      if (member1Status == "processing" && member2Status == "processing") {
+        if (player1Speed < player2Speed) {
+          update(ref(db, `Room/${roomId}/MemberStatus`), {
+            Member1: "foMember2Turn",
+            Member2: "foMember2Turn",
+          });
+        } else {
+          update(ref(db, `Room/${roomId}/MemberStatus`), {
+            Member1: "foMember1Turn",
+            Member2: "foMember1Turn",
+          });
+        }
+      }
+
+      if (
+        member1Status == "foMember1Turn" &&
+        member2Status == "foMember1Turn"
+      ) {
+        if (whoIs == "Member1") {
+          calDamege();
+        }
+      }
+
+      if (
+        member1Status == "foMember2Turn" &&
+        member2Status == "foMember2Turn"
+      ) {
+        if (whoIs == "Member2") {
+          calDamege();
+        }
       }
     }
 
@@ -128,6 +161,106 @@ export default function Home() {
       console.log("changedone");
     }
   }, [changeStatus]);
+
+  useEffect(() => {
+    getplayerw();
+  }, [redirect3]);
+
+  useEffect(() => {
+    calDeltaStatus();
+  }, [damage1, damage2]);
+
+  useEffect(() => {
+    if (calDone) {
+      setPlayer1deltaAttack(Math.trunc(player1deltaAttack));
+      setPlayer1deltaDefence(Math.trunc(player1deltaDefence));
+      setPlayer1deltaHP(Math.trunc(player1deltaHP));
+      setPlayer1deltaSpeed(Math.trunc(player1deltaSpeed));
+      setPlayer2deltaAttack(Math.trunc(player2deltaAttack));
+      setPlayer2deltaDefence(Math.trunc(player2deltaDefence));
+      setPlayer2deltaHP(Math.trunc(player2deltaHP));
+      setPlayer2deltaSpeed(Math.trunc(player2deltaSpeed));
+      setMathTrancDone(true);
+    }
+  }, [calDone]);
+
+  useEffect(() => {
+    if (mathTrancDone) {
+      setPlayer1HP(player1HP + player1deltaHP);
+      setPlayer1deltaHP(0);
+      setPlayer1Attack(player1Attack + player1deltaAttack);
+      setPlayer1deltaAttack(0);
+      setPlayer1Defence(player1Defence + player1deltaDefence);
+      setPlayer1deltaDefence(0);
+      setPlayer1Speed(player1Speed + player1deltaSpeed);
+      setPlayer1deltaSpeed(0);
+      setPlayer2HP(player2HP + player2deltaHP);
+      setPlayer2deltaHP(0);
+      setPlayer2Attack(player2Attack + player2deltaAttack);
+      setPlayer2deltaAttack(0);
+      setPlayer2Defence(player2Defence + player2deltaDefence);
+      setPlayer2deltaDefence(0);
+      setPlayer2Speed(player2Speed + player2deltaSpeed);
+      setPlayer2deltaSpeed(0);
+      setCalDone(false);
+      setDeltaChanged(true);
+    }
+  }, [mathTrancDone]);
+
+  useEffect(() => {
+    if (deltaChanged) {
+      update(ref(db, `Room/${roomId}/ButtleStatus/Member1/Status`), {
+        HP: player1HP,
+        Attack: player1Attack,
+        Defence: player1Defence,
+        Speed: player1Speed,
+      });
+      update(ref(db, `Room/${roomId}/ButtleStatus/Member2/Status`), {
+        HP: player2HP,
+        Attack: player2Attack,
+        Defence: player2Defence,
+        Speed: player2Speed,
+      });
+      setMathTrancDone(false);
+      setDeltaChanged(false);
+      if (
+        member1Status == "foMember1Turn" &&
+        member2Status == "foMember1Turn"
+      ) {
+        update(ref(db, `Room/${roomId}/MemberStatus`), {
+          Member1: "laMember2Turn",
+          Member2: "laMember2Turn",
+        });
+      }
+      if (
+        member1Status == "foMember2Turn" &&
+        member2Status == "foMember2Turn"
+      ) {
+        update(ref(db, `Room/${roomId}/MemberStatus`), {
+          Member1: "laeMember1Turn",
+          Member2: "laMember1Turn",
+        });
+      }
+      if (
+        member1Status == "laMember1Turn" &&
+        member2Status == "laMember1Turn"
+      ) {
+        update(ref(db, `Room/${roomId}/MemberStatus`), {
+          Member1: "selecting",
+          Member2: "selecting",
+        });
+      }
+      if (
+        member1Status == "laMember2Turn" &&
+        member2Status == "laMember2Turn"
+      ) {
+        update(ref(db, `Room/${roomId}/MemberStatus`), {
+          Member1: "selecting",
+          Member2: "selecting",
+        });
+      }
+    }
+  }, [deltaChanged]);
 
   async function setStatus1() {
     const auth = getAuth();
@@ -161,8 +294,10 @@ export default function Home() {
             setw01(data.w01);
             setw02(data.w02);
             setw03(data.w03);
+            setRedirect3(false);
           } else {
             console.log("No data available");
+            setRedirect3(true);
           }
         })
         .catch((error) => {
@@ -181,8 +316,10 @@ export default function Home() {
             setw01(data.w01);
             setw02(data.w02);
             setw03(data.w03);
+            setRedirect3(false);
           } else {
             console.log("No data available");
+            setRedirect3(true);
           }
         })
         .catch((error) => {
@@ -191,70 +328,93 @@ export default function Home() {
     }
   }
 
-  function w0_cal() {
-    if (w00 == 0) {
-      console.log("たたく");
-      w00_cal();
-    } else if (w00 == 1) {
-      console.log("ちゅーちゅーする");
-      w01_cal;
-    } else if (w00 == 2) {
-      console.log("ぜんりょくこうげき");
-      w02_cal;
-    } else if (w00 == 3) {
-      console.log("じばく");
-      w03_cal;
-    } else if (w00 == 4) {
-      console.log("ぺちぺちする");
-      w04_cal;
-    } else {
-      console.log("エラーです");
+  function calDeltaStatus() {
+    if (selectt == 0) {
+      if (selectw == 0) {
+        console.log("たたく");
+        w00_cal();
+      } else if (selectw == 1) {
+        console.log("ちゅーちゅーする");
+        w01_cal();
+      } else if (selectw == 2) {
+        console.log("ぜんりょくこうげき");
+        w02_cal();
+      } else if (selectw == 3) {
+        console.log("じばく");
+        w03_cal();
+      } else if (selectw == 4) {
+        console.log("ぺちぺちする");
+        w04_cal();
+      } else {
+        console.log("エラーです");
+      }
     }
+    if (selectt == 1) {
+      if (selectw == 0) {
+        console.log("ねる");
+        w10_cal();
+      } else if (selectw == 1) {
+        console.log("ぐっすりねる");
+        w11_cal();
+      } else if (selectw == 2) {
+        console.log("ぜっき");
+        w12_cal();
+      } else {
+        console.log("エラーです");
+      }
+    }
+    if (selectt == 2) {
+      if (selectw == 0) {
+        console.log("ちょうはつ");
+        w20_cal();
+      } else if (selectw == 1) {
+        console.log("ひきこもる");
+        w21_cal();
+      } else if (selectw == 2) {
+        console.log("こわいおにいさんをつれてくる");
+        w22_cal();
+      } else if (selectw == 3) {
+        console.log("にらむ");
+        w23_cal();
+      } else {
+        console.log("エラーです");
+      }
+    }
+    if (selectt == 3) {
+      if (selectw == 0) {
+        console.log("ざんねんでしたー");
+        w30_cal();
+      } else if (selectw == 1) {
+        console.log("ぎあちぇんじ");
+        w31_cal();
+      } else if (selectw == 2) {
+        console.log("みちづれ");
+        w32_cal();
+      } else {
+        console.log("エラーです");
+      }
+    }
+  }
+
+  function w0_cal() {
+    setSelectt(0);
+    setSelectw(w00);
+    setChangeStatus("selected");
   }
   function w1_cal() {
-    if (w01 == 0) {
-      console.log("ねる");
-      w10_cal();
-    } else if (w01 == 1) {
-      console.log("ぐっすりねる");
-      w11_cal;
-    } else if (w01 == 2) {
-      console.log("ぜっき");
-      w12_cal;
-    } else {
-      console.log("エラーです");
-    }
+    setSelectt(1);
+    setSelectw(w01);
+    setChangeStatus("selected");
   }
   function w2_cal() {
-    if (w02 == 0) {
-      console.log("ちょうはつ");
-      w20_cal();
-    } else if (w02 == 1) {
-      console.log("ひきこもる");
-      w21_cal;
-    } else if (w02 == 2) {
-      console.log("こわいおにいさんをつれてくる");
-      w22_cal;
-    } else if (w02 == 3) {
-      console.log("にらむ");
-      w23_cal;
-    } else {
-      console.log("エラーです");
-    }
+    setSelectt(2);
+    setSelectw(w02);
+    setChangeStatus("selected");
   }
   function w3_cal() {
-    if (w03 == 0) {
-      console.log("ざんねんでしたー");
-      w30_cal();
-    } else if (w03 == 1) {
-      console.log("ぎあちぇんじ");
-      w31_cal;
-    } else if (w03 == 2) {
-      console.log("みちづれ");
-      w32_cal;
-    } else {
-      console.log("エラーです");
-    }
+    setSelectt(3);
+    setSelectw(w03);
+    setChangeStatus("selected");
   }
 
   function calDamege() {
@@ -272,6 +432,7 @@ export default function Home() {
       console.log("w00");
       setPlayer1deltaHP(-damage2);
     }
+    setCalDone(true);
   }
   function w01_cal() {
     //相手に0.5倍ダメージを与え、与えたダメージの0.5倍自分を回復する
@@ -285,6 +446,7 @@ export default function Home() {
       setPlayer1deltaHP(-damage2 / 2);
       setPlayer2deltaHP(damage2 / 4);
     }
+    setCalDone(true);
   }
   function w02_cal() {
     //相手に2倍ダメージを与え、相手が自分に1倍ダメージを与える
@@ -298,6 +460,7 @@ export default function Home() {
       setPlayer1deltaHP(-damage2 * 2);
       setPlayer2deltaHP(-damage1);
     }
+    setCalDone(true);
   }
   function w03_cal() {
     //相手に5倍ダメージを与え、自分のHPを0にする
@@ -311,6 +474,7 @@ export default function Home() {
       setPlayer1deltaHP(-damage2 * 5);
       setPlayer2HP(0);
     }
+    setCalDone(true);
   }
   function w04_cal() {
     //相手に0.25倍ダメージを与え、自分のこうげきを2倍にする
@@ -324,6 +488,7 @@ export default function Home() {
       setPlayer1deltaHP(-damage2 / 4);
       setPlayer2Attack(player2Attack / 2);
     }
+    setCalDone(true);
   }
 
   function w10_cal() {
@@ -336,6 +501,7 @@ export default function Home() {
       console.log("w10");
       setPlayer1deltaHP(damage2);
     }
+    setCalDone(true);
   }
   function w11_cal() {
     //自分のHP上限の0.5倍自分を回復する
@@ -347,70 +513,73 @@ export default function Home() {
       console.log("w11");
       setPlayer2deltaHP(player2HPmax / 2);
     }
+    setCalDone(true);
   }
   function w12_cal() {
     //自分のHPを全回復し、自分のこうげきとぼうぎょをそれぞれ0.5倍する
     if (whoIs == "Member1") {
       console.log("w12");
-      setPlayer1HP(player1HPmax);
-      setPlayer1Defence(player1Defence / 2);
-      setPlayer1Attack(player1Attack / 2);
+      if (player1HPmax - player1HP > 0) {
+        setPlayer1deltaHP(player1HPmax - player1HP);
+      }
+      setPlayer1deltaDefence(player1Defence - player1Defence / 2);
+      setPlayer1deltaAttack(player1Attack - player1Attack / 2);
     }
     if (whoIs == "Member2") {
       console.log("w12");
-      setPlayer2HP(player2HPmax);
-      setPlayer2Defence(player2Defence / 2);
-      setPlayer2Attack(player2Attack / 2);
+      if (player2HPmax - player2HP > 0) {
+        setPlayer1deltaHP(player2HPmax - player2HP);
+      }
+      setPlayer2deltaDefence(player2Defence - player2Defence / 2);
+      setPlayer2deltaAttack(player2Attack - player2Attack / 2);
     }
+    setCalDone(true);
   }
 
   function w20_cal() {
     //相手のこうげきを2倍、ぼうぎょを0.5倍する
     if (whoIs == "Member1") {
       console.log("w20");
-      setPlayer1Attack(player1Attack * 2);
-      setPlayer2Defence(player2Defence / 2);
+      setPlayer1deltaAttack(player1Attack);
+      setPlayer2deltaDefence(player2Defence / 2 - player2Defence);
     }
     if (whoIs == "Member2") {
       console.log("w20");
-      setPlayer2Attack(player2Attack * 2);
-      setPlayer1Defence(player1Defence / 2);
+      setPlayer2deltaAttack(player2Attack);
+      setPlayer1deltaDefence(player1Defence / 2 - player1Defence);
     }
+    setCalDone(true);
   }
   function w21_cal() {
     //自分のぼうぎょを2倍する
     if (whoIs == "Member1") {
       console.log("w21");
-      setPlayer1Defence(player1Defence * 2);
+      setPlayer1deltaDefence(player1Defence);
     }
     if (whoIs == "Member2") {
       console.log("w21");
-      setPlayer2Defence(player2Defence * 2);
+      setPlayer2deltaDefence(player2Defence);
     }
+    setCalDone(true);
   }
   function w22_cal() {
-    //相手のこうげきとぼうぎょをそれぞれ0.33倍する
-    if (whoIs == "Member1") {
-      console.log("w22");
-      setPlayer2Attack(player2Attack / 3);
-      setPlayer1Attack(player1Attack / 3);
-    }
-    if (whoIs == "Member2") {
-      console.log("w22");
-      setPlayer1Attack(player1Attack / 3);
-      setPlayer2Attack(player2Attack / 3);
-    }
+    //相手と自分のこうげきをそれぞれ0.33倍する
+    console.log("w22");
+    setPlayer2deltaAttack(player2Attack / 3 - player2Attack);
+    setPlayer1deltaAttack(player1Attack / 3 - player1Attack);
+    setCalDone(true);
   }
   function w23_cal() {
     //相手のこうげきを0.5倍する
     if (whoIs == "Member1") {
       console.log("w23");
-      setPlayer2Attack(player2Attack / 2);
+      setPlayer2deltaAttack(player2Attack / 2 - player2Attack);
     }
     if (whoIs == "Member2") {
       console.log("w23");
-      setPlayer1Attack(player1Attack / 2);
+      setPlayer1deltaAttack(player1Attack / 2 - player1Attack);
     }
+    setCalDone(true);
   }
   function w30_cal() {
     //自分のHP上限、HPをそれぞれ相手と入れ替える
@@ -421,25 +590,28 @@ export default function Home() {
     setPlayer1HPmax(player2HPmax);
     setPlayer2HP(temp);
     setPlayer2HPmax(tempMax);
+    setCalDone(true);
   }
   function w31_cal() {
     //自分のこうげきを10倍、ぼうぎょを0.1倍する
     if (whoIs == "Member1") {
       console.log("w31");
-      setPlayer1Attack(player1Attack * 10);
-      setPlayer1Defence(player1Defence / 10);
+      setPlayer1deltaAttack(player1Attack * 10 - player1Attack);
+      setPlayer1deltaDefence(player1Defence / 10 - player1Defence);
     }
     if (whoIs == "Member2") {
       console.log("w31");
-      setPlayer2Attack(player2Attack * 10);
-      setPlayer2Defence(player2Defence / 10);
+      setPlayer2deltaAttack(player2Attack * 10 - player2Attack);
+      setPlayer2deltaDefence(player2Defence / 10 - player2Defence);
     }
+    setCalDone(true);
   }
   function w32_cal() {
     //自分と相手のHPをそれぞれ100にする
     console.log("w32");
-    setPlayer1HP(100);
-    setPlayer2HP(100);
+    setPlayer1deltaHP(100 - player1HP);
+    setPlayer2deltaHP(100 - player2HP);
+    setCalDone(true);
   }
 
   useEffect(() => {
@@ -490,15 +662,6 @@ export default function Home() {
         console.error(error);
       });
   }, [redirect1]);
-
-  function start() {
-    const db = getDatabase();
-    update(ref(db, `Room/${roomId}/MemberStatus`), {
-      Member1: "selecting",
-      Member2: "selecting",
-    });
-    setStartVisible(false);
-  }
 
   useEffect(() => {
     const auth = getAuth();
@@ -636,6 +799,15 @@ export default function Home() {
 
   async function settest() {
     setChangeStatus("ready");
+  }
+
+  function start() {
+    const db = getDatabase();
+    update(ref(db, `Room/${roomId}/MemberStatus`), {
+      Member1: "selecting",
+      Member2: "selecting",
+    });
+    setStartVisible(false);
   }
 
   return (
