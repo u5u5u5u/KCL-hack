@@ -228,7 +228,8 @@ export default function Home() {
     setDamage2((player2Attack / player1Defence) * 100);
   }
 
-  function w00_cal() {//相手に1倍ダメージを与える
+  function w00_cal() {
+    //相手に1倍ダメージを与える
     if (whoIs == "Member1") {
       console.log("w00");
       setPlayer2deltaHP(-damage1);
@@ -238,7 +239,8 @@ export default function Home() {
       setPlayer1deltaHP(-damage2);
     }
   }
-  function w01_cal() { //相手に0.5倍ダメージを与え、与えたダメージの0.5倍自分を回復する
+  function w01_cal() {
+    //相手に0.5倍ダメージを与え、与えたダメージの0.5倍自分を回復する
     if (whoIs == "Member1") {
       console.log("w01");
       setPlayer2deltaHP(-damage1 / 2);
@@ -250,7 +252,8 @@ export default function Home() {
       setPlayer2deltaHP(damage2 / 4);
     }
   }
-  function w02_cal() { //相手に2倍ダメージを与え、相手が自分に1倍ダメージを与える
+  function w02_cal() {
+    //相手に2倍ダメージを与え、相手が自分に1倍ダメージを与える
     if (whoIs == "Member1") {
       console.log("w02");
       setPlayer2deltaHP(-damage1 * 2);
@@ -262,7 +265,8 @@ export default function Home() {
       setPlayer2deltaHP(-damage1);
     }
   }
-  function w03_cal() {　//相手に5倍ダメージを与え、自分のHPを0にする
+  function w03_cal() {
+    //相手に5倍ダメージを与え、自分のHPを0にする
     if (whoIs == "Member1") {
       console.log("w03");
       setPlayer2deltaHP(-damage1 * 5);
@@ -274,7 +278,8 @@ export default function Home() {
       setPlayer2HP(0);
     }
   }
-  function w04_cal() { //相手に0.25倍ダメージを与え、自分のこうげきを2倍にする
+  function w04_cal() {
+    //相手に0.25倍ダメージを与え、自分のこうげきを2倍にする
     if (whoIs == "Member1") {
       console.log("w04");
       setPlayer2deltaHP(-damage1 / 4);
@@ -287,7 +292,8 @@ export default function Home() {
     }
   }
 
-  function w10_cal() { //自分の1倍ダメージぶん自分を回復する
+  function w10_cal() {
+    //自分の1倍ダメージぶん自分を回復する
     if (whoIs == "Member1") {
       console.log("w10");
       setPlayer2deltaHP(damage1);
@@ -297,7 +303,8 @@ export default function Home() {
       setPlayer1deltaHP(damage2);
     }
   }
-  function w11_cal() {//自分のHP上限の0.5倍自分を回復する
+  function w11_cal() {
+    //自分のHP上限の0.5倍自分を回復する
     if (whoIs == "Member1") {
       console.log("w11");
       setPlayer1deltaHP(player1HPmax / 2);
@@ -307,7 +314,8 @@ export default function Home() {
       setPlayer2deltaHP(player2HPmax / 2);
     }
   }
-  function w12_cal() {//自分のHPを全回復し、自分のこうげきとぼうぎょをそれぞれ0.5倍する
+  function w12_cal() {
+    //自分のHPを全回復し、自分のこうげきとぼうぎょをそれぞれ0.5倍する
     if (whoIs == "Member1") {
       console.log("w12");
       HP1 = HP1max;
@@ -322,7 +330,8 @@ export default function Home() {
     }
   }
 
-  function w20_cal() {//相手のこうげきを2倍、ぼうぎょを0.5倍する
+  function w20_cal() {
+    //相手のこうげきを2倍、ぼうぎょを0.5倍する
     if (whoIs == "Member1") {
       console.log("w20");
       setPlayer1Attack(player1Attack * 2);
@@ -334,7 +343,8 @@ export default function Home() {
       setPlayer1Defence(player1Defence / 2);
     }
   }
-  function w21_cal() {//自分のぼうぎょを2倍する
+  function w21_cal() {
+    //自分のぼうぎょを2倍する
     if (whoIs == "Member1") {
       console.log("w21");
       setPlayer1Defence(player1Defence * 2);
@@ -344,7 +354,8 @@ export default function Home() {
       setPlayer2Defence(player2Defence * 2);
     }
   }
-  function w22_cal() {//相手のこうげきとぼうぎょをそれぞれ0.33倍する
+  function w22_cal() {
+    //相手のこうげきとぼうぎょをそれぞれ0.33倍する
     if (whoIs == "Member1") {
       console.log("w22");
       setPlayer2Attack(player2Attack / 3);
@@ -356,7 +367,8 @@ export default function Home() {
       setPlayer2Attack(player2Attack / 3);
     }
   }
-  function w23_cal() { //相手のこうげきを0.5倍する
+  function w23_cal() {
+    //相手のこうげきを0.5倍する
     if (whoIs == "Member1") {
       console.log("w23");
       setPlayer2Attack(player2Attack / 2);
@@ -366,7 +378,8 @@ export default function Home() {
       setPlayer1Attack(player1Attack / 2);
     }
   }
-  function w30_cal() {//自分のHP上限、HPをそれぞれ相手と入れ替える
+  function w30_cal() {
+    //自分のHP上限、HPをそれぞれ相手と入れ替える
     console.log("w30");
     const temp = HP1;
     const tempMax = HP1max;
@@ -375,7 +388,8 @@ export default function Home() {
     setPlayer2HP(temp);
     setPlayer2HPmax(tempMax);
   }
-  function w31_cal() {//自分のこうげきを10倍、ぼうぎょを0.1倍する
+  function w31_cal() {
+    //自分のこうげきを10倍、ぼうぎょを0.1倍する
     if (whoIs == "Member1") {
       console.log("w31");
       setPlayer1Attack(player1Attack * 10);
@@ -387,7 +401,8 @@ export default function Home() {
       setPlayer2Defence(player2Defence / 10);
     }
   }
-  function w32_cal() {//自分と相手のHPをそれぞれ100にする
+  function w32_cal() {
+    //自分と相手のHPをそれぞれ100にする
     console.log("w32");
     setPlayer1HP(100);
     setPlayer2HP(100);
@@ -535,7 +550,7 @@ export default function Home() {
     } else {
       setPlayer1w03("エラーです");
     }
-  });
+  }, [w0, w1, w2, w3]);
 
   async function leftRoom() {
     const UUid = await getUid();

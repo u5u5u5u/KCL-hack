@@ -16,6 +16,15 @@ export default function Home() {
   const [Speed, setSpeed] = useState<number>();
   const [Jan, setJan] = useState<number>();
 
+  const [sendw0, setSendw0] = useState<number>();
+  const [sendw1, setSendw1] = useState<number>();
+  const [sendw2, setSendw2] = useState<number>();
+  const [sendw3, setSendw3] = useState<number>();
+  const [w00, setw00] = useState<string>();
+  const [w01, setw01] = useState<string>();
+  const [w02, setw02] = useState<string>();
+  const [w03, setw03] = useState<string>();
+
   const [number, setNum] = useState<number>();
   const [name, setNam] = useState<string>("");
   const [price, setPri] = useState<number>();
@@ -227,6 +236,52 @@ export default function Home() {
     setDefence(defence);
     setSpeed(speed);
     setJan(number);
+    setSendw0(w0);
+    setSendw1(w1);
+    setSendw2(w2);
+    setSendw3(w3);
+    if (w0 == 0) {
+      setw00("たたく");
+    } else if (w0 == 1) {
+      setw00("ちゅーちゅーする");
+    } else if (w0 == 2) {
+      setw00("ぜんりょくこうげき");
+    } else if (w0 == 3) {
+      setw00("じばく");
+    } else if (w0 == 4) {
+      setw00("ぺちぺちする");
+    } else {
+      setw00("エラーです");
+    }
+    if (w1 == 0) {
+      setw01("ねる");
+    } else if (w1 == 1) {
+      setw01("ぐっすりねる");
+    } else if (w1 == 2) {
+      setw01("ぜっき");
+    } else {
+      setw01("エラーです");
+    }
+    if (w2 == 0) {
+      setw02("ちょうはつ");
+    } else if (w2 == 1) {
+      setw02("ひきこもる");
+    } else if (w2 == 2) {
+      setw02("こわいおにいさんをつれてくる");
+    } else if (w2 == 3) {
+      setw02("にらむ");
+    } else {
+      setw02("エラーです");
+    }
+    if (w3 == 0) {
+      setw03("ざんねんでしたー");
+    } else if (w3 == 1) {
+      setw03("ぎあちぇんじ");
+    } else if (w3 == 2) {
+      setw03("みちづれ");
+    } else {
+      setw03("エラーです");
+    }
   }
   const changeNum = (event: ChangeEvent<HTMLInputElement>) => {
     console.log(event);
@@ -271,6 +326,10 @@ export default function Home() {
         Defence: Defence,
         Speed: Speed,
         CharaImage: image,
+        w00: sendw0,
+        w01: sendw1,
+        w02: sendw2,
+        w03: sendw3,
       });
       console.log("send");
     } catch (error) {
@@ -342,6 +401,14 @@ export default function Home() {
                   </tr>
                 </tbody>
               </table>
+              <div>
+                <ul>
+                  <li>わざ1 : {w00}</li>
+                  <li>わざ2 : {w01}</li>
+                  <li>わざ3 : {w02}</li>
+                  <li>わざ4 : {w03}</li>
+                </ul>
+              </div>
               <button
                 className={styles.registration_button}
                 onClick={sendStatus}
