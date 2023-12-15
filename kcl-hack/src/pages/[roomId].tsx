@@ -417,21 +417,25 @@ export default function Home() {
     setSelectt(0);
     setSelectw(w00);
     setChangeStatus("selected");
+    setSelectVisible(false);
   }
   function w1_cal() {
     setSelectt(1);
     setSelectw(w01);
     setChangeStatus("selected");
+    setSelectVisible(false);
   }
   function w2_cal() {
     setSelectt(2);
     setSelectw(w02);
     setChangeStatus("selected");
+    setSelectVisible(false);
   }
   function w3_cal() {
     setSelectt(3);
     setSelectw(w03);
     setChangeStatus("selected");
+    setSelectVisible(false);
   }
 
   function calDamege() {
@@ -834,7 +838,9 @@ export default function Home() {
         <div>{whoIs}</div>
         <h2 className="text-4xl p-10"></h2>
         <div>{member1Status}</div>
-        <h2>HP {player1HP}</h2>
+        <h2>
+          HP {player1HP} / {player1HPmax}
+        </h2>
         <h2>Attack {player1Attack}</h2>
         <h2>Defence {player1Defence}</h2>
         <h2>Speed {player1Speed}</h2>
@@ -842,13 +848,6 @@ export default function Home() {
       <div className="p-10 text-red-500 float-right">
         <h2 className="text-4xl p-10"></h2>
         <div>{member2Status}</div>
-        HP {player1HP} / {player1HPmax}
-        <h2>こうげき {player1Attack}</h2>
-        <h2>ぼうぎょ {player1Defence}</h2>
-        <h2>すばやさ {player1Speed}</h2>
-      </div>
-      <div className="p-10 text-red-500 float-right">
-        <h2 className="text-4xl p-10"></h2>
         <h2>
           HP {player2HP} / {player2HPmax}
         </h2>
@@ -865,8 +864,6 @@ export default function Home() {
       >
         Start
       </button>
-      <h2>ける</h2>
-      <h2>にげる</h2>
       <button onClick={settest}>test</button>
       <button onClick={leftRoom}>退室</button>
       <Button
