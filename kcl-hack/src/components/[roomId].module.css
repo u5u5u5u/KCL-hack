@@ -1,0 +1,29 @@
+.player1 {
+  color: red;
+  float: left;
+  margin-left: 20%;
+}
+.player2 {
+  color: blue;
+  float: right;
+  margin-right: 20%;
+}
+.tytle {
+  text-align: center;
+  margin-top: 5%;
+}
+.command {
+  text-align: center;
+}
+.leave {
+  text-align: center;
+}
+.waza {
+  text-align: center;
+}
+.main {
+  /* スクロール無効化
+    overflow: hidden;
+    */
+  margin: 0;
+}

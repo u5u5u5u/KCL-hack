@@ -17,6 +17,7 @@ import Footer from "../components/footer";
 import Link from "next/link";
 import { Button } from "@mui/material";
 import { stat } from "fs";
+import styles from "../components/[roomId].module.css";
 
 export default function Home() {
   const [whoIs, setWhoIs] = useState<string>("spectators");
@@ -976,17 +977,17 @@ export default function Home() {
   }
 
   return (
-    <main>
-      <h1>Room {roomId}</h1>
+    <main className={styles.main}>
+      <h1 className={styles.tytle}>Room {roomId}</h1>
       <div style={{ visibility: youWin ? "visible" : "hidden" }}>
         あなたの勝ち！
       </div>
       <div style={{ visibility: youLose ? "visible" : "hidden" }}>
         あなたの負け！
       </div>
-      <div className="p-10 text-blue-600 float-left">
+      <div className={styles.player1}>
         <div>{whoIs}</div>
-        <h2 className="text-4xl p-10"></h2>
+
         <div>{member1Status}</div>
         <h2>
           HP {player1HP} / {player1HPmax}
@@ -995,9 +996,10 @@ export default function Home() {
         <h2>Defence {player1Defence}</h2>
         <h2>Speed {player1Speed}</h2>
       </div>
-      <div className="p-10 text-red-500 float-right">
-        <h2 className="text-4xl p-10"></h2>
+
+      <div className={styles.player2}>
         <div>{member2Status}</div>
+
         <h2>
           HP {player2HP} / {player2HPmax}
         </h2>
@@ -1005,7 +1007,8 @@ export default function Home() {
         <h2>Defence {player2Defence}</h2>
         <h2>Speed {player2Speed}</h2>
       </div>
-      <div className="text-center p-10">
+
+      <div className={styles.command}>
         <h2>コマンドを選んでください</h2>
       </div>
       <button
@@ -1014,31 +1017,35 @@ export default function Home() {
       >
         Start
       </button>
-      <button onClick={leftRoom}>退室</button>
-      <Button
-        onClick={w0_cal}
-        style={{ visibility: selectVisible ? "visible" : "hidden" }}
-      >
-        {playerw00}
-      </Button>
-      <Button
-        onClick={w1_cal}
-        style={{ visibility: selectVisible ? "visible" : "hidden" }}
-      >
-        {playerw01}
-      </Button>
-      <Button
-        onClick={w2_cal}
-        style={{ visibility: selectVisible ? "visible" : "hidden" }}
-      >
-        {playerw02}
-      </Button>
-      <Button
-        onClick={w3_cal}
-        style={{ visibility: selectVisible ? "visible" : "hidden" }}
-      >
-        {playerw03}
-      </Button>
+      <div className={styles.leave}>
+        <button onClick={leftRoom}>退室</button>
+      </div>
+      <div className={styles.waza}>
+        <Button
+          onClick={w0_cal}
+          style={{ visibility: selectVisible ? "visible" : "hidden" }}
+        >
+          {playerw00}
+        </Button>
+        <Button
+          onClick={w1_cal}
+          style={{ visibility: selectVisible ? "visible" : "hidden" }}
+        >
+          {playerw01}
+        </Button>
+        <Button
+          onClick={w2_cal}
+          style={{ visibility: selectVisible ? "visible" : "hidden" }}
+        >
+          {playerw02}
+        </Button>
+        <Button
+          onClick={w3_cal}
+          style={{ visibility: selectVisible ? "visible" : "hidden" }}
+        >
+          {playerw03}
+        </Button>
+      </div>
     </main>
   );
 }
