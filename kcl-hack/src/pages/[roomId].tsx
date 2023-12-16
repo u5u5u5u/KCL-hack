@@ -72,22 +72,20 @@ export default function Home() {
   const db = getDatabase();
   const router = useRouter();
   const roomId = router.query.roomId;
-  let status1 = "null";
-  let status2 = "null";
 
   onValue(ref(db, `Room/${roomId}/MemberStatus/Member1`), (snapshot) => {
     const data = snapshot.val();
-    if (data != status1) {
-      status1 = data;
-      setMember1Status(status1);
+    if (data != member1Status) {
+      setMember1Status(data);
+      console.log("changed1 to " + data);
     }
   });
 
   onValue(ref(db, `Room/${roomId}/MemberStatus/Member2`), (snapshot) => {
     const data = snapshot.val();
-    if (data != status2) {
-      status2 = data;
-      setMember2Status(status2);
+    if (data != member2Status) {
+      setMember2Status(data);
+      console.log("changed2 to " + data);
     }
   });
 
@@ -105,7 +103,7 @@ export default function Home() {
         }
       }
 
-      if (member1Status == "selecting" || member2Status == "selecting") {
+      if (member1Status == "selecting" && member2Status == "selecting") {
         console.log("success");
         setSelectVisible(true);
         getplayerw();
