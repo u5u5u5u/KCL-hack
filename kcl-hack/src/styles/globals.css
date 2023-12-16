@@ -70,7 +70,7 @@ input {
   transition: background-color 0.3s;
 }
 
-.button:hover {
+.button:active {
   color: #ffffff;
   background-color: #4689ff;
   box-shadow: none;
