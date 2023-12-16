@@ -170,9 +170,9 @@ export default function Home() {
           const data = snapshot.val();
           console.log(data.Name);
           if (data.Name === undefined) {
-            setMember2("名無し");
+            return "名無し";
           }
-          setMember2(data.Name);
+          return data.Name;
         } else {
           return "名無し";
         }
