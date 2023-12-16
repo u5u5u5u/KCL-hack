@@ -299,6 +299,7 @@ export default function Home() {
       setTurnStarted(false);
       setDamageSetUped(false);
       setCalDone(false);
+      setStatusFetchDone(false);
       setMathTrancDone(false);
       setDeltaChanged(false);
     }
