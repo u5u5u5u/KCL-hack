@@ -194,35 +194,37 @@ export default function Home() {
   };
 
   useEffect(() => {
-    const db = getDatabase();
-    async function joining() {
-      if (roomStatus === "empty") {
-        await set(ref(db, `Room/${roomNum}/Member/`), {
-          Member1: userUUID,
-          Member1Name: ownName,
-        });
-        await set(ref(db, `Room/${roomNum}/ButtleStatus/`), {
-          Member1: sendStatus,
-        });
-        await set(ref(db, `Room/${roomNum}/MemberStatus/`), {
-          Member1: "ready",
-        });
-      } else if (roomStatus === "P2empty") {
-        await update(ref(db, `Room/${roomNum}/Member/`), {
-          Member2: userUUID,
-          Member2Name: ownName,
-        });
-        await update(ref(db, `Room/${roomNum}/ButtleStatus/`), {
-          Member2: sendStatus,
-        });
-        await update(ref(db, `Room/${roomNum}/MemberStatus/`), {
-          Member2: "ready",
-        });
+    if (ownName !== undefined) {
+      const db = getDatabase();
+      async function joining() {
+        if (roomStatus === "empty") {
+          await set(ref(db, `Room/${roomNum}/Member/`), {
+            Member1: userUUID,
+            Member1Name: ownName,
+          });
+          await set(ref(db, `Room/${roomNum}/ButtleStatus/`), {
+            Member1: sendStatus,
+          });
+          await set(ref(db, `Room/${roomNum}/MemberStatus/`), {
+            Member1: "ready",
+          });
+        } else if (roomStatus === "P2empty") {
+          await update(ref(db, `Room/${roomNum}/Member/`), {
+            Member2: userUUID,
+            Member2Name: ownName,
+          });
+          await update(ref(db, `Room/${roomNum}/ButtleStatus/`), {
+            Member2: sendStatus,
+          });
+          await update(ref(db, `Room/${roomNum}/MemberStatus/`), {
+            Member2: "ready",
+          });
+        }
+        handleClick();
+        console.log("send");
       }
-      handleClick();
-      console.log("send");
+      joining();
     }
-    joining();
   }, [ownName]);
 
   const router = useRouter();
