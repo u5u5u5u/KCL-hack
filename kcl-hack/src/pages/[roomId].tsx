@@ -16,6 +16,7 @@ import Header from "../components/header";
 import Footer from "../components/footer";
 import Link from "next/link";
 import { Button } from "@mui/material";
+import { stat } from "fs";
 
 export default function Home() {
   const [whoIs, setWhoIs] = useState<string>("spectators");
@@ -781,7 +782,16 @@ export default function Home() {
           setPlayer2Defence(data.Defence);
           setPlayer2Speed(data.Speed);
           setPlayer2Img(data.Img);
-          setStatusFetchDone(true);
+          console.log(statusFetchDone);
+          if (
+            (member1Status == "foMember1Turn" &&
+              member2Status == "foMember1Turn") ||
+            (member1Status == "foMember2Turn" &&
+              member2Status == "foMember2Turn")
+          ) {
+            setStatusFetchDone(true);
+          }
+          console.log(statusFetchDone);
         } else {
           console.log("No data available");
         }
