@@ -1186,9 +1186,11 @@ export default function Home() {
           {playerw03}
         </button>
         <div>
-          {Object.keys(ButtleLog).map((key) => {
-            return <div>{ButtleLog[key].Log}</div>;
-          })}
+          {ButtleLog &&
+            Object.keys(ButtleLog).length > 0 &&
+            Object.keys(ButtleLog).map((key, index) => {
+              return <div key={index}>{ButtleLog[key].Log}</div>;
+            })}
         </div>
       </div>
     </main>

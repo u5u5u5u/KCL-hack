@@ -1,6 +1,6 @@
 "use client";
 import { useRouter } from "next/router";
-import React, { ChangeEvent, useState, useEffect } from "react";
+import React, { ChangeEvent, useState, useEffect, use } from "react";
 import {
   getDatabase,
   ref,
@@ -26,6 +26,7 @@ export default function Home() {
   const [member1, setMember1] = useState<string>();
   const [member2, setMember2] = useState<string>();
   const [memberUUID, setMemberUUID] = useState<Member>();
+  const [ownName, setOwnName] = useState<string>();
   const [roomStatus, setRoomStatus] = useState<string>();
   const [visible, setVisible] = useState<boolean>(false);
   const [userUUID, setUUID] = useState<string>("");
@@ -88,7 +89,6 @@ export default function Home() {
   }, [userChara]);
 
   const lookForRoom = async () => {
-    const UUID = await getUid();
     setRoomNum(number);
     console.log(number);
     get(child(dbRef, `Room/${number}/`))
@@ -170,11 +170,11 @@ export default function Home() {
           const data = snapshot.val();
           console.log(data.Name);
           if (data.Name === undefined) {
-            return "名無し";
+            setOwnName("名無し");
           }
-          return data.Name;
+          setOwnName(data.Name);
         } else {
-          return "名無し";
+          setOwnName("名無し");
         }
       })
       .catch((error) => {
@@ -185,39 +185,45 @@ export default function Home() {
   const join = async () => {
     if (roomStatus !== "full") {
       try {
-        const UUID = await getUid();
-        const UserName = await getOwnName(userUUID);
-        const db = getDatabase();
-        if (roomStatus === "empty") {
-          await set(ref(db, `Room/${roomNum}/Member/`), {
-            Member1: UUID,
-            Member1Name: UserName,
-          });
-          await set(ref(db, `Room/${roomNum}/ButtleStatus/`), {
-            Member1: sendStatus,
-          });
-          await set(ref(db, `Room/${roomNum}/MemberStatus/`), {
-            Member1: "ready",
-          });
-        } else if (roomStatus === "P2empty") {
-          await update(ref(db, `Room/${roomNum}/Member/`), {
-            Member2: UUID,
-            Member2Name: UserName,
-          });
-          await update(ref(db, `Room/${roomNum}/ButtleStatus/`), {
-            Member2: sendStatus,
-          });
-          await update(ref(db, `Room/${roomNum}/MemberStatus/`), {
-            Member2: "ready",
-          });
-        }
-        handleClick();
-        console.log("send");
+        await getUid();
+        await getOwnName(userUUID);
       } catch (error) {
         console.error("エラーです:", error);
       }
     }
   };
+
+  useEffect(() => {
+    const db = getDatabase();
+    async function joining() {
+      if (roomStatus === "empty") {
+        await set(ref(db, `Room/${roomNum}/Member/`), {
+          Member1: userUUID,
+          Member1Name: ownName,
+        });
+        await set(ref(db, `Room/${roomNum}/ButtleStatus/`), {
+          Member1: sendStatus,
+        });
+        await set(ref(db, `Room/${roomNum}/MemberStatus/`), {
+          Member1: "ready",
+        });
+      } else if (roomStatus === "P2empty") {
+        await update(ref(db, `Room/${roomNum}/Member/`), {
+          Member2: userUUID,
+          Member2Name: ownName,
+        });
+        await update(ref(db, `Room/${roomNum}/ButtleStatus/`), {
+          Member2: sendStatus,
+        });
+        await update(ref(db, `Room/${roomNum}/MemberStatus/`), {
+          Member2: "ready",
+        });
+      }
+      handleClick();
+      console.log("send");
+    }
+    joining();
+  }, [ownName]);
 
   const router = useRouter();
   const handleClick = () => {
