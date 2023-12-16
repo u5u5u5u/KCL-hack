@@ -261,7 +261,9 @@ export default function Home() {
             Member2:{member2}
           </div>
           <div style={{ visibility: visible ? "visible" : "hidden" }}>
-            <button onClick={join}>PLAY</button>
+            <button className="button" onClick={join}>
+              参加
+            </button>
           </div>
         </div>
       </div>
