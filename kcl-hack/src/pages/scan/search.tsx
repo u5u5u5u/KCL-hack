@@ -355,7 +355,7 @@ export default function Home() {
     <main>
       <Header children="入力" />
       <div className="container">
-        <div className="wrapper">
+        <div className={styles.wrapper}>
           <div className="search">
             <input
               value={number}
@@ -372,7 +372,7 @@ export default function Home() {
             </button>
           </div>
           <div className="accordion">この商品はありません</div>
-          <div>
+          <div className={styles["info-reg"]}>
             <div className="accordion-body">
               <div className={styles.information}>
                 <div className={styles["img-name-price"]}>
@@ -418,7 +418,10 @@ export default function Home() {
               <div className={styles.buttons}>
                 <button
                   className={styles.registration_button}
-                  onClick={sendStatus}
+                  onClick={() => {
+                    sendStatus();
+                    setIsOpen(false);
+                  }}
                 >
                   登録する
                 </button>
@@ -436,14 +439,15 @@ export default function Home() {
       <Footer />
       <style jsx>{`
         .search {
-          height: ${isOpen ? 0 : "auto"};
+          height: ${isOpen ? 0 : "100%"};
           overflow: ${isOpen ? "hidden" : "visible"};
         }
         .accordion {
-          height: ${isError ? "auto" : 0};
+          height: ${isError ? "80%" : 0};
+          width: 100%;
           font-size: 2rem;
+          text-align: center;
           overflow: hidden;
-          margin-top: 20px;
         }
         .accordion-body {
           height: ${isOpen ? "auto" : 0};
