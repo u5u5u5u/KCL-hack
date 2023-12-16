@@ -513,7 +513,12 @@ export default function Home() {
         }
       }
       if (selectt == 1) {
-        pushButtlelog(Member1Name + "の" + playerw01 + "!");
+        if (whoIs == "Member1") {
+          pushButtlelog(Member1Name + "の" + playerw01 + "!");
+        }
+        if (whoIs == "Member2") {
+          pushButtlelog(Member2Name + "の" + playerw01 + "!");
+        }
         if (selectw == 0) {
           console.log("ねる");
           setDamageSetUped(false);
@@ -532,7 +537,12 @@ export default function Home() {
         }
       }
       if (selectt == 2) {
-        pushButtlelog(Member1Name + "の" + playerw02 + "!");
+        if (whoIs == "Member1") {
+          pushButtlelog(Member1Name + "の" + playerw02 + "!");
+        }
+        if (whoIs == "Member2") {
+          pushButtlelog(Member2Name + "の" + playerw02 + "!");
+        }
         if (selectw == 0) {
           console.log("ちょうはつ");
           setDamageSetUped(false);
@@ -555,7 +565,12 @@ export default function Home() {
         }
       }
       if (selectt == 3) {
-        pushButtlelog(Member1Name + "の" + playerw03 + "!");
+        if (whoIs == "Member1") {
+          pushButtlelog(Member1Name + "の" + playerw03 + "!");
+        }
+        if (whoIs == "Member2") {
+          pushButtlelog(Member2Name + "の" + playerw03 + "!");
+        }
         if (selectw == 0) {
           console.log("ざんねんでしたー");
           setDamageSetUped(false);
