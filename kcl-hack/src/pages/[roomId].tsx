@@ -577,14 +577,14 @@ export default function Home() {
   }
 
   function w10_cal() {
-    //自分の1倍ダメージぶん自分を回復する
+    //自分の1倍attackぶん自分を回復する
     if (whoIs == "Member1") {
       console.log("w10");
-      setPlayer1deltaHP(damage1);
+      setPlayer1deltaHP(player1Attack);
     }
     if (whoIs == "Member2") {
       console.log("w10");
-      setPlayer2deltaHP(damage2);
+      setPlayer2deltaHP(player2Attack);
     }
     setCalDone(true);
   }
