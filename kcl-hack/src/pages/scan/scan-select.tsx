@@ -10,7 +10,7 @@ export default function Home() {
       <Header children="SCAN" />
       <div className="container">
         <div className="wrapper">
-          <ul className="">
+          <ul className="wrapper">
             <li className="content">
               <Link href="/camera">
                 <Button label="読み取り" />
