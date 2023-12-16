@@ -163,14 +163,35 @@ export default function Home() {
       });
   }
 
+  async function getOwnName(uuid: string) {
+    get(child(dbRef, `User/${uuid}/Profile/`))
+      .then((snapshot) => {
+        if (snapshot.exists()) {
+          const data = snapshot.val();
+          console.log(data.Name);
+          if (data.Name === undefined) {
+            setMember2("名無し");
+          }
+          setMember2(data.Name);
+        } else {
+          return "名無し";
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }
+
   const join = async () => {
     if (roomStatus !== "full") {
       try {
         const UUID = await getUid();
+        const UserName = await getOwnName(userUUID);
         const db = getDatabase();
         if (roomStatus === "empty") {
           await set(ref(db, `Room/${roomNum}/Member/`), {
             Member1: UUID,
+            Member1Name: UserName,
           });
           await set(ref(db, `Room/${roomNum}/ButtleStatus/`), {
             Member1: sendStatus,
@@ -181,6 +202,7 @@ export default function Home() {
         } else if (roomStatus === "P2empty") {
           await update(ref(db, `Room/${roomNum}/Member/`), {
             Member2: UUID,
+            Member2Name: UserName,
           });
           await update(ref(db, `Room/${roomNum}/ButtleStatus/`), {
             Member2: sendStatus,
