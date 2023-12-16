@@ -99,13 +99,6 @@ export default function Home() {
     }
   });
 
-  onValue(ref(db, `Room/${roomId}/ButtleLog`), (snapshot) => {
-    const data = snapshot.val();
-    if (data != ButtleLog) {
-      setButtleLog(data);
-    }
-  });
-
   useEffect(() => {
     const auth = getAuth();
     const db = getDatabase();
@@ -125,6 +118,7 @@ export default function Home() {
         fetchButtleStatus1();
         console.log("fetch");
         setSelectVisible(true);
+        fetchButtlelog();
         getplayerw();
       }
 
@@ -195,10 +189,12 @@ export default function Home() {
       if (member1Status == "win" && member2Status == "lose") {
         if (whoIs == "Member1") {
           setYouWin(true);
+          fetchButtlelog();
           setSelectVisible(false);
         }
         if (whoIs == "Member2") {
           setYouLose(true);
+          fetchButtlelog();
           setSelectVisible(false);
         }
       }
@@ -1096,7 +1092,7 @@ export default function Home() {
         if (snapshot.exists()) {
           console.log("available");
           const data = snapshot.val();
-          set;
+          setButtleLog(data);
         } else {
           console.log("No data available");
         }
