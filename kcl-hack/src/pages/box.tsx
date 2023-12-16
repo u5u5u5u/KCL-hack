@@ -61,7 +61,6 @@ export default function Home() {
         const w1 = val.Status.w01;
         const w2 = val.Status.w02;
         const w3 = val.Status.w03;
-        setDescDone(true);
         let change: boolean = false;
 
         if (w0 == 0) {
@@ -142,6 +141,7 @@ export default function Home() {
         }
         if (change) {
           setCharacters(newCharacters);
+          setDescDone(true);
         }
       });
     }
