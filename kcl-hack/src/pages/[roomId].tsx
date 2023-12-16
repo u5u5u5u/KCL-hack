@@ -115,6 +115,8 @@ export default function Home() {
 
       if (member1Status == "selecting" && member2Status == "selecting") {
         console.log("success");
+        fetchButtleStatus1();
+        fetchButtleStatus2();
         setSelectVisible(true);
         setMemberStatusChanged(false);
         getplayerw();
