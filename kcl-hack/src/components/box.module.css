@@ -2,10 +2,30 @@
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 1.5rem;
-  padding: 3rem;
+  padding: 3rem 5rem;
 }
 
 .content {
+  position: relative;
+  height: 90%;
+  width: 90%;
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+}
+
+.content::before {
+  content: "";
+  display: block;
+  padding-top: 142.5%;
+}
+
+.content div {
+  width: 100%;
+}
+
+.content .back,
+.content .front {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -14,13 +34,26 @@
   border-radius: 0.5rem;
   box-shadow: 0.3rem 0.3rem 0.2rem #ccc;
   cursor: pointer;
+  transition: all 1s ease-in-out;
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  backface-visibility: hidden;
   padding: 5%;
 }
 
-.content:hover {
-  box-shadow: 0.3rem 0.3rem 0.2rem #4689ff;
-  transform: translateY(-1rem);
-  transition: transform 0.3s;
+.back {
+  transform: rotateY(180deg);
+}
+
+.content:hover .front {
+  transform: rotateY(180deg);
+}
+
+.content:hover .back {
+  transform: rotateY(0deg);
 }
 
 .name {

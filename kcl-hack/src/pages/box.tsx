@@ -76,34 +76,56 @@ export default function Home() {
             key={id}
             onClick={() => handleClick(id)}
           >
-            <div className={styles.name}>
-              <h1>{chara.Status.Name}</h1>
+            <div className={styles.back}>
+              <ul className={styles.actions}>
+                <li>
+                  <p></p> {/* わざ名 */}
+                  <p></p> {/* わざ説明 */}
+                </li>
+                <li>
+                  <p></p>
+                  <p></p>
+                </li>
+                <li>
+                  <p></p>
+                  <p></p>
+                </li>
+                <li>
+                  <p></p>
+                  <p></p>
+                </li>
+              </ul>
             </div>
-            <div className={styles.image_box}>
-              <img
-                className={styles.image}
-                src={chara.Status.CharaImage}
-                alt={chara.Status.Name}
-              />
+            <div className={styles.front}>
+              <div className={styles.name}>
+                <h1>{chara.Status.Name}</h1>
+              </div>
+              <div className={styles.image_box}>
+                <img
+                  className={styles.image}
+                  src={chara.Status.CharaImage}
+                  alt={chara.Status.Name}
+                />
+              </div>
+              <table className={styles.status}>
+                <tr>
+                  <td className={styles.data1}>HP</td>
+                  <td className={styles.data2}>{chara.Status.HP}</td>
+                </tr>
+                <tr>
+                  <td className={styles.data1}>Attack</td>
+                  <td className={styles.data2}>{chara.Status.Attack}</td>
+                </tr>
+                <tr>
+                  <td className={styles.data1}>Defence</td>
+                  <td className={styles.data2}>{chara.Status.Defence}</td>
+                </tr>
+                <tr>
+                  <td className={styles.data1}>Speed</td>
+                  <td className={styles.data2}>{chara.Status.Speed}</td>
+                </tr>
+              </table>
             </div>
-            <table className={styles.status}>
-              <tr>
-                <td className={styles.data1}>HP</td>
-                <td className={styles.data2}>{chara.Status.HP}</td>
-              </tr>
-              <tr>
-                <td className={styles.data1}>Attack</td>
-                <td className={styles.data2}>{chara.Status.Attack}</td>
-              </tr>
-              <tr>
-                <td className={styles.data1}>Defence</td>
-                <td className={styles.data2}>{chara.Status.Defence}</td>
-              </tr>
-              <tr>
-                <td className={styles.data1}>Speed</td>
-                <td className={styles.data2}>{chara.Status.Speed}</td>
-              </tr>
-            </table>
           </button>
         ))}
       </div>
