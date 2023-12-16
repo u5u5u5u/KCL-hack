@@ -1021,30 +1021,34 @@ export default function Home() {
         <button onClick={leftRoom}>退室</button>
       </div>
       <div className={styles.waza}>
-        <Button
+        <button
+          className={styles.button}
           onClick={w0_cal}
           style={{ visibility: selectVisible ? "visible" : "hidden" }}
         >
           {playerw00}
-        </Button>
-        <Button
+        </button>
+        <button
+          className={styles.button}
           onClick={w1_cal}
           style={{ visibility: selectVisible ? "visible" : "hidden" }}
         >
           {playerw01}
-        </Button>
-        <Button
+        </button>
+        <button
+          className={styles.button}
           onClick={w2_cal}
           style={{ visibility: selectVisible ? "visible" : "hidden" }}
         >
           {playerw02}
-        </Button>
-        <Button
+        </button>
+        <button
+          className={styles.button}
           onClick={w3_cal}
           style={{ visibility: selectVisible ? "visible" : "hidden" }}
         >
           {playerw03}
-        </Button>
+        </button>
       </div>
     </main>
   );
