@@ -111,7 +111,6 @@ export default function Home() {
       if (member1Status == "selecting" && member2Status == "selecting") {
         console.log("success");
         fetchButtleStatus1();
-        fetchButtleStatus2();
         console.log("fetch");
         setSelectVisible(true);
         getplayerw();
@@ -148,7 +147,6 @@ export default function Home() {
       ) {
         if (whoIs == "Member1") {
           fetchButtleStatus1();
-          fetchButtleStatus2();
           console.log("fetch");
         }
       }
@@ -159,7 +157,6 @@ export default function Home() {
       ) {
         if (whoIs == "Member2") {
           fetchButtleStatus1();
-          fetchButtleStatus2();
           console.log("fetch");
         }
       }
@@ -170,7 +167,6 @@ export default function Home() {
       ) {
         if (whoIs == "Member1") {
           fetchButtleStatus1();
-          fetchButtleStatus2();
           console.log("fetch");
         }
       }
@@ -180,13 +176,19 @@ export default function Home() {
       ) {
         if (whoIs == "Member2") {
           fetchButtleStatus1();
-          fetchButtleStatus2();
           console.log("fetch");
         }
       }
       console.log("check");
     }
   }, [member1Status, member2Status]);
+
+  function damegeCal() {
+    setDamage1((player1Attack / player2Defence) * 100);
+    setDamage2((player2Attack / player1Defence) * 100);
+    setDamageSetUped(true);
+    console.log("done");
+  }
 
   useEffect(() => {
     getplayerw();
@@ -470,17 +472,6 @@ export default function Home() {
     selected();
     setSelectVisible(false);
   }
-  useEffect(() => {
-    if (battleStatus1Fetched && battleStatus2Fetched) {
-      setDamage1((player1Attack / player2Defence) * 100);
-      setDamage2((player2Attack / player1Defence) * 100);
-      setDamageSetUped(true);
-      setRedirect4(false);
-    } else {
-      setRedirect4(true);
-    }
-    console.log(battleStatus1Fetched + " " + battleStatus2Fetched);
-  }, [battleStatus1Fetched, battleStatus2Fetched, redirect4]);
 
   function w00_cal() {
     //相手に1倍ダメージを与える
@@ -770,8 +761,7 @@ export default function Home() {
           setPlayer1Defence(data.Defence);
           setPlayer1Speed(data.Speed);
           setPlayer1Img(data.Img);
-          setBattleStatus1Fetched(true);
-          console.log(battleStatus1Fetched);
+          fetchButtleStatus2();
         } else {
           console.log("No data available");
         }
@@ -798,8 +788,7 @@ export default function Home() {
           setPlayer2Defence(data.Defence);
           setPlayer2Speed(data.Speed);
           setPlayer2Img(data.Img);
-          setBattleStatus2Fetched(true);
-          console.log(battleStatus2Fetched);
+          damegeCal();
         } else {
           console.log("No data available");
         }
