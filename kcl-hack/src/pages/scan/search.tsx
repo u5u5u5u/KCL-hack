@@ -421,6 +421,7 @@ export default function Home() {
                   onClick={() => {
                     sendStatus();
                     setIsOpen(false);
+                    alert("登録しました");
                   }}
                 >
                   登録する
