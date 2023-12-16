@@ -16,6 +16,7 @@ import Header from "../components/header";
 import Footer from "../components/footer";
 import Link from "next/link";
 import { Button } from "@mui/material";
+import { stat } from "fs";
 
 export default function Home() {
   const [whoIs, setWhoIs] = useState<string>("spectators");
@@ -48,10 +49,10 @@ export default function Home() {
   const [player2Img, setPlayer2Img] = useState<string>("");
   const [startVisible, setStartVisible] = useState<boolean>(false);
   const [selectVisible, setSelectVisible] = useState<boolean>(false);
+  const [processingBlocker, setProcessingBlocker] = useState<boolean>(false);
   const [redirect1, setRedirect1] = useState<boolean>(false);
   const [redirect2, setRedirect2] = useState<boolean>(false);
   const [redirect3, setRedirect3] = useState<boolean>(false);
-  const [redirect4, setRedirect4] = useState<boolean>(false);
   const [w00, setw00] = useState<number>(0);
   const [w01, setw01] = useState<number>(0);
   const [w02, setw02] = useState<number>(0);
@@ -60,34 +61,35 @@ export default function Home() {
   const [playerw01, setPlayerw01] = useState<string>("");
   const [playerw02, setPlayerw02] = useState<string>("");
   const [playerw03, setPlayerw03] = useState<string>("");
-  const [changeStatus, setChangeStatus] = useState<string>();
   const [selectw, setSelectw] = useState<number>(-1);
   const [selectt, setSelectt] = useState<number>(-1);
+  const [turnStarted, setTurnStarted] = useState<boolean>(false);
+  const [statusFetchDone, setStatusFetchDone] = useState<boolean>(false);
   const [damageSetUped, setDamageSetUped] = useState<boolean>(false);
   const [calDone, setCalDone] = useState<boolean>(false);
   const [mathTrancDone, setMathTrancDone] = useState<boolean>(false);
   const [deltaChanged, setDeltaChanged] = useState<boolean>(false);
+  const [youWin, setYouWin] = useState<boolean>(false);
+  const [youLose, setYouLose] = useState<boolean>(false);
 
   const dbRef = ref(getDatabase());
   const db = getDatabase();
   const router = useRouter();
   const roomId = router.query.roomId;
-  let status1 = "null";
-  let status2 = "null";
 
   onValue(ref(db, `Room/${roomId}/MemberStatus/Member1`), (snapshot) => {
     const data = snapshot.val();
-    if (data != status1) {
-      status1 = data;
-      setMember1Status(status1);
+    if (data != member1Status) {
+      setMember1Status(data);
+      console.log("changed1 to " + data);
     }
   });
 
   onValue(ref(db, `Room/${roomId}/MemberStatus/Member2`), (snapshot) => {
     const data = snapshot.val();
-    if (data != status2) {
-      status2 = data;
-      setMember2Status(status2);
+    if (data != member2Status) {
+      setMember2Status(data);
+      console.log("changed2 to " + data);
     }
   });
 
@@ -105,17 +107,23 @@ export default function Home() {
         }
       }
 
-      if (member1Status == "selecting" || member2Status == "selecting") {
+      if (member1Status == "selecting" && member2Status == "selecting") {
         console.log("success");
+        fetchButtleStatus1();
+        console.log("fetch");
         setSelectVisible(true);
         getplayerw();
       }
 
       if (member1Status == "selected" && member2Status == "selected") {
-        update(ref(db, `Room/${roomId}/MemberStatus`), {
-          Member1: "processing",
-          Member2: "processing",
-        });
+        setSelectVisible(false);
+        if (!processingBlocker) {
+          setProcessingBlocker(true);
+          update(ref(db, `Room/${roomId}/MemberStatus`), {
+            Member1: "processing",
+            Member2: "processing",
+          });
+        }
       }
 
       if (member1Status == "processing" && member2Status == "processing") {
@@ -137,7 +145,8 @@ export default function Home() {
         member2Status == "foMember1Turn"
       ) {
         if (whoIs == "Member1") {
-          calDamege();
+          setTurnStarted(true);
+          console.log("fetch");
         }
       }
 
@@ -146,7 +155,8 @@ export default function Home() {
         member2Status == "foMember2Turn"
       ) {
         if (whoIs == "Member2") {
-          calDamege();
+          setTurnStarted(true);
+          console.log("fetch");
         }
       }
 
@@ -155,25 +165,62 @@ export default function Home() {
         member2Status == "laMember1Turn"
       ) {
         if (whoIs == "Member1") {
-          calDamege();
+          setTurnStarted(true);
+          console.log("fetch");
         }
-      } else {
-        setRedirect4(true);
       }
       if (
         member1Status == "laMember2Turn" &&
         member2Status == "laMember2Turn"
       ) {
         if (whoIs == "Member2") {
-          calDamege();
+          setTurnStarted(true);
+          console.log("fetch");
         }
-      } else {
-        setRedirect4(true);
       }
-    }
 
-    console.log("changed");
+      if (member1Status == "win" && member2Status == "lose") {
+        if (whoIs == "Member1") {
+          setYouWin(true);
+          setSelectVisible(false);
+        }
+        if (whoIs == "Member2") {
+          setYouLose(true);
+          setSelectVisible(false);
+        }
+      }
+      if (member1Status == "lose" && member2Status == "win") {
+        if (whoIs == "Member1") {
+          setYouLose(true);
+          setSelectVisible(false);
+        }
+        if (whoIs == "Member2") {
+          setYouWin(true);
+          setSelectVisible(false);
+        }
+      }
+      console.log("check");
+    }
   }, [member1Status, member2Status]);
+
+  function damegeCal() {
+    setDamage1((player1Attack / player2Defence) * 100);
+    setDamage2((player2Attack / player1Defence) * 100);
+    setDamageSetUped(true);
+    console.log("done");
+  }
+
+  useEffect(() => {
+    if (turnStarted) {
+      fetchButtleStatus1();
+    }
+  }, [turnStarted]);
+
+  useEffect(() => {
+    if (statusFetchDone) {
+      damegeCal();
+    }
+  }, [statusFetchDone]);
 
   useEffect(() => {
     getplayerw();
@@ -221,76 +268,80 @@ export default function Home() {
 
   useEffect(() => {
     if (deltaChanged) {
-      update(ref(db, `Room/${roomId}/ButtleStatus/Member1/Status`), {
-        HP: player1HP,
-        Attack: player1Attack,
-        Defence: player1Defence,
-        Speed: player1Speed,
-      });
-      update(ref(db, `Room/${roomId}/ButtleStatus/Member2/Status`), {
-        HP: player2HP,
-        Attack: player2Attack,
-        Defence: player2Defence,
-        Speed: player2Speed,
-      });
-      if (
-        member1Status == "foMember1Turn" &&
-        member2Status == "foMember1Turn"
-      ) {
-        update(ref(db, `Room/${roomId}/MemberStatus`), {
-          Member1: "laMember2Turn",
-          Member2: "laMember2Turn",
+      if (player1HP > 0 && player2HP > 0) {
+        update(ref(db, `Room/${roomId}/ButtleStatus/Member1/Status`), {
+          HPmax: player1HPmax,
+          HP: player1HP,
+          Attack: player1Attack,
+          Defence: player1Defence,
+          Speed: player1Speed,
         });
-      }
-      if (
-        member1Status == "foMember2Turn" &&
-        member2Status == "foMember2Turn"
-      ) {
-        update(ref(db, `Room/${roomId}/MemberStatus`), {
-          Member1: "laMember1Turn",
-          Member2: "laMember1Turn",
+        update(ref(db, `Room/${roomId}/ButtleStatus/Member2/Status`), {
+          HPmax: player2HPmax,
+          HP: player2HP,
+          Attack: player2Attack,
+          Defence: player2Defence,
+          Speed: player2Speed,
         });
+        if (
+          member1Status == "foMember1Turn" &&
+          member2Status == "foMember1Turn"
+        ) {
+          update(ref(db, `Room/${roomId}/MemberStatus`), {
+            Member1: "laMember2Turn",
+            Member2: "laMember2Turn",
+          });
+        }
+        if (
+          member1Status == "foMember2Turn" &&
+          member2Status == "foMember2Turn"
+        ) {
+          update(ref(db, `Room/${roomId}/MemberStatus`), {
+            Member1: "laMember1Turn",
+            Member2: "laMember1Turn",
+          });
+        }
+        if (
+          member1Status == "laMember1Turn" &&
+          member2Status == "laMember1Turn"
+        ) {
+          update(ref(db, `Room/${roomId}/MemberStatus`), {
+            Member1: "selecting",
+            Member2: "selecting",
+          });
+        }
+        if (
+          member1Status == "laMember2Turn" &&
+          member2Status == "laMember2Turn"
+        ) {
+          update(ref(db, `Room/${roomId}/MemberStatus`), {
+            Member1: "selecting",
+            Member2: "selecting",
+          });
+        }
+        setProcessingBlocker(false);
+        setTurnStarted(false);
+        setDamageSetUped(false);
+        setCalDone(false);
+        setStatusFetchDone(false);
+        setMathTrancDone(false);
+        setDeltaChanged(false);
+      } else {
+        if (player1HP <= 0) {
+          update(ref(db, `Room/${roomId}/MemberStatus`), {
+            Member1: "lose",
+            Member2: "win",
+          });
+        }
+        if (player2HP <= 0) {
+          update(ref(db, `Room/${roomId}/MemberStatus`), {
+            Member1: "win",
+            Member2: "lose",
+          });
+        }
       }
-      if (
-        member1Status == "laMember1Turn" &&
-        member2Status == "laMember1Turn"
-      ) {
-        update(ref(db, `Room/${roomId}/MemberStatus`), {
-          Member1: "selecting",
-          Member2: "selecting",
-        });
-      }
-      if (
-        member1Status == "laMember2Turn" &&
-        member2Status == "laMember2Turn"
-      ) {
-        update(ref(db, `Room/${roomId}/MemberStatus`), {
-          Member1: "selecting",
-          Member2: "selecting",
-        });
-      }
-      setCalDone(false);
-      setMathTrancDone(false);
-      setDeltaChanged(false);
     }
   }, [deltaChanged]);
-
-  async function setStatus1() {
-    const auth = getAuth();
-    const db = getDatabase();
-    update(ref(db, `Room/${roomId}/MemberStatus`), {
-      Member1: changeStatus,
-    });
-  }
-
-  async function setStatus2() {
-    const auth = getAuth();
-    const db = getDatabase();
-    if (changeStatus != "ready")
-      update(ref(db, `Room/${roomId}/MemberStatus`), {
-        Member2: changeStatus,
-      });
-  }
 
   async function getplayerw() {
     const auth = getAuth();
@@ -455,12 +506,6 @@ export default function Home() {
     setSelectVisible(false);
   }
 
-  function calDamege() {
-    setDamage1((player1Attack / player2Defence) * 100);
-    setDamage2((player2Attack / player1Defence) * 100);
-    setDamageSetUped(true);
-  }
-
   function w00_cal() {
     //相手に1倍ダメージを与える
     if (whoIs == "Member1") {
@@ -478,12 +523,12 @@ export default function Home() {
     if (whoIs == "Member1") {
       console.log("w01");
       setPlayer2deltaHP(-damage1 / 2);
-      setPlayer1deltaHP(damage1 / 4);
+      setPlayer1deltaHP(damage1 / 2);
     }
     if (whoIs == "Member2") {
       console.log("w01");
       setPlayer1deltaHP(-damage2 / 2);
-      setPlayer2deltaHP(damage2 / 4);
+      setPlayer2deltaHP(damage2 / 2);
     }
     setCalDone(true);
   }
@@ -506,12 +551,12 @@ export default function Home() {
     if (whoIs == "Member1") {
       console.log("w03");
       setPlayer2deltaHP(-damage1 * 5);
-      setPlayer1HP(0);
+      setPlayer1deltaHP(-player1HP);
     }
     if (whoIs == "Member2") {
       console.log("w03");
       setPlayer1deltaHP(-damage2 * 5);
-      setPlayer2HP(0);
+      setPlayer2deltaHP(-player2HP);
     }
     setCalDone(true);
   }
@@ -520,12 +565,12 @@ export default function Home() {
     if (whoIs == "Member1") {
       console.log("w04");
       setPlayer2deltaHP(-damage1 / 4);
-      setPlayer1Attack(player1Attack / 2);
+      setPlayer1deltaAttack(player1Attack);
     }
     if (whoIs == "Member2") {
       console.log("w04");
       setPlayer1deltaHP(-damage2 / 4);
-      setPlayer2Attack(player2Attack / 2);
+      setPlayer2deltaAttack(player2Attack);
     }
     setCalDone(true);
   }
@@ -534,11 +579,11 @@ export default function Home() {
     //自分の1倍ダメージぶん自分を回復する
     if (whoIs == "Member1") {
       console.log("w10");
-      setPlayer2deltaHP(damage1);
+      setPlayer1deltaHP(damage1);
     }
     if (whoIs == "Member2") {
       console.log("w10");
-      setPlayer1deltaHP(damage2);
+      setPlayer2deltaHP(damage2);
     }
     setCalDone(true);
   }
@@ -567,10 +612,10 @@ export default function Home() {
     if (whoIs == "Member2") {
       console.log("w12");
       if (player2HPmax - player2HP > 0) {
-        setPlayer1deltaHP(player2HPmax - player2HP);
+        setPlayer2deltaHP(player2HPmax - player2HP);
       }
-      setPlayer2deltaDefence(player2Defence - player2Defence / 2);
-      setPlayer2deltaAttack(player2Attack - player2Attack / 2);
+      setPlayer2deltaDefence(player2Defence / 2 - player2Defence);
+      setPlayer2deltaAttack(player2Attack / 2 - player2Attack);
     }
     setCalDone(true);
   }
@@ -579,12 +624,12 @@ export default function Home() {
     //相手のこうげきを2倍、ぼうぎょを0.5倍する
     if (whoIs == "Member1") {
       console.log("w20");
-      setPlayer1deltaAttack(player1Attack);
+      setPlayer2deltaAttack(player2Attack);
       setPlayer2deltaDefence(player2Defence / 2 - player2Defence);
     }
     if (whoIs == "Member2") {
       console.log("w20");
-      setPlayer2deltaAttack(player2Attack);
+      setPlayer1deltaAttack(player1Attack);
       setPlayer1deltaDefence(player1Defence / 2 - player1Defence);
     }
     setCalDone(true);
@@ -731,6 +776,74 @@ export default function Home() {
       });
   }, [redirect2]);
 
+  ///
+  async function fetchButtleStatus1() {
+    const auth = getAuth();
+    console.log(roomId);
+    const snapshot = get(
+      child(dbRef, `Room/${roomId}/ButtleStatus/Member1/Status`)
+    )
+      .then((snapshot) => {
+        if (snapshot.exists()) {
+          console.log("available");
+          const data = snapshot.val();
+          setPlayer1Status(data);
+          setPlayer1HP(data.HP);
+          setPlayer1HPmax(data.HPmax);
+          setPlayer1Attack(data.Attack);
+          setPlayer1Defence(data.Defence);
+          setPlayer1Speed(data.Speed);
+          setPlayer1Img(data.Img);
+          fetchButtleStatus2();
+        } else {
+          console.log("No data available");
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }
+
+  async function fetchButtleStatus2() {
+    const auth = getAuth();
+    console.log(roomId);
+    const snapshot = get(
+      child(dbRef, `Room/${roomId}/ButtleStatus/Member2/Status`)
+    )
+      .then((snapshot) => {
+        if (snapshot.exists()) {
+          console.log("available");
+          const data = snapshot.val();
+          setPlayer2Status(data);
+          setPlayer2HP(data.HP);
+          setPlayer2HPmax(data.HPmax);
+          setPlayer2Attack(data.Attack);
+          setPlayer2Defence(data.Defence);
+          setPlayer2Speed(data.Speed);
+          setPlayer2Img(data.Img);
+          console.log(statusFetchDone);
+          if (
+            (member1Status == "foMember1Turn" &&
+              member2Status == "foMember1Turn") ||
+            (member1Status == "foMember2Turn" &&
+              member2Status == "foMember2Turn") ||
+            (member1Status == "laMember1Turn" &&
+              member2Status == "laMember1Turn") ||
+            (member1Status == "laMember2Turn" &&
+              member2Status == "laMember2Turn")
+          ) {
+            setStatusFetchDone(true);
+          }
+          console.log(statusFetchDone);
+        } else {
+          console.log("No data available");
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }
+
   useEffect(() => {
     console.log("looking");
     if (w00 == 0) {
@@ -838,10 +951,6 @@ export default function Home() {
     return null;
   }
 
-  async function settest() {
-    setChangeStatus("ready");
-  }
-
   function start() {
     const db = getDatabase();
     update(ref(db, `Room/${roomId}/MemberStatus`), {
@@ -852,6 +961,7 @@ export default function Home() {
   }
 
   function selected() {
+    console.log("selected done");
     const db = getDatabase();
     if (whoIs == "Member1") {
       update(ref(db, `Room/${roomId}/MemberStatus`), {
@@ -868,6 +978,12 @@ export default function Home() {
   return (
     <main>
       <h1>Room {roomId}</h1>
+      <div style={{ visibility: youWin ? "visible" : "hidden" }}>
+        あなたの勝ち！
+      </div>
+      <div style={{ visibility: youLose ? "visible" : "hidden" }}>
+        あなたの負け！
+      </div>
       <div className="p-10 text-blue-600 float-left">
         <div>{whoIs}</div>
         <h2 className="text-4xl p-10"></h2>
@@ -885,9 +1001,9 @@ export default function Home() {
         <h2>
           HP {player2HP} / {player2HPmax}
         </h2>
-        <h2>こうげき {player2Attack}</h2>
-        <h2>ぼうぎょ {player2Defence}</h2>
-        <h2>すばやさ {player2Speed}</h2>
+        <h2>Attack {player2Attack}</h2>
+        <h2>Defence {player2Defence}</h2>
+        <h2>Speed {player2Speed}</h2>
       </div>
       <div className="text-center p-10">
         <h2>コマンドを選んでください</h2>
@@ -898,7 +1014,6 @@ export default function Home() {
       >
         Start
       </button>
-      <button onClick={settest}>test</button>
       <button onClick={leftRoom}>退室</button>
       <Button
         onClick={w0_cal}
