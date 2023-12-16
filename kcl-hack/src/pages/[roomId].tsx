@@ -103,6 +103,7 @@ export default function Home() {
     if (whoIs != "spectators") {
       if (member2Status == "ready") {
         setRedirect2(false);
+        setMemberStatusChanged(false);
       }
 
       if (member1Status == "ready" && member2Status == "ready") {
@@ -190,7 +191,7 @@ export default function Home() {
         setRedirect4(true);
       }
     }
-
+    setMemberStatusChanged(false);
     console.log("changed");
   }, [MemberStatusChanged]);
 
