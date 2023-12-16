@@ -851,7 +851,7 @@ export default function Home() {
           setPlayer1Attack(data.Attack);
           setPlayer1Defence(data.Defence);
           setPlayer1Speed(data.Speed);
-          setPlayer1Img(data.Img);
+          setPlayer1Img(data.CharaImage);
           setRedirect1(false);
         } else {
           console.log("No data available");
@@ -879,7 +879,7 @@ export default function Home() {
           setPlayer2Attack(data.Attack);
           setPlayer2Defence(data.Defence);
           setPlayer2Speed(data.Speed);
-          setPlayer2Img(data.Img);
+          setPlayer2Img(data.CharaImage);
           setRedirect2(false);
         } else {
           console.log("No data available");
@@ -1127,7 +1127,8 @@ export default function Home() {
         <div>{whoIs}</div>
 
         <div>{member1Status}</div>
-        <img src={player1Img} />
+        <h2>{Member1Name}</h2>
+        <img src={player1Img}></img>
         <h2>
           HP {player1HP} / {player1HPmax}
         </h2>
@@ -1138,7 +1139,9 @@ export default function Home() {
 
       <div className={styles.player2}>
         <div>{member2Status}</div>
-        <img src={player2Img} />
+        <h2>{Member2Name}</h2>
+        <img src={player2Img}></img>
+
         <h2>
           HP {player2HP} / {player2HPmax}
         </h2>
