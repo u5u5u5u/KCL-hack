@@ -266,16 +266,7 @@ export default function Home() {
         }
       }
       if (player1deltaHP < 0) {
-        if (whoIs == "Member1") {
-          pushButtlelog(
-            Member1Name + "に" + -player1deltaHP + "ダメージを受けた"
-          );
-        }
-        if (whoIs == "Member2") {
-          pushButtlelog(
-            Member1Name + "に" + -player1deltaHP + "ダメージを与えた"
-          );
-        }
+        pushButtlelog(Member1Name + "に" + -player1deltaHP + "のダメージ！");
       }
       setPlayer1Attack(player1Attack + player1deltaAttack);
       if (player1deltaAttack > 0) {
@@ -318,16 +309,7 @@ export default function Home() {
         pushButtlelog(Member2Name + "のHPが" + player2deltaHP + "回復した");
       }
       if (player2deltaHP < 0) {
-        if (whoIs == "Member1") {
-          pushButtlelog(
-            Member2Name + "に" + -player2deltaHP + "ダメージを与えた"
-          );
-        }
-        if (whoIs == "Member2") {
-          pushButtlelog(
-            Member2Name + "に" + -player2deltaHP + "ダメージを受けた"
-          );
-        }
+        pushButtlelog(Member2Name + "に" + -player2deltaHP + "のダメージ！");
       }
       setPlayer2deltaHP(0);
       setPlayer2Attack(player2Attack + player2deltaAttack);
@@ -499,7 +481,12 @@ export default function Home() {
   function calDeltaStatus() {
     if (damageSetUped) {
       if (selectt == 0) {
-        pushButtlelog(Member1Name + "の" + playerw00 + "!");
+        if (whoIs == "Member1") {
+          pushButtlelog(Member1Name + "の" + playerw00 + "!");
+        }
+        if (whoIs == "Member2") {
+          pushButtlelog(Member2Name + "の" + playerw00 + "!");
+        }
         if (selectw == 0) {
           console.log("たたく");
           setDamageSetUped(false);
