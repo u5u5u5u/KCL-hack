@@ -1,6 +1,6 @@
 "use client";
 import { useRouter } from "next/router";
-import React, { ChangeEvent, useState, useEffect } from "react";
+import React, { ChangeEvent, useState, useEffect, use } from "react";
 import {
   getDatabase,
   ref,
@@ -26,6 +26,7 @@ export default function Home() {
   const [member1, setMember1] = useState<string>();
   const [member2, setMember2] = useState<string>();
   const [memberUUID, setMemberUUID] = useState<Member>();
+  const [ownName, setOwnName] = useState<string>();
   const [roomStatus, setRoomStatus] = useState<string>();
   const [visible, setVisible] = useState<boolean>(false);
   const [userUUID, setUUID] = useState<string>("");
@@ -88,7 +89,6 @@ export default function Home() {
   }, [userChara]);
 
   const lookForRoom = async () => {
-    const UUID = await getUid();
     setRoomNum(number);
     console.log(number);
     get(child(dbRef, `Room/${number}/`))
@@ -163,14 +163,44 @@ export default function Home() {
       });
   }
 
+  async function getOwnName(uuid: string) {
+    get(child(dbRef, `User/${uuid}/Profile/`))
+      .then((snapshot) => {
+        if (snapshot.exists()) {
+          const data = snapshot.val();
+          console.log(data.Name);
+          if (data.Name === undefined) {
+            setOwnName("名無し");
+          }
+          setOwnName(data.Name);
+        } else {
+          setOwnName("名無し");
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }
+
   const join = async () => {
     if (roomStatus !== "full") {
       try {
-        const UUID = await getUid();
-        const db = getDatabase();
+        await getUid();
+        await getOwnName(userUUID);
+      } catch (error) {
+        console.error("エラーです:", error);
+      }
+    }
+  };
+
+  useEffect(() => {
+    if (ownName !== undefined) {
+      const db = getDatabase();
+      async function joining() {
         if (roomStatus === "empty") {
           await set(ref(db, `Room/${roomNum}/Member/`), {
-            Member1: UUID,
+            Member1: userUUID,
+            Member1Name: ownName,
           });
           await set(ref(db, `Room/${roomNum}/ButtleStatus/`), {
             Member1: sendStatus,
@@ -180,7 +210,8 @@ export default function Home() {
           });
         } else if (roomStatus === "P2empty") {
           await update(ref(db, `Room/${roomNum}/Member/`), {
-            Member2: UUID,
+            Member2: userUUID,
+            Member2Name: ownName,
           });
           await update(ref(db, `Room/${roomNum}/ButtleStatus/`), {
             Member2: sendStatus,
@@ -191,11 +222,10 @@ export default function Home() {
         }
         handleClick();
         console.log("send");
-      } catch (error) {
-        console.error("エラーです:", error);
       }
+      joining();
     }
-  };
+  }, [ownName]);
 
   const router = useRouter();
   const handleClick = () => {

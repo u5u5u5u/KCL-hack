@@ -7,6 +7,7 @@ import {
   child,
   get,
   set,
+  push,
   update,
   remove,
   onValue,
@@ -18,10 +19,13 @@ import Link from "next/link";
 import { Button } from "@mui/material";
 import { stat } from "fs";
 import styles from "../components/[roomId].module.css";
+import { on } from "events";
 
 export default function Home() {
+  const [ButtleLog, setButtleLog] = useState<string[]>([]);
   const [whoIs, setWhoIs] = useState<string>("spectators");
   const [redirectWho, setRedirectWho] = useState<boolean>(false);
+  const [Member1Name, setMember1Name] = useState<string>("");
   const [member1Status, setMember1Status] = useState<string>("null");
   const [player1Status, setPlayer1Status] = useState<Object>();
   const [player1HP, setPlayer1HP] = useState<number>(1);
@@ -35,6 +39,7 @@ export default function Home() {
   const [player1deltaSpeed, setPlayer1deltaSpeed] = useState<number>(0);
   const [damage1, setDamage1] = useState<number>(0);
   const [player1Img, setPlayer1Img] = useState<string>("");
+  const [Member2Name, setMember2Name] = useState<string>("");
   const [member2Status, setMember2Status] = useState<string>("null");
   const [player2Status, setPlayer2Status] = useState<Object>();
   const [player2HP, setPlayer2HP] = useState<number>(1);
@@ -113,6 +118,7 @@ export default function Home() {
         fetchButtleStatus1();
         console.log("fetch");
         setSelectVisible(true);
+        fetchButtlelog();
         getplayerw();
       }
 
@@ -181,16 +187,22 @@ export default function Home() {
       }
 
       if (member1Status == "win" && member2Status == "lose") {
+        fetchButtleStatus1();
+        fetchButtleStatus2();
         if (whoIs == "Member1") {
           setYouWin(true);
+          fetchButtlelog();
           setSelectVisible(false);
         }
         if (whoIs == "Member2") {
           setYouLose(true);
+          fetchButtlelog();
           setSelectVisible(false);
         }
       }
       if (member1Status == "lose" && member2Status == "win") {
+        fetchButtleStatus1();
+        fetchButtleStatus2();
         if (whoIs == "Member1") {
           setYouLose(true);
           setSelectVisible(false);
@@ -249,19 +261,96 @@ export default function Home() {
     if (mathTrancDone) {
       setPlayer1HP(player1HP + player1deltaHP);
       setPlayer1deltaHP(0);
+      if (player1deltaHP > 0) {
+        if (whoIs == "Member1") {
+          pushButtlelog(Member1Name + "のHPが" + player1deltaHP + "回復した");
+        }
+        if (whoIs == "Member2") {
+          pushButtlelog(Member1Name + "のHPが" + player1deltaHP + "回復した");
+        }
+      }
+      if (player1deltaHP < 0) {
+        pushButtlelog(Member1Name + "に" + -player1deltaHP + "のダメージ！");
+      }
       setPlayer1Attack(player1Attack + player1deltaAttack);
+      if (player1deltaAttack > 0) {
+        pushButtlelog(
+          Member1Name + "のこうげきが" + player1deltaAttack + "上がった"
+        );
+      }
+      if (player1deltaAttack < 0) {
+        pushButtlelog(
+          Member1Name + "のこうげきが" + -player1deltaAttack + "下がった"
+        );
+      }
       setPlayer1deltaAttack(0);
       setPlayer1Defence(player1Defence + player1deltaDefence);
+      if (player1deltaDefence > 0) {
+        pushButtlelog(
+          Member1Name + "のぼうぎょが" + player1deltaDefence + "上がった"
+        );
+      }
+      if (player1deltaDefence < 0) {
+        pushButtlelog(
+          Member1Name + "のぼうぎょが" + -player1deltaDefence + "下がった"
+        );
+      }
       setPlayer1deltaDefence(0);
       setPlayer1Speed(player1Speed + player1deltaSpeed);
+      if (player1deltaSpeed > 0) {
+        pushButtlelog(
+          Member1Name + "のすばやさが" + player1deltaSpeed + "上がった"
+        );
+      }
+      if (player1deltaSpeed < 0) {
+        pushButtlelog(
+          Member1Name + "のすばやさが" + -player1deltaSpeed + "下がった"
+        );
+      }
       setPlayer1deltaSpeed(0);
       setPlayer2HP(player2HP + player2deltaHP);
+      if (player2deltaHP > 0) {
+        pushButtlelog(Member2Name + "のHPが" + player2deltaHP + "回復した");
+      }
+      if (player2deltaHP < 0) {
+        pushButtlelog(Member2Name + "に" + -player2deltaHP + "のダメージ！");
+      }
       setPlayer2deltaHP(0);
       setPlayer2Attack(player2Attack + player2deltaAttack);
+      if (player2deltaAttack > 0) {
+        pushButtlelog(
+          Member2Name + "のこうげきが" + player2deltaAttack + "上がった"
+        );
+      }
+      if (player2deltaAttack < 0) {
+        pushButtlelog(
+          Member2Name + "のこうげきが" + -player2deltaAttack + "下がった"
+        );
+      }
       setPlayer2deltaAttack(0);
       setPlayer2Defence(player2Defence + player2deltaDefence);
+      if (player2deltaDefence > 0) {
+        pushButtlelog(
+          Member2Name + "のぼうぎょが" + player2deltaDefence + "上がった"
+        );
+      }
+      if (player2deltaDefence < 0) {
+        pushButtlelog(
+          Member2Name + "のぼうぎょが" + -player2deltaDefence + "下がった"
+        );
+      }
       setPlayer2deltaDefence(0);
       setPlayer2Speed(player2Speed + player2deltaSpeed);
+      if (player2deltaSpeed > 0) {
+        pushButtlelog(
+          Member2Name + "のすばやさが" + player2deltaSpeed + "上がった"
+        );
+      }
+      if (player2deltaSpeed < 0) {
+        pushButtlelog(
+          Member2Name + "のすばやさが" + -player2deltaSpeed + "下がった"
+        );
+      }
       setPlayer2deltaSpeed(0);
       setDeltaChanged(true);
     }
@@ -269,21 +358,21 @@ export default function Home() {
 
   useEffect(() => {
     if (deltaChanged) {
+      update(ref(db, `Room/${roomId}/ButtleStatus/Member1/Status`), {
+        HPmax: player1HPmax,
+        HP: player1HP,
+        Attack: player1Attack,
+        Defence: player1Defence,
+        Speed: player1Speed,
+      });
+      update(ref(db, `Room/${roomId}/ButtleStatus/Member2/Status`), {
+        HPmax: player2HPmax,
+        HP: player2HP,
+        Attack: player2Attack,
+        Defence: player2Defence,
+        Speed: player2Speed,
+      });
       if (player1HP > 0 && player2HP > 0) {
-        update(ref(db, `Room/${roomId}/ButtleStatus/Member1/Status`), {
-          HPmax: player1HPmax,
-          HP: player1HP,
-          Attack: player1Attack,
-          Defence: player1Defence,
-          Speed: player1Speed,
-        });
-        update(ref(db, `Room/${roomId}/ButtleStatus/Member2/Status`), {
-          HPmax: player2HPmax,
-          HP: player2HP,
-          Attack: player2Attack,
-          Defence: player2Defence,
-          Speed: player2Speed,
-        });
         if (
           member1Status == "foMember1Turn" &&
           member2Status == "foMember1Turn"
@@ -396,6 +485,12 @@ export default function Home() {
   function calDeltaStatus() {
     if (damageSetUped) {
       if (selectt == 0) {
+        if (whoIs == "Member1") {
+          pushButtlelog(Member1Name + "の" + playerw00 + "!");
+        }
+        if (whoIs == "Member2") {
+          pushButtlelog(Member2Name + "の" + playerw00 + "!");
+        }
         if (selectw == 0) {
           console.log("たたく");
           setDamageSetUped(false);
@@ -422,6 +517,12 @@ export default function Home() {
         }
       }
       if (selectt == 1) {
+        if (whoIs == "Member1") {
+          pushButtlelog(Member1Name + "の" + playerw01 + "!");
+        }
+        if (whoIs == "Member2") {
+          pushButtlelog(Member2Name + "の" + playerw01 + "!");
+        }
         if (selectw == 0) {
           console.log("ねる");
           setDamageSetUped(false);
@@ -440,6 +541,12 @@ export default function Home() {
         }
       }
       if (selectt == 2) {
+        if (whoIs == "Member1") {
+          pushButtlelog(Member1Name + "の" + playerw02 + "!");
+        }
+        if (whoIs == "Member2") {
+          pushButtlelog(Member2Name + "の" + playerw02 + "!");
+        }
         if (selectw == 0) {
           console.log("ちょうはつ");
           setDamageSetUped(false);
@@ -462,6 +569,12 @@ export default function Home() {
         }
       }
       if (selectt == 3) {
+        if (whoIs == "Member1") {
+          pushButtlelog(Member1Name + "の" + playerw03 + "!");
+        }
+        if (whoIs == "Member2") {
+          pushButtlelog(Member2Name + "の" + playerw03 + "!");
+        }
         if (selectw == 0) {
           console.log("ざんねんでしたー");
           setDamageSetUped(false);
@@ -702,12 +815,13 @@ export default function Home() {
   useEffect(() => {
     async function whoAmI() {
       const UUid = await getUid();
-      const db = getDatabase();
       get(child(dbRef, `Room/${roomId}/Member`))
         .then((snapshot) => {
           if (snapshot.exists()) {
             UUid == snapshot.val().Member1 ? setWhoIs("Member1") : null;
             UUid == snapshot.val().Member2 ? setWhoIs("Member2") : null;
+            setMember1Name(snapshot.val().Member1Name);
+            setMember2Name(snapshot.val().Member2Name);
             setRedirectWho(false);
           } else {
             console.log("No data available");
@@ -737,7 +851,7 @@ export default function Home() {
           setPlayer1Attack(data.Attack);
           setPlayer1Defence(data.Defence);
           setPlayer1Speed(data.Speed);
-          setPlayer1Img(data.Img);
+          setPlayer1Img(data.CharaImage);
           setRedirect1(false);
         } else {
           console.log("No data available");
@@ -765,7 +879,7 @@ export default function Home() {
           setPlayer2Attack(data.Attack);
           setPlayer2Defence(data.Defence);
           setPlayer2Speed(data.Speed);
-          setPlayer2Img(data.Img);
+          setPlayer2Img(data.CharaImage);
           setRedirect2(false);
         } else {
           console.log("No data available");
@@ -976,6 +1090,30 @@ export default function Home() {
     }
   }
 
+  async function fetchButtlelog() {
+    const auth = getAuth();
+    console.log(roomId);
+    const snapshot = get(child(dbRef, `Room/${roomId}/Buttlelog`))
+      .then((snapshot) => {
+        if (snapshot.exists()) {
+          console.log("available");
+          const data = snapshot.val();
+          setButtleLog(data);
+        } else {
+          console.log("No data available");
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }
+
+  function pushButtlelog(pushLog: string) {
+    const newPostRef = push(child(dbRef, `Room/${roomId}/Buttlelog`), {
+      Log: pushLog,
+    });
+  }
+
   return (
     <main className={styles.main}>
       <h1 className={styles.tytle}>Room {roomId}</h1>
@@ -989,6 +1127,8 @@ export default function Home() {
         <div>{whoIs}</div>
 
         <div>{member1Status}</div>
+        <h2>{Member1Name}</h2>
+        <img src={player1Img}></img>
         <h2>
           HP {player1HP} / {player1HPmax}
         </h2>
@@ -999,6 +1139,8 @@ export default function Home() {
 
       <div className={styles.player2}>
         <div>{member2Status}</div>
+        <h2>{Member2Name}</h2>
+        <img src={player2Img}></img>
 
         <h2>
           HP {player2HP} / {player2HPmax}
@@ -1049,6 +1191,13 @@ export default function Home() {
         >
           {playerw03}
         </button>
+        <div>
+          {ButtleLog &&
+            Object.keys(ButtleLog).length > 0 &&
+            Object.keys(ButtleLog).map((key, index) => {
+              return <div key={index}>{ButtleLog[key].Log}</div>;
+            })}
+        </div>
       </div>
     </main>
   );
