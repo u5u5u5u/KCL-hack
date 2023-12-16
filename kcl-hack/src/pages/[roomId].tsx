@@ -788,7 +788,11 @@ export default function Home() {
             (member1Status == "foMember1Turn" &&
               member2Status == "foMember1Turn") ||
             (member1Status == "foMember2Turn" &&
-              member2Status == "foMember2Turn")
+              member2Status == "foMember2Turn") ||
+            (member1Status == "laMember1Turn" &&
+              member2Status == "laMember1Turn") ||
+            (member1Status == "laMember2Turn" &&
+              member2Status == "laMember2Turn")
           ) {
             setStatusFetchDone(true);
           }
