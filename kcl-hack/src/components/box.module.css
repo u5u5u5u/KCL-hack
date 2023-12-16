@@ -48,12 +48,38 @@
   transform: rotateY(180deg);
 }
 
-.content:hover .front {
-  transform: rotateY(180deg);
-}
-
 .content:hover .back {
   transform: rotateY(0deg);
+}
+
+.actions {
+  display: flex;
+  flex-flow: column;
+  justify-content: space-around;
+  height: 100%;
+  margin: 0;
+}
+
+.actions li {
+  height: 25%;
+}
+
+.action-name {
+  font-size: 1rem;
+  font-weight: bold;
+  text-align: start;
+  margin: 0;
+}
+
+.action-description {
+  font-size: 0.7rem;
+  text-align: start;
+  padding-top: 1%;
+  margin: 0;
+}
+
+.content:hover .front {
+  transform: rotateY(180deg);
 }
 
 .name {
