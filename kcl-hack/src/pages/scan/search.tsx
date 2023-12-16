@@ -356,7 +356,7 @@ export default function Home() {
       <Header children="入力" />
       <div className="container">
         <div className="wrapper">
-          <div style={{ visibility: isOpen ? "hidden" : "visible" }}>
+          <div className="search">
             <input
               value={number}
               onChange={changeNum}
@@ -435,6 +435,10 @@ export default function Home() {
       </div>
       <Footer />
       <style jsx>{`
+        .search {
+          height: ${isOpen ? 0 : "auto"};
+          overflow: ${isOpen ? "hidden" : "visible"};
+        }
         .accordion {
           height: ${isError ? "auto" : 0};
           font-size: 2rem;
