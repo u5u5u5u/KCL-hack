@@ -61,82 +61,88 @@ export default function Home() {
       const w2 = val.Status.w02;
       const w3 = val.Status.w03;
       let change: boolean = false;
-
-      if (w0 == 0) {
-        val.Status.w00_name = "たたく";
-        val.Status.w00_desc = "相手に1倍ダメージを与える";
-        change = true;
-      } else if (w0 == 1) {
-        val.Status.w00_name = "ちゅーちゅーする";
-        val.Status.w00_desc =
-          "相手に0.5倍ダメージを与え、与えたダメージの0.5倍自分を回復する";
-        change = true;
-      } else if (w0 == 2) {
-        val.Status.w00_name = "ぜんりょくこうげき";
-        val.Status.w00_desc =
-          "相手に2倍ダメージを与え、相手が自分に1倍ダメージを与える";
-        change = true;
-      } else if (w0 == 3) {
-        val.Status.w00_name = "じばく";
-        val.Status.w00_desc = "相手に5倍ダメージを与え、自分のHPを0にする";
-        change = true;
-      } else if (w0 == 4) {
-        val.Status.w00_name = "ぺちぺちする";
-        val.Status.w00_desc =
-          "相手に0.25倍ダメージを与え、自分のこうげきを2倍にする";
-        change = true;
-      } else {
-        val.Status.w00_name = "エラーです";
-      }
-      if (w1 == 0) {
-        val.Status.w01_name = "ねる";
-        val.Status.w01_desc = "自分の1倍attackぶん自分を回復する";
-        change = true;
-      } else if (w1 == 1) {
-        val.Status.w01_name = "ぐっすりねる";
-        val.Status.w01_desc = "自分のHP上限の0.5倍自分を回復する";
-        change = true;
-      } else if (w1 == 2) {
-        val.Status.w01_name = "ぜっき";
-        val.Status.w01_desc =
-          "自分のHPを全回復し、自分のこうげきとぼうぎょをそれぞれ0.5倍する";
-        change = true;
-      } else {
-        val.Status.w01_name = "エラーです";
-      }
-      if (w2 == 0) {
-        val.Status.w02_name = "ちょうはつ";
-        val.Status.w02_desc = "相手のこうげきを2倍、ぼうぎょを0.5倍する";
-        change = true;
-      } else if (w2 == 1) {
-        val.Status.w02_name = "ひきこもる";
-        val.Status.w02_desc = "自分のぼうぎょを2倍する";
-        change = true;
-      } else if (w2 == 2) {
-        val.Status.w02_name = "こわいおにいさんをつれてくる";
-        val.Status.w02_desc = "相手と自分のこうげきをそれぞれ0.33倍する";
-        change = true;
-      } else if (w2 == 3) {
-        val.Status.w02_name = "にらむ";
-        val.Status.w02_desc = "相手のこうげきを0.5倍する";
-        change = true;
-      } else {
-        val.Status.w02_name = "エラーです";
-      }
-      if (w3 == 0) {
-        val.Status.w03_name = "ざんねんでしたー";
-        val.Status.w03_desc = "自分のHP上限、HPをそれぞれ相手と入れ替える";
-        change = true;
-      } else if (w3 == 1) {
-        val.Status.w03_name = "ぎあちぇんじ";
-        val.Status.w03_desc = "自分のこうげきを10倍、ぼうぎょを0.1倍する";
-        change = true;
-      } else if (w3 == 2) {
-        val.Status.w03_name = "みちづれ";
-        val.Status.w03_desc = "自分と相手のHPをそれぞれ100にする";
-        change = true;
-      } else {
-        val.Status.w03_name = "エラーです";
+      if (
+        val.Status.w00_name === undefined &&
+        val.Status.w01_name === undefined &&
+        val.Status.w02_name === undefined &&
+        val.Status.w03_name === undefined
+      ) {
+        if (w0 == 0) {
+          val.Status.w00_name = "たたく";
+          val.Status.w00_desc = "相手に1倍ダメージを与える";
+          change = true;
+        } else if (w0 == 1) {
+          val.Status.w00_name = "ちゅーちゅーする";
+          val.Status.w00_desc =
+            "相手に0.5倍ダメージを与え、与えたダメージの0.5倍自分を回復する";
+          change = true;
+        } else if (w0 == 2) {
+          val.Status.w00_name = "ぜんりょくこうげき";
+          val.Status.w00_desc =
+            "相手に2倍ダメージを与え、相手が自分に1倍ダメージを与える";
+          change = true;
+        } else if (w0 == 3) {
+          val.Status.w00_name = "じばく";
+          val.Status.w00_desc = "相手に5倍ダメージを与え、自分のHPを0にする";
+          change = true;
+        } else if (w0 == 4) {
+          val.Status.w00_name = "ぺちぺちする";
+          val.Status.w00_desc =
+            "相手に0.25倍ダメージを与え、自分のこうげきを2倍にする";
+          change = true;
+        } else {
+          val.Status.w00_name = "エラーです";
+        }
+        if (w1 == 0) {
+          val.Status.w01_name = "ねる";
+          val.Status.w01_desc = "自分の1倍attackぶん自分を回復する";
+          change = true;
+        } else if (w1 == 1) {
+          val.Status.w01_name = "ぐっすりねる";
+          val.Status.w01_desc = "自分のHP上限の0.5倍自分を回復する";
+          change = true;
+        } else if (w1 == 2) {
+          val.Status.w01_name = "ぜっき";
+          val.Status.w01_desc =
+            "自分のHPを全回復し、自分のこうげきとぼうぎょをそれぞれ0.5倍する";
+          change = true;
+        } else {
+          val.Status.w01_name = "エラーです";
+        }
+        if (w2 == 0) {
+          val.Status.w02_name = "ちょうはつ";
+          val.Status.w02_desc = "相手のこうげきを2倍、ぼうぎょを0.5倍する";
+          change = true;
+        } else if (w2 == 1) {
+          val.Status.w02_name = "ひきこもる";
+          val.Status.w02_desc = "自分のぼうぎょを2倍する";
+          change = true;
+        } else if (w2 == 2) {
+          val.Status.w02_name = "こわいおにいさんをつれてくる";
+          val.Status.w02_desc = "相手と自分のこうげきをそれぞれ0.33倍する";
+          change = true;
+        } else if (w2 == 3) {
+          val.Status.w02_name = "にらむ";
+          val.Status.w02_desc = "相手のこうげきを0.5倍する";
+          change = true;
+        } else {
+          val.Status.w02_name = "エラーです";
+        }
+        if (w3 == 0) {
+          val.Status.w03_name = "ざんねんでしたー";
+          val.Status.w03_desc = "自分のHP上限、HPをそれぞれ相手と入れ替える";
+          change = true;
+        } else if (w3 == 1) {
+          val.Status.w03_name = "ぎあちぇんじ";
+          val.Status.w03_desc = "自分のこうげきを10倍、ぼうぎょを0.1倍する";
+          change = true;
+        } else if (w3 == 2) {
+          val.Status.w03_name = "みちづれ";
+          val.Status.w03_desc = "自分と相手のHPをそれぞれ100にする";
+          change = true;
+        } else {
+          val.Status.w03_name = "エラーです";
+        }
       }
       if (change) {
         setCharacters(newCharacters);
