@@ -187,6 +187,8 @@ export default function Home() {
       }
 
       if (member1Status == "win" && member2Status == "lose") {
+        fetchButtleStatus1();
+        fetchButtleStatus2();
         if (whoIs == "Member1") {
           setYouWin(true);
           fetchButtlelog();
@@ -199,6 +201,8 @@ export default function Home() {
         }
       }
       if (member1Status == "lose" && member2Status == "win") {
+        fetchButtleStatus1();
+        fetchButtleStatus2();
         if (whoIs == "Member1") {
           setYouLose(true);
           setSelectVisible(false);
