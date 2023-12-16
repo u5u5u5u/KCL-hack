@@ -358,21 +358,21 @@ export default function Home() {
 
   useEffect(() => {
     if (deltaChanged) {
+      update(ref(db, `Room/${roomId}/ButtleStatus/Member1/Status`), {
+        HPmax: player1HPmax,
+        HP: player1HP,
+        Attack: player1Attack,
+        Defence: player1Defence,
+        Speed: player1Speed,
+      });
+      update(ref(db, `Room/${roomId}/ButtleStatus/Member2/Status`), {
+        HPmax: player2HPmax,
+        HP: player2HP,
+        Attack: player2Attack,
+        Defence: player2Defence,
+        Speed: player2Speed,
+      });
       if (player1HP > 0 && player2HP > 0) {
-        update(ref(db, `Room/${roomId}/ButtleStatus/Member1/Status`), {
-          HPmax: player1HPmax,
-          HP: player1HP,
-          Attack: player1Attack,
-          Defence: player1Defence,
-          Speed: player1Speed,
-        });
-        update(ref(db, `Room/${roomId}/ButtleStatus/Member2/Status`), {
-          HPmax: player2HPmax,
-          HP: player2HP,
-          Attack: player2Attack,
-          Defence: player2Defence,
-          Speed: player2Speed,
-        });
         if (
           member1Status == "foMember1Turn" &&
           member2Status == "foMember1Turn"
