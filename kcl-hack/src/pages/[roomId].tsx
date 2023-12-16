@@ -1127,6 +1127,7 @@ export default function Home() {
         <div>{whoIs}</div>
 
         <div>{member1Status}</div>
+        <img src={player1Img} />
         <h2>
           HP {player1HP} / {player1HPmax}
         </h2>
@@ -1137,7 +1138,7 @@ export default function Home() {
 
       <div className={styles.player2}>
         <div>{member2Status}</div>
-
+        <img src={player2Img} />
         <h2>
           HP {player2HP} / {player2HPmax}
         </h2>
