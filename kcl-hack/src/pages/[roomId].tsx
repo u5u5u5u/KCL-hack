@@ -81,6 +81,7 @@ export default function Home() {
     const data = snapshot.val();
     if (data != member1Status) {
       setMember1Status(data);
+      checkMemberStatus();
       console.log("changed1 to " + data);
     }
   });
@@ -89,6 +90,7 @@ export default function Home() {
     const data = snapshot.val();
     if (data != member2Status) {
       setMember2Status(data);
+      checkMemberStatus();
       console.log("changed2 to " + data);
     }
   });
