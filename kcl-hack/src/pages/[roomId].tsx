@@ -275,6 +275,7 @@ export default function Home() {
           Member2: "selecting",
         });
       }
+      setProcessingBlocker(false);
       setBattleStatus1Fetched(false);
       setBattleStatus2Fetched(false);
       setCalDone(false);
