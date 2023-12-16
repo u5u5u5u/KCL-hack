@@ -52,6 +52,7 @@ export default function Home() {
   const [redirect1, setRedirect1] = useState<boolean>(false);
   const [redirect2, setRedirect2] = useState<boolean>(false);
   const [redirect3, setRedirect3] = useState<boolean>(false);
+  const [redirect4, setRedirect4] = useState<boolean>(false);
   const [w00, setw00] = useState<number>(0);
   const [w01, setw01] = useState<number>(0);
   const [w02, setw02] = useState<number>(0);
@@ -111,6 +112,7 @@ export default function Home() {
         console.log("success");
         fetchButtleStatus1();
         fetchButtleStatus2();
+        console.log("fetch");
         setSelectVisible(true);
         getplayerw();
       }
@@ -147,6 +149,7 @@ export default function Home() {
         if (whoIs == "Member1") {
           fetchButtleStatus1();
           fetchButtleStatus2();
+          console.log("fetch");
         }
       }
 
@@ -157,6 +160,7 @@ export default function Home() {
         if (whoIs == "Member2") {
           fetchButtleStatus1();
           fetchButtleStatus2();
+          console.log("fetch");
         }
       }
 
@@ -167,6 +171,7 @@ export default function Home() {
         if (whoIs == "Member1") {
           fetchButtleStatus1();
           fetchButtleStatus2();
+          console.log("fetch");
         }
       }
       if (
@@ -176,8 +181,10 @@ export default function Home() {
         if (whoIs == "Member2") {
           fetchButtleStatus1();
           fetchButtleStatus2();
+          console.log("fetch");
         }
       }
+      console.log("check");
     }
   }, [member1Status, member2Status]);
 
@@ -468,8 +475,12 @@ export default function Home() {
       setDamage1((player1Attack / player2Defence) * 100);
       setDamage2((player2Attack / player1Defence) * 100);
       setDamageSetUped(true);
+      setRedirect4(false);
+    } else {
+      setRedirect4(true);
     }
-  }, [battleStatus1Fetched, battleStatus2Fetched]);
+    console.log(battleStatus1Fetched + " " + battleStatus2Fetched);
+  }, [battleStatus1Fetched, battleStatus2Fetched, redirect4]);
 
   function w00_cal() {
     //相手に1倍ダメージを与える
@@ -760,6 +771,7 @@ export default function Home() {
           setPlayer1Speed(data.Speed);
           setPlayer1Img(data.Img);
           setBattleStatus1Fetched(true);
+          console.log(battleStatus1Fetched);
         } else {
           console.log("No data available");
         }
@@ -787,6 +799,7 @@ export default function Home() {
           setPlayer2Speed(data.Speed);
           setPlayer2Img(data.Img);
           setBattleStatus2Fetched(true);
+          console.log(battleStatus2Fetched);
         } else {
           console.log("No data available");
         }
