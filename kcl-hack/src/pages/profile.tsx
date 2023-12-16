@@ -70,6 +70,10 @@ export default function Home() {
     }
   };
 
+  const alertOK = () => {
+    alert("プロフィールを更新しました");
+  };
+
   return (
     <main>
       <Header children="PROFILE" />
@@ -95,7 +99,13 @@ export default function Home() {
             ></input>
           </div>
           <div>
-            <button className={styles.button} onClick={sendProfile}>
+            <button
+              className={styles.button}
+              onClick={() => {
+                sendProfile();
+                alertOK();
+              }}
+            >
               決定
             </button>
           </div>
