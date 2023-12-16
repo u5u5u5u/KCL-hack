@@ -64,10 +64,8 @@ export default function Home() {
   const [changeStatus, setChangeStatus] = useState<string>();
   const [selectw, setSelectw] = useState<number>(-1);
   const [selectt, setSelectt] = useState<number>(-1);
-  const [battleStatus1Fetched, setBattleStatus1Fetched] =
-    useState<boolean>(false);
-  const [battleStatus2Fetched, setBattleStatus2Fetched] =
-    useState<boolean>(false);
+  const [turnStarted, setTurnStarted] = useState<boolean>(false);
+  const [statusFetchDone, setStatusFetchDone] = useState<boolean>(false);
   const [damageSetUped, setDamageSetUped] = useState<boolean>(false);
   const [calDone, setCalDone] = useState<boolean>(false);
   const [mathTrancDone, setMathTrancDone] = useState<boolean>(false);
@@ -146,7 +144,7 @@ export default function Home() {
         member2Status == "foMember1Turn"
       ) {
         if (whoIs == "Member1") {
-          fetchButtleStatus1();
+          setTurnStarted(true);
           console.log("fetch");
         }
       }
@@ -156,7 +154,7 @@ export default function Home() {
         member2Status == "foMember2Turn"
       ) {
         if (whoIs == "Member2") {
-          fetchButtleStatus1();
+          setTurnStarted(true);
           console.log("fetch");
         }
       }
@@ -166,7 +164,7 @@ export default function Home() {
         member2Status == "laMember1Turn"
       ) {
         if (whoIs == "Member1") {
-          fetchButtleStatus1();
+          setTurnStarted(true);
           console.log("fetch");
         }
       }
@@ -175,7 +173,7 @@ export default function Home() {
         member2Status == "laMember2Turn"
       ) {
         if (whoIs == "Member2") {
-          fetchButtleStatus1();
+          setTurnStarted(true);
           console.log("fetch");
         }
       }
@@ -189,6 +187,18 @@ export default function Home() {
     setDamageSetUped(true);
     console.log("done");
   }
+
+  useEffect(() => {
+    if (turnStarted) {
+      fetchButtleStatus1();
+    }
+  }, [turnStarted]);
+
+  useEffect(() => {
+    if (statusFetchDone) {
+      damegeCal();
+    }
+  }, [statusFetchDone]);
 
   useEffect(() => {
     getplayerw();
@@ -285,30 +295,13 @@ export default function Home() {
         });
       }
       setProcessingBlocker(false);
-      setBattleStatus1Fetched(false);
-      setBattleStatus2Fetched(false);
+      setTurnStarted(false);
+      setDamageSetUped(false);
       setCalDone(false);
       setMathTrancDone(false);
       setDeltaChanged(false);
     }
   }, [deltaChanged]);
-
-  async function setStatus1() {
-    const auth = getAuth();
-    const db = getDatabase();
-    update(ref(db, `Room/${roomId}/MemberStatus`), {
-      Member1: changeStatus,
-    });
-  }
-
-  async function setStatus2() {
-    const auth = getAuth();
-    const db = getDatabase();
-    if (changeStatus != "ready")
-      update(ref(db, `Room/${roomId}/MemberStatus`), {
-        Member2: changeStatus,
-      });
-  }
 
   async function getplayerw() {
     const auth = getAuth();
@@ -744,7 +737,7 @@ export default function Home() {
   }, [redirect2]);
 
   ///
-  function fetchButtleStatus1() {
+  async function fetchButtleStatus1() {
     const auth = getAuth();
     console.log(roomId);
     const snapshot = get(
@@ -771,7 +764,7 @@ export default function Home() {
       });
   }
 
-  function fetchButtleStatus2() {
+  async function fetchButtleStatus2() {
     const auth = getAuth();
     console.log(roomId);
     const snapshot = get(
@@ -788,7 +781,7 @@ export default function Home() {
           setPlayer2Defence(data.Defence);
           setPlayer2Speed(data.Speed);
           setPlayer2Img(data.Img);
-          damegeCal();
+          setStatusFetchDone(true);
         } else {
           console.log("No data available");
         }
