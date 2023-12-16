@@ -48,10 +48,10 @@ export default function Home() {
   const [player2Img, setPlayer2Img] = useState<string>("");
   const [startVisible, setStartVisible] = useState<boolean>(false);
   const [selectVisible, setSelectVisible] = useState<boolean>(false);
+  const [processingBlocker, setProcessingBlocker] = useState<boolean>(false);
   const [redirect1, setRedirect1] = useState<boolean>(false);
   const [redirect2, setRedirect2] = useState<boolean>(false);
   const [redirect3, setRedirect3] = useState<boolean>(false);
-  const [redirect4, setRedirect4] = useState<boolean>(false);
   const [w00, setw00] = useState<number>(0);
   const [w01, setw01] = useState<number>(0);
   const [w02, setw02] = useState<number>(0);
@@ -81,7 +81,6 @@ export default function Home() {
     const data = snapshot.val();
     if (data != member1Status) {
       setMember1Status(data);
-      checkMemberStatus();
       console.log("changed1 to " + data);
     }
   });
@@ -90,12 +89,11 @@ export default function Home() {
     const data = snapshot.val();
     if (data != member2Status) {
       setMember2Status(data);
-      checkMemberStatus();
       console.log("changed2 to " + data);
     }
   });
 
-  function checkMemberStatus() {
+  useEffect(() => {
     const auth = getAuth();
     const db = getDatabase();
     if (whoIs != "spectators") {
@@ -119,10 +117,13 @@ export default function Home() {
 
       if (member1Status == "selected" && member2Status == "selected") {
         setSelectVisible(false);
-        update(ref(db, `Room/${roomId}/MemberStatus`), {
-          Member1: "processing",
-          Member2: "processing",
-        });
+        if (!processingBlocker) {
+          setProcessingBlocker(true);
+          update(ref(db, `Room/${roomId}/MemberStatus`), {
+            Member1: "processing",
+            Member2: "processing",
+          });
+        }
       }
 
       if (member1Status == "processing" && member2Status == "processing") {
@@ -167,8 +168,6 @@ export default function Home() {
           fetchButtleStatus1();
           fetchButtleStatus2();
         }
-      } else {
-        setRedirect4(true);
       }
       if (
         member1Status == "laMember2Turn" &&
@@ -178,12 +177,9 @@ export default function Home() {
           fetchButtleStatus1();
           fetchButtleStatus2();
         }
-      } else {
-        setRedirect4(true);
       }
     }
-    console.log("changed");
-  }
+  }, [member1Status, member2Status]);
 
   useEffect(() => {
     getplayerw();
