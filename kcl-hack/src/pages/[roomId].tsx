@@ -52,8 +52,6 @@ export default function Home() {
   const [redirect2, setRedirect2] = useState<boolean>(false);
   const [redirect3, setRedirect3] = useState<boolean>(false);
   const [redirect4, setRedirect4] = useState<boolean>(false);
-  const [MemberStatusChanged, setMemberStatusChanged] =
-    useState<boolean>(false);
   const [w00, setw00] = useState<number>(0);
   const [w01, setw01] = useState<number>(0);
   const [w02, setw02] = useState<number>(0);
@@ -83,7 +81,6 @@ export default function Home() {
     const data = snapshot.val();
     if (data != member1Status) {
       setMember1Status(data);
-      setMemberStatusChanged(true);
       console.log("changed1 to " + data);
     }
   });
@@ -92,24 +89,21 @@ export default function Home() {
     const data = snapshot.val();
     if (data != member2Status) {
       setMember2Status(data);
-      setMemberStatusChanged(true);
       console.log("changed2 to " + data);
     }
   });
 
-  useEffect(() => {
+  function checkMemberStatus() {
     const auth = getAuth();
     const db = getDatabase();
     if (whoIs != "spectators") {
       if (member2Status == "ready") {
         setRedirect2(false);
-        setMemberStatusChanged(false);
       }
 
       if (member1Status == "ready" && member2Status == "ready") {
         if (whoIs == "Member1") {
           setStartVisible(true);
-          setMemberStatusChanged(false);
         }
       }
 
@@ -118,7 +112,6 @@ export default function Home() {
         fetchButtleStatus1();
         fetchButtleStatus2();
         setSelectVisible(true);
-        setMemberStatusChanged(false);
         getplayerw();
       }
 
@@ -136,13 +129,11 @@ export default function Home() {
             Member1: "foMember2Turn",
             Member2: "foMember2Turn",
           });
-          setMemberStatusChanged(false);
         } else {
           update(ref(db, `Room/${roomId}/MemberStatus`), {
             Member1: "foMember1Turn",
             Member2: "foMember1Turn",
           });
-          setMemberStatusChanged(false);
         }
       }
 
@@ -153,7 +144,6 @@ export default function Home() {
         if (whoIs == "Member1") {
           fetchButtleStatus1();
           fetchButtleStatus2();
-          setMemberStatusChanged(false);
         }
       }
 
@@ -164,7 +154,6 @@ export default function Home() {
         if (whoIs == "Member2") {
           fetchButtleStatus1();
           fetchButtleStatus2();
-          setMemberStatusChanged(false);
         }
       }
 
@@ -175,7 +164,6 @@ export default function Home() {
         if (whoIs == "Member1") {
           fetchButtleStatus1();
           fetchButtleStatus2();
-          setMemberStatusChanged(false);
         }
       } else {
         setRedirect4(true);
@@ -187,15 +175,13 @@ export default function Home() {
         if (whoIs == "Member2") {
           fetchButtleStatus1();
           fetchButtleStatus2();
-          setMemberStatusChanged(false);
         }
       } else {
         setRedirect4(true);
       }
     }
-    setMemberStatusChanged(false);
     console.log("changed");
-  }, [MemberStatusChanged]);
+  }
 
   useEffect(() => {
     getplayerw();
