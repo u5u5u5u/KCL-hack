@@ -9,26 +9,31 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  background-color: #fff;
   border: 1px solid #ccc;
   border-radius: 0.5rem;
   box-shadow: 0.3rem 0.3rem 0.2rem #ccc;
-  padding: 0.7rem;
+  cursor: pointer;
+  padding: 5%;
 }
 
 .content:hover {
   box-shadow: 0.3rem 0.3rem 0.2rem #4689ff;
   transform: translateY(-1rem);
+  transition: transform 0.3s;
 }
 
 .name {
   height: 25%;
+  width: 90%;
   font-size: 0.5rem;
   font-weight: bold;
-  margin: 0;
+  text-align: start;
   overflow: hidden;
   display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 3;
+  margin: 0;
 }
 
 .name h1 {
@@ -46,10 +51,12 @@
 
 .status {
   height: 35%;
+  width: 70%;
 }
 
 .status td {
   width: 50%;
+  font-size: 1rem;
   font-weight: bold;
 }
 

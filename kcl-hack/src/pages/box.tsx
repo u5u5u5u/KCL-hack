@@ -71,7 +71,11 @@ export default function Home() {
       <Header children="キャラ一覧だを" />
       <div className={styles.wrapper}>
         {Object.entries(characters).map(([id, chara]: any) => (
-          <div className={styles.content} key={id}>
+          <button
+            className={styles.content}
+            key={id}
+            onClick={() => handleClick(id)}
+          >
             <div className={styles.name}>
               <h1>{chara.Status.Name}</h1>
             </div>
@@ -100,12 +104,7 @@ export default function Home() {
                 <td className={styles.data2}>{chara.Status.Speed}</td>
               </tr>
             </table>
-            <div className={styles.button_box}>
-              <button className={styles.button} onClick={() => handleClick(id)}>
-                Select
-              </button>
-            </div>
-          </div>
+          </button>
         ))}
       </div>
       {selectedId && (
