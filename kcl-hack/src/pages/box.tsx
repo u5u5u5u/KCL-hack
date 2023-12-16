@@ -174,20 +174,28 @@ export default function Home() {
             <div className={styles.back}>
               <ul className={styles.actions}>
                 <li>
-                  <p>{chara.Status.w00}</p>
-                  <p>{chara.Status.w00_desc}</p>
+                  <p className={styles["action-name"]}>{chara.Status.w00}</p>
+                  <p className={styles["action-description"]}>
+                    {chara.Status.w00_desc}
+                  </p>
                 </li>
                 <li>
-                  <p>{chara.Status.w01}</p>
-                  <p>{chara.Status.w01_desc}</p>
+                  <p className={styles["action-name"]}>{chara.Status.w01}</p>
+                  <p className={styles["action-description"]}>
+                    {chara.Status.w01_desc}
+                  </p>
                 </li>
                 <li>
-                  <p>{chara.Status.w02}</p>
-                  <p>{chara.Status.w02_desc}</p>
+                  <p className={styles["action-name"]}>{chara.Status.w02}</p>
+                  <p className={styles["action-description"]}>
+                    {chara.Status.w02_desc}
+                  </p>
                 </li>
                 <li>
-                  <p>{chara.Status.w03}</p>
-                  <p>{chara.Status.w03_desc}</p>
+                  <p className={styles["action-name"]}>{chara.Status.w03}</p>
+                  <p className={styles["action-description"]}>
+                    {chara.Status.w03_desc}
+                  </p>
                 </li>
               </ul>
             </div>
