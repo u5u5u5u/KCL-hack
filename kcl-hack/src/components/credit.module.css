@@ -79,3 +79,10 @@
     transform: scale(1);
   }
 }
+.yahho {
+  margin: 15px 15px 15px 15px;
+
+  position: absolute;
+  right: 0;
+  bottom: 0;
+}
