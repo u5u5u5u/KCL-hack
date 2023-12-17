@@ -95,7 +95,13 @@ export default function Home() {
             ></input>
           </div>
           <div>
-            <button className={styles.button} onClick={sendProfile}>
+            <button
+              className={styles.button}
+              onClick={() => {
+                sendProfile();
+                alert("プロフィールを更新しました");
+              }}
+            >
               決定
             </button>
           </div>
