@@ -1123,31 +1123,43 @@ export default function Home() {
       <div style={{ visibility: youLose ? "visible" : "hidden" }}>
         あなたの負け！
       </div>
-      <div className={styles.player1}>
-        <div>{whoIs}</div>
+      <div className={styles.parent}>
+        <div className={styles.player1}>
+          <div>{whoIs}</div>
 
-        <div>{member1Status}</div>
-        <h2>{Member1Name}</h2>
-        <img src={player1Img}></img>
-        <h2>
-          HP {player1HP} / {player1HPmax}
-        </h2>
-        <h2>Attack {player1Attack}</h2>
-        <h2>Defence {player1Defence}</h2>
-        <h2>Speed {player1Speed}</h2>
-      </div>
+          <div>{member1Status}</div>
+          <h2>{Member1Name}</h2>
+          <img src={player1Img}></img>
+          <div className={styles.ability}>
+            <h2>
+              HP {player1HP} / {player1HPmax}
+            </h2>
+            <h2>Attack {player1Attack}</h2>
+            <h2>Defence {player1Defence}</h2>
+            <h2>Speed {player1Speed}</h2>
+          </div>
+        </div>
+        <div className={styles.log}>
+          {ButtleLog &&
+            Object.keys(ButtleLog).length > 0 &&
+            Object.keys(ButtleLog).map((key, index) => {
+              return <div key={index}>{ButtleLog[key].Log}</div>;
+            })}
+        </div>
 
-      <div className={styles.player2}>
-        <div>{member2Status}</div>
-        <h2>{Member2Name}</h2>
-        <img src={player2Img}></img>
-
-        <h2>
-          HP {player2HP} / {player2HPmax}
-        </h2>
-        <h2>Attack {player2Attack}</h2>
-        <h2>Defence {player2Defence}</h2>
-        <h2>Speed {player2Speed}</h2>
+        <div className={styles.player2}>
+          <div>{member2Status}</div>
+          <h2>{Member2Name}</h2>
+          <img src={player2Img}></img>
+          <div className={styles.ability}>
+            <h2>
+              HP {player2HP} / {player2HPmax}
+            </h2>
+            <h2>Attack {player2Attack}</h2>
+            <h2>Defence {player2Defence}</h2>
+            <h2>Speed {player2Speed}</h2>
+          </div>
+        </div>
       </div>
 
       <div className={styles.command}>
@@ -1191,13 +1203,6 @@ export default function Home() {
         >
           {playerw03}
         </button>
-        <div>
-          {ButtleLog &&
-            Object.keys(ButtleLog).length > 0 &&
-            Object.keys(ButtleLog).map((key, index) => {
-              return <div key={index}>{ButtleLog[key].Log}</div>;
-            })}
-        </div>
       </div>
     </main>
   );

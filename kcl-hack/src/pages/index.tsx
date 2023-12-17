@@ -25,9 +25,9 @@ export default function Home() {
           </div>
         </div>
       </div>
-      <div>
+      <div className={styles.credit}>
         <Link href="/credit">
-          <button>クレジット</button>
+          <button className={styles.btn}>クレジット</button>
         </Link>
       </div>
       <span className={styles.yahho}>
