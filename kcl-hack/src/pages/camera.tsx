@@ -415,7 +415,6 @@ export const Camera = () => {
         >
           カメラを起動
         </button>
-        <div>{code}</div>
         <div>
           <video ref={videoRef}></video>
         </div>
@@ -431,6 +430,7 @@ export const Camera = () => {
       >
         <div className={styles.wrapper}>
           <div className="accordion">この商品はありません</div>
+          <div>Janコード:{code}</div>
           <div className={styles["info-reg"]}>
             <div className="accordion-body">
               <div className={styles.information}>
