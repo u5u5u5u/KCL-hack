@@ -1,12 +1,12 @@
 "use client";
 import { useState, ChangeEvent } from "react";
-import { YAHOO_API_KEY } from "../../constant/env";
+import { YAHOO_API_KEY } from "../../../../constant/env";
 import { getDatabase, ref, set } from "firebase/database";
 import { getAuth } from "firebase/auth";
 import "firebase/compat/database";
-import Header from "../../components/header";
-import styles from "../../components/search.module.css";
-import Footer from "../../components/footer";
+import Header from "../../../../components/header/header";
+import styles from "../../../../styles/search.module.css";
+import Footer from "../../../../components/footer/footer";
 
 export default function Home() {
   //status

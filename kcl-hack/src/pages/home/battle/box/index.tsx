@@ -2,9 +2,9 @@
 import React, { useState, useEffect, use } from "react";
 import { getDatabase, ref, child, get, set } from "firebase/database";
 import { getAuth } from "firebase/auth";
-import Header from "../components/header";
-import Footer from "../components/footer";
-import styles from "../components/box.module.css";
+import Header from "../../../../components/header/header";
+import Footer from "../../../../components/footer/footer";
+import styles from "../../../../styles/box.module.css";
 
 interface Status {
   Attack: number;

@@ -1,10 +1,10 @@
-import styles from "../components/search.module.css";
 import React, { useEffect, useRef, useState } from "react";
-import { YAHOO_API_KEY } from "../constant/env";
+import { YAHOO_API_KEY } from "../../../../constant/env";
 import { getDatabase, ref, set } from "firebase/database";
 import { getAuth } from "firebase/auth";
-import Header from "../components/header";
-import Footer from "../components/footer";
+import Header from "../../../../components/header/header";
+import Footer from "../../../../components/footer/footer";
+import styles from "../../../../styles/search.module.css";
 
 export const Camera = () => {
   const videoRef = useRef<HTMLVideoElement>(null);

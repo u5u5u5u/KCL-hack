@@ -11,9 +11,8 @@ import {
   onValue,
 } from "firebase/database";
 import { getAuth } from "firebase/auth";
-import Header from "../components/header";
-import Footer from "../components/footer";
-import Link from "next/link";
+import Header from "../../../../components/header/header";
+import Footer from "../../../../components/footer/footer";
 
 interface Member {
   Member1: string;

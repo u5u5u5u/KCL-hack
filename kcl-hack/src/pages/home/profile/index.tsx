@@ -4,9 +4,9 @@ import { getDatabase, ref, set, child, get } from "firebase/database";
 import { getAuth } from "firebase/auth";
 import { useEffect } from "react";
 import "firebase/compat/database";
-import Header from "../components/header";
-import Footer from "../components/footer";
-import styles from "../components/profile.module.css";
+import Header from "../../../components/header/header";
+import Footer from "../../../components/footer/footer";
+import styles from "../../../styles/profile.module.css";
 
 export default function Home() {
   const [userName, setUsername] = useState<string>("");

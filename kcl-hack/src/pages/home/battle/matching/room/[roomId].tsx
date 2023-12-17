@@ -13,8 +13,8 @@ import {
   onValue,
 } from "firebase/database";
 import { getAuth } from "firebase/auth";
-import Header from "../components/header";
-import Footer from "../components/footer";
+import Header from "../../../../../components/header";
+import Footer from "../../../../../components/footer";
 import Link from "next/link";
 import { Button } from "@mui/material";
 import { stat } from "fs";

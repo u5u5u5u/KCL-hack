@@ -23,7 +23,7 @@ const Header = ({ children }: HeaderProps) => {
       </div>
       <div className={styles.title}>{children}</div>
       <div className={styles.ml_175}>
-        <Link href="/home">
+        <Link href="../home">
           <span className={styles.home}></span>
         </Link>
       </div>

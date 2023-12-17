@@ -1,8 +1,7 @@
 "use client";
 import Link from "next/link";
-import Header from "../components/header";
-import Button from "../components/button";
-import Footer from "../components/footer";
+import Header from "../../../../components/header/header";
+import Footer from "../../../../components/footer/footer";
 
 export default function Home() {
   return (
