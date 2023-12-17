@@ -10,7 +10,7 @@
 }
 .tytle {
   text-align: center;
-  margin-top: 5%;
+  margin-top: 0;
 }
 .command {
   margin-top: 18%;
@@ -78,10 +78,26 @@
   z-index: 1;
   transition: 0.4s;
 }
-.button:hover:before,
-.button:hover:after {
-  border-left-width: 25px;
+.button:active:before,
+.button:active:after {
+  border-left-width: 100px;
 }
-.deg_btn:hover {
+.deg_btn:active {
   background: #2c3148;
+}
+.parent {
+  display: flex;
+  flex-direction: row;
+  height: 30%;
+  justify-content: space-between;
+  margin-right: 10%;
+}
+.ability {
+  position: absolute;
+  bottom: 20%;
+}
+.log {
+  margin-top: 10%;
+  height: 100%;
+  overflow: scroll;
 }
