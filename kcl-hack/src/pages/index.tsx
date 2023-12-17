@@ -26,9 +26,7 @@ export default function Home() {
         </div>
       </div>
       <div className={styles.credit}>
-        <Link href="/credit">
-          <button className={styles.btn}>クレジット</button>
-        </Link>
+        <a href="/credit">クレジット</a>
       </div>
       <span className={styles.yahho}>
         <a href="https://developer.yahoo.co.jp/sitemap/">
