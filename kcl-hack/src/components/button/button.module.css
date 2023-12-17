@@ -22,3 +22,17 @@
   background-color: #4689ff;
   box-shadow: none;
 }
+
+@media screen and (min-width: 768px) and (max-width: 1279px) {
+  .button {
+    width: 40vh;
+    font-size: 1.8rem;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .button {
+    width: 25vh;
+    font-size: 1.3rem;
+  }
+}

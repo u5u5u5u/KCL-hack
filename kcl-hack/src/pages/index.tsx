@@ -9,10 +9,11 @@ export default function Home() {
     <main>
       <div className="container">
         <div className="wrapper">
-          <div>
+          <div className={styles.image}>
             <Image
               className={styles.logo_large}
               src="/BAGOLA_logo.png"
+              layout="intrinsic"
               width={1000}
               height={283}
               alt="BAGOLA"
@@ -28,7 +29,7 @@ export default function Home() {
       <div className={styles.credit}>
         <a href="../credit">クレジット</a>
       </div>
-      <span className={styles.yahho}>
+      <span className={styles.yahoo}>
         <a href="https://developer.yahoo.co.jp/sitemap/">
           Webサービス by Yahoo! JAPAN
         </a>

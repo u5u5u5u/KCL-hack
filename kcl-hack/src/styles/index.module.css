@@ -1,31 +1,28 @@
+.image {
+  width: 90%;
+  height: auto;
+  object-fit: cover;
+}
+
 .logo_large {
   margin-top: 10rem;
 }
-.yahho {
-  margin: 15px 15px 15px 15px;
 
-  position: absolute;
-  right: 0;
-  bottom: 0;
-}
 .credit {
   margin: 15px 15px 15px 15px;
   position: absolute;
   left: 0;
   bottom: 0;
 }
-.btn {
-  display: inline-block;
-  padding: 0.5em 1em;
-  text-decoration: none;
-  background: #668ad8; /*ボタン色*/
-  color: #fff;
-  border-bottom: solid 4px #627295;
-  border-radius: 3px;
+
+.yahoo {
+  margin: 15px 15px 15px 15px;
+  position: absolute;
+  right: 0;
+  bottom: 0;
 }
-.btn:active {
-  /*ボタンを押したとき*/
-  -webkit-transform: translateY(4px);
-  transform: translateY(4px); /*下に動く*/
-  border-bottom: none; /*線を消す*/
+
+@media screen and (min-width: 481px) and (max-width: 1024px) {
+}
+@media screen and (min-width: 1025px) and (max-width: 1480px) {
 }
