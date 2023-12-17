@@ -26,10 +26,15 @@ export default function Home() {
         </div>
       </div>
       <div>
-        <Link href="/cresit">
+        <Link href="/credit">
           <button>クレジット</button>
         </Link>
       </div>
+      <span className={styles.yahho}>
+        <a href="https://developer.yahoo.co.jp/sitemap/">
+          Webサービス by Yahoo! JAPAN
+        </a>
+      </span>
     </main>
   );
 }

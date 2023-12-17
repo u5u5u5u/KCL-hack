@@ -1,7 +1,7 @@
 "use client";
 
 import Header from "../components/header";
-import styles from "../components/cresit.module.css";
+import styles from "../components/credit.module.css";
 import Footer from "../components/footer";
 
 export default function Home() {
@@ -20,6 +20,11 @@ export default function Home() {
           </div>
         </div>
       </div>
+      <span className={styles.yahho}>
+        <a href="https://developer.yahoo.co.jp/sitemap/">
+          Webサービス by Yahoo! JAPAN
+        </a>
+      </span>
 
       <Footer />
     </main>
