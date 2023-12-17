@@ -17,7 +17,7 @@
   padding: 5% 0;
 }
 
-.button:hover {
+.button:active {
   color: #ffffff;
   background-color: #4689ff;
   box-shadow: none;
