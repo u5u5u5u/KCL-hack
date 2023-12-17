@@ -1,28 +1,33 @@
 .player1 {
   color: red;
   float: left;
-  margin-left: 20%;
+  margin-left: 15%;
 }
 .player2 {
   color: blue;
   float: right;
-  margin-right: 20%;
+  margin-right: 15%;
 }
 .tytle {
   text-align: center;
   margin-top: 0;
 }
 .command {
-  margin-top: 18%;
+  margin-top: 13%;
   text-align: center;
+}
+.command h2 {
+  margin: 0;
 }
 .leave {
   float: left;
   margin-left: 10%;
+  margin-bottom: 0;
 }
 .waza {
   text-align: center;
   margin-right: 10%;
+  margin-bottom: 0;
 }
 .main {
   /* スクロール無効化
@@ -87,7 +92,6 @@
 }
 .parent {
   display: flex;
-  flex-direction: row;
   height: 30%;
   justify-content: space-between;
   margin-right: 10%;
@@ -100,4 +104,8 @@
   margin-top: 10%;
   height: 100%;
   overflow: scroll;
+}
+.message {
+  text-align: center;
+  font-size: 20px;
 }

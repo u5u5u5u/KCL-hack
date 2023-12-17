@@ -1117,11 +1117,17 @@ export default function Home() {
   return (
     <main className={styles.main}>
       <h1 className={styles.tytle}>Room {roomId}</h1>
-      <div style={{ visibility: youWin ? "visible" : "hidden" }}>
+      <div
+        style={{ visibility: youWin ? "visible" : "hidden" }}
+        className={styles.message}
+      >
         あなたの勝ち！
       </div>
-      <div style={{ visibility: youLose ? "visible" : "hidden" }}>
-        あなたの負け！
+      <div
+        style={{ visibility: youLose ? "visible" : "hidden" }}
+        className={styles.message}
+      >
+        おっつー
       </div>
       <div className={styles.parent}>
         <div className={styles.player1}>

@@ -252,7 +252,7 @@ export default function Home() {
         <div>
           <div className={styles.select_id}>Selected ID: {selectedId}</div>
           <div className={styles.button_box}>
-            <button className="button" onClick={sendSelectedId}>
+            <button className={styles.btn} onClick={sendSelectedId}>
               決定
             </button>
           </div>
