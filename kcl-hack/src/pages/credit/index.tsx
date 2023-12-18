@@ -1,8 +1,8 @@
 "use client";
 
-import Header from "../components/header";
-import styles from "../components/credit.module.css";
-import Footer from "../components/footer";
+import Header from "../../components/header/header";
+import styles from "../../styles/credit.module.css";
+import Footer from "../../components/footer/footer";
 
 export default function Home() {
   return (

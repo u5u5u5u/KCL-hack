@@ -16,9 +16,9 @@ import { firebaseConfig } from "@/lib/firebase/firebase";
 // プロジェクトの概要 -> アプリの追加 -> ウェブ -> アプリの作成
 // firebaseConfig の内容を持ってくる
 
-import Header from "../components/header";
-import style from "../components/google.module.css";
-import Footer from "../components/footer";
+import Header from "../../components/header/header";
+import style from "../../styles/google.module.css";
+import Footer from "../../components/footer/footer";
 
 const useAuth = (auth: Auth) => {
   const [state, setState] = useState<

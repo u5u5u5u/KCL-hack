@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
-import Button from "../components/button";
-import styles from "../components/index.module.css";
+import Button from "../components/button/button";
+import styles from "../styles/index.module.css";
 import Image from "next/image";
 
 export default function Home() {
@@ -19,14 +19,14 @@ export default function Home() {
             />
           </div>
           <div className="content">
-            <Link href="/google">
+            <Link href="../login">
               <Button label="logIn" />
             </Link>
           </div>
         </div>
       </div>
       <div className={styles.credit}>
-        <a href="/credit">クレジット</a>
+        <a href="../credit">クレジット</a>
       </div>
       <span className={styles.yahho}>
         <a href="https://developer.yahoo.co.jp/sitemap/">
