@@ -158,12 +158,17 @@
   }
 
   .img-name-price {
-    width: 60%;
+    width: 70%;
     margin: 0;
   }
 
+  .status {
+    width: 70%;
+    margin: auto;
+  }
+
   .status-actions {
-    width: 50%;
+    width: 70%;
     margin: 5%;
   }
 
