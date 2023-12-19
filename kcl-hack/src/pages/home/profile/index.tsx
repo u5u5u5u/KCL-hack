@@ -75,7 +75,7 @@ export default function Home() {
       <Header children="PROFILE" />
       <div className="container">
         <div className="wrapper">
-          <div className="wrapper">
+          <div className={styles.wrapper}>
             <label className={styles.label}>ユーザーネーム</label>
             <input
               className={styles.user_name}
@@ -84,7 +84,7 @@ export default function Home() {
               onChange={changeUserName}
             ></input>
           </div>
-          <div className="wrapper">
+          <div className={styles.wrapper}>
             <label className={styles.label}>コメント</label>
             <input
               className={styles.one_word}
