@@ -358,6 +358,7 @@ export default function Home() {
         <div className={styles.wrapper}>
           <div className="search">
             <input
+              className={styles.input}
               value={number}
               onChange={changeNum}
               placeholder="JANコード"
@@ -424,13 +425,13 @@ export default function Home() {
                     alert("登録しました");
                   }}
                 >
-                  登録する
+                  登録
                 </button>
                 <button
                   className={styles.registration_button}
                   onClick={() => setIsOpen(false)}
                 >
-                  登録しない
+                  戻る
                 </button>
               </div>
             </div>
@@ -440,8 +441,9 @@ export default function Home() {
       <Footer />
       <style jsx>{`
         .search {
-          height: ${isOpen ? 0 : "100%"};
+          height: ${isOpen ? 0 : "auto"};
           overflow: ${isOpen ? "hidden" : "visible"};
+          margin-top: ${isOpen ? "0" : "15%"};
         }
         .accordion {
           height: ${isError ? "80%" : 0};
@@ -454,6 +456,16 @@ export default function Home() {
           height: ${isOpen ? "auto" : 0};
           overflow: hidden;
         }
+        @media screen and (max-width: 767px) {
+          .search {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            width: 80%;
+            height: ${isOpen ? 0 : "25%"};
+            margin-top: ${isOpen ? "0" : "30%"};
+          }
       `}</style>
     </main>
   );
