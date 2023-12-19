@@ -24,8 +24,8 @@ const Header = ({ children }: HeaderProps) => {
             className={styles.logo_sp}
             src="/BAGOLA_small.png"
             layout="intrinsic"
-            width={70}
-            height={70}
+            width={50}
+            height={50}
             alt="BAGOLA"
           />
         </Link>

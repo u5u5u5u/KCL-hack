@@ -1,6 +1,7 @@
 import React from "react";
 import styles from "./button.module.css";
 
+//適用ページ: src/pages/home/index.tsx
 type ButtonProps = {
   label: string;
 };
