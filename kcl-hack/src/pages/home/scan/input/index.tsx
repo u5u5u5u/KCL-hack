@@ -356,7 +356,7 @@ export default function Home() {
       <Header children="入力" />
       <div className="container">
         <div className={styles.wrapper}>
-          <div className="search">
+          <div>
             <input
               className={styles.input}
               value={number}
