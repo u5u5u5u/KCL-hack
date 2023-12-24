@@ -12,6 +12,7 @@ import {
 } from "firebase/database";
 import { getAuth } from "firebase/auth";
 import Header from "../../../../components/header/header";
+import styles from "../../../../styles/matching.module.css";
 import Footer from "../../../../components/footer/footer";
 
 interface Member {
@@ -241,14 +242,15 @@ export default function Home() {
           </div>
           <div className="text-center">
             <label>
-              <div>
+              <div className={styles.wrapper}>
                 <input
+                  className={styles.input}
                   value={number}
                   onChange={changeNum}
                   placeholder="ルーム番号を入力"
                 />
 
-                <button className="button" onClick={lookForRoom}>
+                <button className={styles.button} onClick={lookForRoom}>
                   検索
                 </button>
               </div>
