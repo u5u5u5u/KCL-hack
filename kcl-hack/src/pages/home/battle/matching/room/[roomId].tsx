@@ -14,6 +14,7 @@ import {
 } from "firebase/database";
 import { getAuth } from "firebase/auth";
 import styles from "../../../../../styles/[roomId].module.css";
+import { read } from "fs";
 
 export default function Home() {
   const [ButtleLog, setButtleLog] = useState<string[]>([]);
@@ -998,6 +999,29 @@ export default function Home() {
       setPlayerw03("エラーです");
     }
   }, [w00, w01, w02, w03]);
+
+  window.addEventListener("popstate", function (e) {
+    if (member1Status != "ready" && member2Status != "ready") {
+      giveUp();
+    } else {
+      leftRoom();
+    }
+  });
+
+  function giveUp() {
+    if (whoIs == "Member1") {
+      update(ref(db, `Room/${roomId}/MemberStatus`), {
+        Member1: "lose",
+        Member2: "win",
+      });
+    }
+    if (whoIs == "Member2") {
+      update(ref(db, `Room/${roomId}/MemberStatus`), {
+        Member1: "win",
+        Member2: "lose",
+      });
+    }
+  }
 
   async function leftRoom() {
     const UUid = await getUid();
