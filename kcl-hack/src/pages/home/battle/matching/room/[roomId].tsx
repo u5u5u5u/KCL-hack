@@ -14,7 +14,6 @@ import {
 } from "firebase/database";
 import { getAuth } from "firebase/auth";
 import styles from "../../../../../styles/[roomId].module.css";
-import { read } from "fs";
 
 export default function Home() {
   const [ButtleLog, setButtleLog] = useState<string[]>([]);
@@ -72,6 +71,7 @@ export default function Home() {
   const [deltaChanged, setDeltaChanged] = useState<boolean>(false);
   const [youWin, setYouWin] = useState<boolean>(false);
   const [youLose, setYouLose] = useState<boolean>(false);
+  const [draw, setDraw] = useState<boolean>(false);
   const [JSvalied, setJSvalied] = useState<boolean>(false);
 
   const dbRef = ref(getDatabase());
@@ -212,6 +212,14 @@ export default function Home() {
           setSelectVisible(false);
         }
       }
+
+      if (member1Status == "draw" && member2Status == "draw") {
+        fetchButtleStatus1();
+        fetchButtleStatus2();
+        setSelectVisible(false);
+        setDraw(true);
+      }
+
       console.log("check");
     }
   }, [member1Status, member2Status]);
@@ -418,16 +426,30 @@ export default function Home() {
         setDeltaChanged(false);
       } else {
         if (player1HP <= 0) {
-          update(ref(db, `Room/${roomId}/MemberStatus`), {
-            Member1: "lose",
-            Member2: "win",
-          });
+          if (player2HP > 0) {
+            update(ref(db, `Room/${roomId}/MemberStatus`), {
+              Member1: "lose",
+              Member2: "win",
+            });
+          } else {
+            update(ref(db, `Room/${roomId}/MemberStatus`), {
+              Member1: "draw",
+              Member2: "draw",
+            });
+          }
         }
         if (player2HP <= 0) {
-          update(ref(db, `Room/${roomId}/MemberStatus`), {
-            Member1: "win",
-            Member2: "lose",
-          });
+          if (player1HP > 0) {
+            update(ref(db, `Room/${roomId}/MemberStatus`), {
+              Member1: "win",
+              Member2: "lose",
+            });
+          } else {
+            update(ref(db, `Room/${roomId}/MemberStatus`), {
+              Member1: "draw",
+              Member2: "draw",
+            });
+          }
         }
       }
     }
@@ -1152,6 +1174,12 @@ export default function Home() {
           className={styles.message}
         >
           おっつー
+        </div>
+        <div
+          style={{ visibility: draw ? "visible" : "hidden" }}
+          className={styles.message}
+        >
+          ひきわけ
         </div>
         <div className={styles.parent}>
           <div className={styles.player1}>
