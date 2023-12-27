@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
+import { useRouter } from "next/router";
 import { initializeApp } from "@firebase/app";
 import {
   getAuth,
@@ -26,6 +27,8 @@ const useAuth = (auth: Auth) => {
   >("idel");
   const [error, setError] = useState<unknown>("");
   const [credential, setCredential] = useState<UserCredential>();
+  const [logined, setLogined] = useState<boolean>(false);
+
   const dispatch = useCallback(
     (
       action:
@@ -42,20 +45,24 @@ const useAuth = (auth: Auth) => {
               .then((result) => {
                 setCredential(result);
                 setState("logined");
+                setLogined(true);
               })
               .catch((e) => {
                 setError(e);
                 setState("error");
+                setLogined(false);
               });
           } else {
             signInWithPopup(auth, provider)
               .then((result) => {
                 setCredential(result);
                 setState("logined");
+                setLogined(true);
               })
               .catch((e) => {
                 setError(e);
                 setState("error");
+                setLogined(false);
               });
           }
           break;
@@ -75,20 +82,24 @@ const useAuth = (auth: Auth) => {
     },
     [auth]
   );
-  return { state, error, credential, dispatch };
+  return { state, error, credential, dispatch, logined };
 };
 
 const auth = getAuth(initializeApp(firebaseConfig));
+
 const provider = new GoogleAuthProvider();
 
 const Page = () => {
-  const { state, dispatch, credential, error } = useAuth(auth);
+  const router = useRouter();
+  const { state, dispatch, credential, error, logined } = useAuth(auth);
+
   useEffect(() => {
     const token = sessionStorage.getItem("token");
     if (token) {
       dispatch({ type: "login", payload: { token } });
     }
   }, [dispatch]);
+
   useEffect(() => {
     if (credential) {
       const token =
@@ -98,8 +109,15 @@ const Page = () => {
       sessionStorage.removeItem("token");
     }
   }, [credential]);
+
   const handleLogin = () => dispatch({ type: "login" });
   const handleLogout = () => dispatch({ type: "logout" });
+
+  useEffect(() => {
+    if (logined) {
+      router.push(`/home`);
+    }
+  }, [logined]);
 
   return (
     <main>
