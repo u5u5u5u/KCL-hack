@@ -25,6 +25,7 @@ export default function Home() {
   const [userChara, setuserChara] = useState<string>("");
   const [sendStatus, setSendStatus] = useState<Object>();
   const [redirect, setRedirect] = useState<boolean>(false);
+  const [JSvalied, setJSvalied] = useState<boolean>(false);
   const dbRef = ref(getDatabase());
 
   const changeNum = (event: ChangeEvent<HTMLInputElement>) => {
@@ -39,6 +40,10 @@ export default function Home() {
       return user.uid;
     }
   }
+
+  useEffect(() => {
+    setJSvalied(true);
+  }, []);
 
   useEffect(() => {
     async function getCharaid() {
@@ -223,42 +228,58 @@ export default function Home() {
   const handleClick = () => {
     router.push(`../battle/matching/room/${roomNum}`);
   };
+  if (JSvalied) {
+    return (
+      <main>
+        <Header children="MATCHING" />
+        <div
+          className="container"
+          style={{ visibility: JSvalied ? "visible" : "collapse" }}
+        >
+          <div className="wrapper">
+            <div>
+              <h2>ルームを探す</h2>
+            </div>
+            <div className="text-center">
+              <label>
+                <div className={styles.wrapper}>
+                  <input
+                    className={styles.input}
+                    value={number}
+                    onChange={changeNum}
+                    placeholder="ルーム番号を入力"
+                  />
 
-  return (
-    <main>
-      <Header children="MATCHING" />
-      <div className="container">
-        <div className="wrapper">
-          <div>
-            <h2>ルームを探す</h2>
-          </div>
-          <div className="text-center">
-            <label>
-              <div className={styles.wrapper}>
-                <input
-                  className={styles.input}
-                  value={number}
-                  onChange={changeNum}
-                  placeholder="ルーム番号を入力"
-                />
-
-                <button className={styles.button} onClick={lookForRoom}>
-                  検索
-                </button>
-              </div>
-            </label>
-          </div>
-          <div>
-            Member1:{member1}
-            <br />
-            Member2:{member2}
-          </div>
-          <div style={{ visibility: visible ? "visible" : "hidden" }}>
-            <button onClick={join}>PLAY</button>
+                  <button className={styles.button} onClick={lookForRoom}>
+                    検索
+                  </button>
+                </div>
+              </label>
+            </div>
+            <div>
+              Member1:{member1}
+              <br />
+              Member2:{member2}
+            </div>
+            <div style={{ visibility: visible ? "visible" : "hidden" }}>
+              <button onClick={join}>PLAY</button>
+            </div>
           </div>
         </div>
-      </div>
-      <Footer />
-    </main>
-  );
+        <Footer />
+      </main>
+    );
+  } else {
+    return (
+      <main>
+        <h1>please enable javascript</h1>
+        <div>
+          javascriptをオフにして一体何が楽しいんだ？
+          <br />
+          ということで、javascriptをオンにしてください。
+          <br />
+        </div>
+      </main>
+    );
+  }
 }

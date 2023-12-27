@@ -72,6 +72,7 @@ export default function Home() {
   const [deltaChanged, setDeltaChanged] = useState<boolean>(false);
   const [youWin, setYouWin] = useState<boolean>(false);
   const [youLose, setYouLose] = useState<boolean>(false);
+  const [JSvalied, setJSvalied] = useState<boolean>(false);
 
   const dbRef = ref(getDatabase());
   const db = getDatabase();
@@ -93,6 +94,10 @@ export default function Home() {
       console.log("changed2 to " + data);
     }
   });
+
+  useEffect(() => {
+    setJSvalied(true);
+  }, []);
 
   useEffect(() => {
     const auth = getAuth();
@@ -1132,102 +1137,116 @@ export default function Home() {
     });
   }
 
-  return (
-    <main className={styles.main}>
-      <h1 className={styles.tytle}>Room {roomId}</h1>
-      <div
-        style={{ visibility: youWin ? "visible" : "hidden" }}
-        className={styles.message}
-      >
-        あなたの勝ち！
-      </div>
-      <div
-        style={{ visibility: youLose ? "visible" : "hidden" }}
-        className={styles.message}
-      >
-        おっつー
-      </div>
-      <div className={styles.parent}>
-        <div className={styles.player1}>
-          <div>{whoIs}</div>
+  if (JSvalied) {
+    return (
+      <main className={styles.main}>
+        <h1 className={styles.tytle}>Room {roomId}</h1>
+        <div
+          style={{ visibility: youWin ? "visible" : "hidden" }}
+          className={styles.message}
+        >
+          あなたの勝ち！
+        </div>
+        <div
+          style={{ visibility: youLose ? "visible" : "hidden" }}
+          className={styles.message}
+        >
+          おっつー
+        </div>
+        <div className={styles.parent}>
+          <div className={styles.player1}>
+            <div>{whoIs}</div>
 
-          <div>{member1Status}</div>
-          <h2>{Member1Name}</h2>
-          <img src={player1Img}></img>
-          <div className={styles.ability}>
-            <h2>
-              HP {player1HP} / {player1HPmax}
-            </h2>
-            <h2>Attack {player1Attack}</h2>
-            <h2>Defence {player1Defence}</h2>
-            <h2>Speed {player1Speed}</h2>
+            <div>{member1Status}</div>
+            <h2>{Member1Name}</h2>
+            <img src={player1Img}></img>
+            <div className={styles.ability}>
+              <h2>
+                HP {player1HP} / {player1HPmax}
+              </h2>
+              <h2>Attack {player1Attack}</h2>
+              <h2>Defence {player1Defence}</h2>
+              <h2>Speed {player1Speed}</h2>
+            </div>
+          </div>
+          <div className={styles.log}>
+            {ButtleLog &&
+              Object.keys(ButtleLog).length > 0 &&
+              Object.keys(ButtleLog).map((key, index) => {
+                return <div key={index}>{ButtleLog[key].Log}</div>;
+              })}
+          </div>
+
+          <div className={styles.player2}>
+            <div>{member2Status}</div>
+            <h2>{Member2Name}</h2>
+            <img src={player2Img}></img>
+            <div className={styles.ability}>
+              <h2>
+                HP {player2HP} / {player2HPmax}
+              </h2>
+              <h2>Attack {player2Attack}</h2>
+              <h2>Defence {player2Defence}</h2>
+              <h2>Speed {player2Speed}</h2>
+            </div>
           </div>
         </div>
-        <div className={styles.log}>
-          {ButtleLog &&
-            Object.keys(ButtleLog).length > 0 &&
-            Object.keys(ButtleLog).map((key, index) => {
-              return <div key={index}>{ButtleLog[key].Log}</div>;
-            })}
-        </div>
 
-        <div className={styles.player2}>
-          <div>{member2Status}</div>
-          <h2>{Member2Name}</h2>
-          <img src={player2Img}></img>
-          <div className={styles.ability}>
-            <h2>
-              HP {player2HP} / {player2HPmax}
-            </h2>
-            <h2>Attack {player2Attack}</h2>
-            <h2>Defence {player2Defence}</h2>
-            <h2>Speed {player2Speed}</h2>
-          </div>
+        <div className={styles.command}>
+          <h2>コマンドを選んでください</h2>
         </div>
-      </div>
-
-      <div className={styles.command}>
-        <h2>コマンドを選んでください</h2>
-      </div>
-      <button
-        onClick={start}
-        style={{ visibility: startVisible ? "visible" : "hidden" }}
-      >
-        Start
-      </button>
-      <div className={styles.leave}>
-        <button onClick={leftRoom}>退室</button>
-      </div>
-      <div className={styles.waza}>
         <button
-          className={styles.button}
-          onClick={w0_cal}
-          style={{ visibility: selectVisible ? "visible" : "hidden" }}
+          onClick={start}
+          style={{ visibility: startVisible ? "visible" : "hidden" }}
         >
-          {playerw00}
+          Start
         </button>
-        <button
-          className={styles.button}
-          onClick={w1_cal}
-          style={{ visibility: selectVisible ? "visible" : "hidden" }}
-        >
-          {playerw01}
-        </button>
-        <button
-          className={styles.button}
-          onClick={w2_cal}
-          style={{ visibility: selectVisible ? "visible" : "hidden" }}
-        >
-          {playerw02}
-        </button>
-        <button
-          className={styles.button}
-          onClick={w3_cal}
-          style={{ visibility: selectVisible ? "visible" : "hidden" }}
-        >
-          {playerw03}
-        </button>
-      </div>
-    </main>
-  );
+        <div className={styles.leave}>
+          <button onClick={leftRoom}>退室</button>
+        </div>
+        <div className={styles.waza}>
+          <button
+            className={styles.button}
+            onClick={w0_cal}
+            style={{ visibility: selectVisible ? "visible" : "hidden" }}
+          >
+            {playerw00}
+          </button>
+          <button
+            className={styles.button}
+            onClick={w1_cal}
+            style={{ visibility: selectVisible ? "visible" : "hidden" }}
+          >
+            {playerw01}
+          </button>
+          <button
+            className={styles.button}
+            onClick={w2_cal}
+            style={{ visibility: selectVisible ? "visible" : "hidden" }}
+          >
+            {playerw02}
+          </button>
+          <button
+            className={styles.button}
+            onClick={w3_cal}
+            style={{ visibility: selectVisible ? "visible" : "hidden" }}
+          >
+            {playerw03}
+          </button>
+        </div>
+      </main>
+    );
+  } else {
+    return (
+      <main>
+        <h1>please enable javascript</h1>
+        <div>
+          おいおい、javascriptがオフだとバトルシステムが動かないぜ!
+          <br />
+          ということで、javascriptをオンにしてください。
+          <br />
+        </div>
+      </main>
+    );
+  }
 }

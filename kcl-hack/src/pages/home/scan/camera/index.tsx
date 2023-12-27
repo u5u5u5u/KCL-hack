@@ -35,6 +35,11 @@ export const Camera = () => {
 
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [isError, setIsError] = useState<boolean>(false);
+  const [JSvalied, setJSvalied] = useState<boolean>(false);
+
+  useEffect(() => {
+    setJSvalied(true);
+  }, []);
 
   useEffect(() => {
     if (cameraOn) {
@@ -402,119 +407,133 @@ export const Camera = () => {
     setPri("");
   };
 
-  return (
-    <main>
-      <Header children="CAMERA" />
-      <div>
-        <button
-          onClick={() => {
-            setCameraOn(true);
-            setCode(undefined);
-            setStatusVisible(false);
+  if (JSvalied) {
+    return (
+      <main>
+        <Header children="CAMERA" />
+        <div>
+          <button
+            onClick={() => {
+              setCameraOn(true);
+              setCode(undefined);
+              setStatusVisible(false);
+            }}
+          >
+            カメラを起動
+          </button>
+          <div>
+            <video ref={videoRef}></video>
+          </div>
+          <div>
+            <p>{deviceMessage}</p>
+          </div>
+        </div>
+        <div
+          className="container"
+          style={{
+            visibility: statusVisible ? "visible" : "hidden",
           }}
         >
-          カメラを起動
-        </button>
-        <div>
-          <video ref={videoRef}></video>
-        </div>
-        <div>
-          <p>{deviceMessage}</p>
-        </div>
-      </div>
-      <div
-        className="container"
-        style={{
-          visibility: statusVisible ? "visible" : "hidden",
-        }}
-      >
-        <div className={styles.wrapper}>
-          <div className="accordion">この商品はありません</div>
-          <div>Janコード:{code}</div>
-          <div className={styles["info-reg"]}>
-            <div className="accordion-body">
-              <div className={styles.information}>
-                <div className={styles["img-name-price"]}>
-                  <div className={styles.image}>
-                    <img src={image} />
-                  </div>
-                  <ul>
-                    <li className={styles.name}>{name}</li>
-                    <li className={styles.price}>{price}円</li>
-                  </ul>
-                </div>
-                <div className={styles["status-actions"]}>
-                  <table className={styles.status}>
-                    <tbody>
-                      <tr>
-                        <td className={styles.data1}>HP</td>
-                        <td className={styles.data2}>{Hp}</td>
-                      </tr>
-                      <tr>
-                        <td className={styles.data1}>Attack</td>
-                        <td className={styles.data2}>{Attack}</td>
-                      </tr>
-                      <tr>
-                        <td className={styles.data1}>Defence</td>
-                        <td className={styles.data2}>{Defence}</td>
-                      </tr>
-                      <tr>
-                        <td className={styles.data1}>Speed</td>
-                        <td className={styles.data2}>{Speed}</td>
-                      </tr>
-                    </tbody>
-                  </table>
-                  <div className={styles["actions-box"]}>
-                    <ul className={styles.actions}>
-                      <li>{w00}</li>
-                      <li>{w01}</li>
-                      <li>{w02}</li>
-                      <li>{w03}</li>
+          <div className={styles.wrapper}>
+            <div className="accordion">この商品はありません</div>
+            <div>Janコード:{code}</div>
+            <div className={styles["info-reg"]}>
+              <div className="accordion-body">
+                <div className={styles.information}>
+                  <div className={styles["img-name-price"]}>
+                    <div className={styles.image}>
+                      <img src={image} />
+                    </div>
+                    <ul>
+                      <li className={styles.name}>{name}</li>
+                      <li className={styles.price}>{price}円</li>
                     </ul>
                   </div>
+                  <div className={styles["status-actions"]}>
+                    <table className={styles.status}>
+                      <tbody>
+                        <tr>
+                          <td className={styles.data1}>HP</td>
+                          <td className={styles.data2}>{Hp}</td>
+                        </tr>
+                        <tr>
+                          <td className={styles.data1}>Attack</td>
+                          <td className={styles.data2}>{Attack}</td>
+                        </tr>
+                        <tr>
+                          <td className={styles.data1}>Defence</td>
+                          <td className={styles.data2}>{Defence}</td>
+                        </tr>
+                        <tr>
+                          <td className={styles.data1}>Speed</td>
+                          <td className={styles.data2}>{Speed}</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                    <div className={styles["actions-box"]}>
+                      <ul className={styles.actions}>
+                        <li>{w00}</li>
+                        <li>{w01}</li>
+                        <li>{w02}</li>
+                        <li>{w03}</li>
+                      </ul>
+                    </div>
+                  </div>
                 </div>
-              </div>
-              <div className={styles.buttons}>
-                <button
-                  className={styles.registration_button}
-                  onClick={() => {
-                    sendStatus();
-                    setIsOpen(false);
-                  }}
-                >
-                  登録する
-                </button>
-                <button
-                  className={styles.registration_button}
-                  onClick={() => setIsOpen(false)}
-                >
-                  登録しない
-                </button>
+                <div className={styles.buttons}>
+                  <button
+                    className={styles.registration_button}
+                    onClick={() => {
+                      sendStatus();
+                      setIsOpen(false);
+                    }}
+                  >
+                    登録する
+                  </button>
+                  <button
+                    className={styles.registration_button}
+                    onClick={() => setIsOpen(false)}
+                  >
+                    登録しない
+                  </button>
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
-      <Footer />
-      <style jsx>{`
-        .search {
-          height: ${isOpen ? 0 : "100%"};
-          overflow: ${isOpen ? "hidden" : "visible"};
-        }
-        .accordion {
-          height: ${isError ? "80%" : 0};
-          width: 100%;
-          font-size: 2rem;
-          text-align: center;
-          overflow: hidden;
-        }
-        .accordion-body {
-          height: ${isOpen ? "auto" : 0};
-          overflow: hidden;
-        }
-      `}</style>
-    </main>
-  );
+        <Footer />
+        <style jsx>{`
+          .search {
+            height: ${isOpen ? 0 : "100%"};
+            overflow: ${isOpen ? "hidden" : "visible"};
+          }
+          .accordion {
+            height: ${isError ? "80%" : 0};
+            width: 100%;
+            font-size: 2rem;
+            text-align: center;
+            overflow: hidden;
+          }
+          .accordion-body {
+            height: ${isOpen ? "auto" : 0};
+            overflow: hidden;
+          }
+        `}</style>
+      </main>
+    );
+  } else {
+    return (
+      <main>
+        <h1>please enable javascript</h1>
+        <div>
+          01001100100101110000000101001101011001111010100100001101110001111000000101110101110001111100000111100001110001110100000111001101110001111100000100111101110001111100000110010001110001111000000101010101110001110100000110010001011001110101100111101001101001111111000111101101110001111000000111110001110001110100000111001001110001111000000100110001011101000111010001110100110001111000000101000001110001111000000110000001110001111000000111001001110001110100000100110001000101110101010110110101110001110100000110000001110001111000000101100101110001110100000111010001110001110100000111001001110001111000000101010101110001110100000110010001110001110100000101000001110001111000000101100001101001111111110110100001000101110110010110000001110001111000000101010101110001111000000100100001110001111000000101010101
+          <br />
+          ということで、javascriptをオンにしてください。
+          <br />
+        </div>
+      </main>
+    );
+  }
 };
 
 export default Camera;
