@@ -452,20 +452,23 @@ export default function Home() {
           text-align: center;
           overflow: hidden;
         }
+
         .accordion-body {
           height: ${isOpen ? "auto" : 0};
           overflow: hidden;
         }
+
         @media screen and (max-width: 767px) {
           .search {
             display: flex;
             flex-direction: column;
             justify-content: space-between;
             align-items: center;
-            width: 80%;
-            height: ${isOpen ? 0 : "25%"};
+            width: 100%;
+            height: ${isOpen ? 0 : "45%"};
             margin-top: ${isOpen ? "0" : "30%"};
           }
+        }
       `}</style>
     </main>
   );

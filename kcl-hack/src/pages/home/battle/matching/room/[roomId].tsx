@@ -13,7 +13,7 @@ import {
   onValue,
 } from "firebase/database";
 import { getAuth } from "firebase/auth";
-import styles from "../components/[roomId].module.css";
+import styles from "../../../../../styles/[roomId].module.css";
 
 export default function Home() {
   const [ButtleLog, setButtleLog] = useState<string[]>([]);

@@ -171,7 +171,7 @@ export default function Home() {
 
   return (
     <main>
-      <Header children="キャラ一覧だを" />
+      <Header children="BOX" />
       <div className={styles.wrapper}>
         {Object.entries(characters).map(([id, chara]: any) => (
           <button
@@ -250,10 +250,10 @@ export default function Home() {
       </div>
       {selectedId && (
         <div>
-          <div className={styles.select_id}>Selected ID: {selectedId}</div>
+          <div className={styles["select-id"]}>Selected ID: {selectedId}</div>
           <div className={styles.button_box}>
             <button
-              className={styles.btn}
+              className={styles.button}
               onClick={() => {
                 sendSelectedId();
                 alert("キャラクターを選択しました");

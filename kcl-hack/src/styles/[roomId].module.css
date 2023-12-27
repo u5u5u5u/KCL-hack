@@ -3,43 +3,52 @@
   float: left;
   margin-left: 15%;
 }
+
 .player2 {
   color: blue;
   float: right;
   margin-right: 15%;
 }
+
 .tytle {
   text-align: center;
   margin-top: 0;
 }
+
 .command {
   margin-top: 13%;
   text-align: center;
 }
+
 .command h2 {
   margin: 0;
 }
+
 .leave {
   float: left;
   margin-left: 10%;
   margin-bottom: 0;
 }
+
 .waza {
   text-align: center;
   margin-right: 10%;
   margin-bottom: 0;
 }
+
 .main {
   /* スクロール無効化
     overflow: hidden;
     */
   margin: 0;
 }
+
 /* .button {
   font-size: 20px;
   margin-left: 1%;
   margin-right: 1%;
 } */
+
 .button {
   position: relative;
   display: inline-block;
@@ -83,28 +92,34 @@
   z-index: 1;
   transition: 0.4s;
 }
+
 .button:active:before,
 .button:active:after {
   border-left-width: 100px;
 }
+
 .deg_btn:active {
   background: #2c3148;
 }
+
 .parent {
   display: flex;
   height: 30%;
   justify-content: space-between;
   margin-right: 10%;
 }
+
 .ability {
   position: absolute;
   bottom: 20%;
 }
+
 .log {
   margin-top: 10%;
   height: 100%;
   overflow: scroll;
 }
+
 .message {
   text-align: center;
   font-size: 20px;
