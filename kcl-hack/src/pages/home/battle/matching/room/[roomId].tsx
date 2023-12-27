@@ -13,13 +13,7 @@ import {
   onValue,
 } from "firebase/database";
 import { getAuth } from "firebase/auth";
-import Header from "../../../../../components/header";
-import Footer from "../../../../../components/footer";
-import Link from "next/link";
-import { Button } from "@mui/material";
-import { stat } from "fs";
 import styles from "../components/[roomId].module.css";
-import { on } from "events";
 
 export default function Home() {
   const [ButtleLog, setButtleLog] = useState<string[]>([]);
