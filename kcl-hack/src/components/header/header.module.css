@@ -39,7 +39,7 @@
   position: relative;
   display: block;
   transform: scale(var(--ggs, 1));
-  width: 40px;
+  width: 38px;
   height: 25px;
   border: 0.3rem solid;
   border-top: 0;
@@ -65,7 +65,7 @@
   border-left: 0.3rem solid;
   border-top-left-radius: 4px;
   transform: rotate(45deg);
-  top: -13px;
+  top: -12px;
   border-radius: 3px;
   width: 28px;
   height: 28px;
@@ -80,7 +80,7 @@
   border-bottom-left-radius: 0;
   border-bottom-right-radius: 0;
   border-bottom: 0;
-  left: 4px;
+  left: 3px;
   bottom: 0;
 }
 
