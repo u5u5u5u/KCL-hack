@@ -10,6 +10,7 @@ export const Camera = () => {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [deviceMessage, setDeviceMessage] = useState<string>("");
   const [cameraOn, setCameraOn] = useState<boolean>(false);
+  const [UUID, setUUID] = useState<string>("");
   const [code, setCode] = useState<number | undefined>();
 
   const [Hp, setHP] = useState<number>();
@@ -342,10 +343,6 @@ export const Camera = () => {
       setw03("エラーです");
     }
   }
-  const changeNum = (event: ChangeEvent<HTMLInputElement>) => {
-    console.log(event);
-    setNum(event.target.value);
-  };
 
   async function fetchname() {
     try {
@@ -374,6 +371,7 @@ export const Camera = () => {
     const auth = getAuth();
     const user = auth.currentUser;
     if (user !== null) {
+      setUUID(user.uid);
       return user.uid;
     }
   }
@@ -408,119 +406,128 @@ export const Camera = () => {
   };
 
   if (JSvalied) {
-    return (
-      <main>
-        <Header children="CAMERA" />
-        <div>
-          <button
-            onClick={() => {
-              setCameraOn(true);
-              setCode(undefined);
-              setStatusVisible(false);
+    if (UUID != undefined) {
+      return (
+        <main>
+          <Header children="CAMERA" />
+          <div>
+            <button
+              onClick={() => {
+                setCameraOn(true);
+                setCode(undefined);
+                setStatusVisible(false);
+              }}
+            >
+              カメラを起動
+            </button>
+            <div>
+              <video ref={videoRef}></video>
+            </div>
+            <div>
+              <p>{deviceMessage}</p>
+            </div>
+          </div>
+          <div
+            className="container"
+            style={{
+              visibility: statusVisible ? "visible" : "hidden",
             }}
           >
-            カメラを起動
-          </button>
-          <div>
-            <video ref={videoRef}></video>
-          </div>
-          <div>
-            <p>{deviceMessage}</p>
-          </div>
-        </div>
-        <div
-          className="container"
-          style={{
-            visibility: statusVisible ? "visible" : "hidden",
-          }}
-        >
-          <div className={styles.wrapper}>
-            <div className="accordion">この商品はありません</div>
-            <div>Janコード:{code}</div>
-            <div className={styles["info-reg"]}>
-              <div className="accordion-body">
-                <div className={styles.information}>
-                  <div className={styles["img-name-price"]}>
-                    <div className={styles.image}>
-                      <img src={image} />
-                    </div>
-                    <ul>
-                      <li className={styles.name}>{name}</li>
-                      <li className={styles.price}>{price}円</li>
-                    </ul>
-                  </div>
-                  <div className={styles["status-actions"]}>
-                    <table className={styles.status}>
-                      <tbody>
-                        <tr>
-                          <td className={styles.data1}>HP</td>
-                          <td className={styles.data2}>{Hp}</td>
-                        </tr>
-                        <tr>
-                          <td className={styles.data1}>Attack</td>
-                          <td className={styles.data2}>{Attack}</td>
-                        </tr>
-                        <tr>
-                          <td className={styles.data1}>Defence</td>
-                          <td className={styles.data2}>{Defence}</td>
-                        </tr>
-                        <tr>
-                          <td className={styles.data1}>Speed</td>
-                          <td className={styles.data2}>{Speed}</td>
-                        </tr>
-                      </tbody>
-                    </table>
-                    <div className={styles["actions-box"]}>
-                      <ul className={styles.actions}>
-                        <li>{w00}</li>
-                        <li>{w01}</li>
-                        <li>{w02}</li>
-                        <li>{w03}</li>
+            <div className={styles.wrapper}>
+              <div className="accordion">この商品はありません</div>
+              <div>Janコード:{code}</div>
+              <div className={styles["info-reg"]}>
+                <div className="accordion-body">
+                  <div className={styles.information}>
+                    <div className={styles["img-name-price"]}>
+                      <div className={styles.image}>
+                        <img src={image} />
+                      </div>
+                      <ul>
+                        <li className={styles.name}>{name}</li>
+                        <li className={styles.price}>{price}円</li>
                       </ul>
                     </div>
+                    <div className={styles["status-actions"]}>
+                      <table className={styles.status}>
+                        <tbody>
+                          <tr>
+                            <td className={styles.data1}>HP</td>
+                            <td className={styles.data2}>{Hp}</td>
+                          </tr>
+                          <tr>
+                            <td className={styles.data1}>Attack</td>
+                            <td className={styles.data2}>{Attack}</td>
+                          </tr>
+                          <tr>
+                            <td className={styles.data1}>Defence</td>
+                            <td className={styles.data2}>{Defence}</td>
+                          </tr>
+                          <tr>
+                            <td className={styles.data1}>Speed</td>
+                            <td className={styles.data2}>{Speed}</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                      <div className={styles["actions-box"]}>
+                        <ul className={styles.actions}>
+                          <li>{w00}</li>
+                          <li>{w01}</li>
+                          <li>{w02}</li>
+                          <li>{w03}</li>
+                        </ul>
+                      </div>
+                    </div>
                   </div>
-                </div>
-                <div className={styles.buttons}>
-                  <button
-                    className={styles.registration_button}
-                    onClick={() => {
-                      sendStatus();
-                      setIsOpen(false);
-                    }}
-                  >
-                    登録する
-                  </button>
-                  <button
-                    className={styles.registration_button}
-                    onClick={() => setIsOpen(false)}
-                  >
-                    登録しない
-                  </button>
+                  <div className={styles.buttons}>
+                    <button
+                      className={styles.registration_button}
+                      onClick={() => {
+                        sendStatus();
+                        setIsOpen(false);
+                      }}
+                    >
+                      登録する
+                    </button>
+                    <button
+                      className={styles.registration_button}
+                      onClick={() => setIsOpen(false)}
+                    >
+                      登録しない
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-        <Footer />
-        <style jsx>{`
-          .search {
-            height: ${isOpen ? 0 : "100%"};
-            overflow: ${isOpen ? "hidden" : "visible"};
-          }
-          .accordion {
-            height: ${isError ? "80%" : 0};
-            width: 100%;
-            font-size: 2rem;
-            text-align: center;
-            overflow: hidden;
-          }
-          .accordion-body {
-            height: ${isOpen ? "auto" : 0};
-            overflow: hidden;
-          }
-        `}</style>
-      </main>
-    );
+          <Footer />
+          <style jsx>{`
+            .search {
+              height: ${isOpen ? 0 : "100%"};
+              overflow: ${isOpen ? "hidden" : "visible"};
+            }
+            .accordion {
+              height: ${isError ? "80%" : 0};
+              width: 100%;
+              font-size: 2rem;
+              text-align: center;
+              overflow: hidden;
+            }
+            .accordion-body {
+              height: ${isOpen ? "auto" : 0};
+              overflow: hidden;
+            }
+          `}</style>
+        </main>
+      );
+    } else {
+      return (
+        <main>
+          <Header children="CAMERA" />
+          <h1>ログインをやり直してください</h1>
+        </main>
+      );
+    }
   } else {
     return (
       <main>
