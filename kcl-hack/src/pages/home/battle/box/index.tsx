@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect, use } from "react";
+import React, { useState, useEffect } from "react";
 import { getDatabase, ref, child, get, set } from "firebase/database";
 import { getAuth } from "firebase/auth";
 import Header from "../../../../components/header/header";
@@ -22,8 +22,13 @@ export default function Home() {
   const [selectedId, setSelectedId] = useState(null);
   const [characters, setCharacters] = useState(Object);
   const [redirect, setRedirect] = useState<boolean>(false);
-  const [descDone, setDescDone] = useState<boolean>(false);
+  const [JSvalied, setJSvalied] = useState<boolean>(false);
+
   const dbRef = ref(getDatabase());
+
+  useEffect(() => {
+    setJSvalied(true);
+  }, []);
 
   async function getUid() {
     const auth = getAuth();
@@ -146,7 +151,6 @@ export default function Home() {
       }
       if (change) {
         setCharacters(newCharacters);
-        setDescDone(true);
       }
     });
   }, [characters]);
@@ -169,102 +173,115 @@ export default function Home() {
     }
   };
 
-  return (
-    <main>
-      <Header children="BOX" />
-      <div className={styles.wrapper}>
-        {Object.entries(characters).map(([id, chara]: any) => (
-          <button
-            className={styles.content}
-            key={id}
-            onClick={() => handleClick(id)}
-          >
-            <div className={styles.back}>
-              <ul className={styles.actions}>
-                <li>
-                  <p className={styles["action-name"]}>
-                    {chara.Status.w00_name}
-                  </p>
-                  <p className={styles["action-description"]}>
-                    {chara.Status.w00_desc}
-                  </p>
-                </li>
-                <li>
-                  <p className={styles["action-name"]}>
-                    {chara.Status.w01_name}
-                  </p>
-                  <p className={styles["action-description"]}>
-                    {chara.Status.w01_desc}
-                  </p>
-                </li>
-                <li>
-                  <p className={styles["action-name"]}>
-                    {chara.Status.w02_name}
-                  </p>
-                  <p className={styles["action-description"]}>
-                    {chara.Status.w02_desc}
-                  </p>
-                </li>
-                <li>
-                  <p className={styles["action-name"]}>
-                    {chara.Status.w03_name}
-                  </p>
-                  <p className={styles["action-description"]}>
-                    {chara.Status.w03_desc}
-                  </p>
-                </li>
-              </ul>
-            </div>
-            <div className={styles.front}>
-              <div className={styles.name}>
-                <h1>{chara.Status.Name}</h1>
-              </div>
-              <div className={styles.image_box}>
-                <img
-                  className={styles.image}
-                  src={chara.Status.CharaImage}
-                  alt={chara.Status.Name}
-                />
-              </div>
-              <table className={styles.status}>
-                <tr>
-                  <td className={styles.data1}>HP</td>
-                  <td className={styles.data2}>{chara.Status.HP}</td>
-                </tr>
-                <tr>
-                  <td className={styles.data1}>Attack</td>
-                  <td className={styles.data2}>{chara.Status.Attack}</td>
-                </tr>
-                <tr>
-                  <td className={styles.data1}>Defence</td>
-                  <td className={styles.data2}>{chara.Status.Defence}</td>
-                </tr>
-                <tr>
-                  <td className={styles.data1}>Speed</td>
-                  <td className={styles.data2}>{chara.Status.Speed}</td>
-                </tr>
-              </table>
-            </div>
-          </button>
-        ))}
-      </div>
-      {selectedId && (
-        <div>
-          <div className={styles["select-id"]}>Selected ID: {selectedId}</div>
-          <div className={styles.button_box}>
+  if (JSvalied) {
+    return (
+      <main>
+        <Header children="BOX" />
+        <div className={styles.wrapper}>
+          {Object.entries(characters).map(([id, chara]: any) => (
             <button
-              className={styles.button}
-              onClick={() => {
-                sendSelectedId();
-                alert("キャラクターを選択しました");
-              }}
+              className={styles.content}
+              key={id}
+              onClick={() => handleClick(id)}
             >
-              決定
+              <div className={styles.back}>
+                <ul className={styles.actions}>
+                  <li>
+                    <p className={styles["action-name"]}>
+                      {chara.Status.w00_name}
+                    </p>
+                    <p className={styles["action-description"]}>
+                      {chara.Status.w00_desc}
+                    </p>
+                  </li>
+                  <li>
+                    <p className={styles["action-name"]}>
+                      {chara.Status.w01_name}
+                    </p>
+                    <p className={styles["action-description"]}>
+                      {chara.Status.w01_desc}
+                    </p>
+                  </li>
+                  <li>
+                    <p className={styles["action-name"]}>
+                      {chara.Status.w02_name}
+                    </p>
+                    <p className={styles["action-description"]}>
+                      {chara.Status.w02_desc}
+                    </p>
+                  </li>
+                  <li>
+                    <p className={styles["action-name"]}>
+                      {chara.Status.w03_name}
+                    </p>
+                    <p className={styles["action-description"]}>
+                      {chara.Status.w03_desc}
+                    </p>
+                  </li>
+                </ul>
+              </div>
+              <div className={styles.front}>
+                <div className={styles.name}>
+                  <h1>{chara.Status.Name}</h1>
+                </div>
+                <div className={styles.image_box}>
+                  <img
+                    className={styles.image}
+                    src={chara.Status.CharaImage}
+                    alt={chara.Status.Name}
+                  />
+                </div>
+                <table className={styles.status}>
+                  <tr>
+                    <td className={styles.data1}>HP</td>
+                    <td className={styles.data2}>{chara.Status.HP}</td>
+                  </tr>
+                  <tr>
+                    <td className={styles.data1}>Attack</td>
+                    <td className={styles.data2}>{chara.Status.Attack}</td>
+                  </tr>
+                  <tr>
+                    <td className={styles.data1}>Defence</td>
+                    <td className={styles.data2}>{chara.Status.Defence}</td>
+                  </tr>
+                  <tr>
+                    <td className={styles.data1}>Speed</td>
+                    <td className={styles.data2}>{chara.Status.Speed}</td>
+                  </tr>
+                </table>
+              </div>
             </button>
-          </div>
+          ))}
         </div>
-      )}
-      <Footer />
-    </main>
-  );
+        {selectedId && (
+          <div>
+            <div className={styles["select-id"]}>Selected ID: {selectedId}</div>
+            <div className={styles.button_box}>
+              <button
+                className={styles.button}
+                onClick={() => {
+                  sendSelectedId();
+                  alert("キャラクターを選択しました");
+                }}
+              >
+                決定
+              </button>
+            </div>
+          </div>
+        )}
+        <Footer />
+      </main>
+    );
+  } else {
+    return (
+      <main>
+        <h1>Please enable javascript</h1>
+        <div>
+          技の名前がちょっと変なのはやつに技の命名を任せた私の責任でもある。見たくない気持ちも分かるがいつかjavascriptをオンにして向き合う時が来る。
+          <br />
+          ということで、javascriptをオンにしてください。
+        </div>
+      </main>
+    );
+  }
 }

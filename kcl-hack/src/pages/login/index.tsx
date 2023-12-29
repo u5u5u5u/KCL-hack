@@ -11,12 +11,6 @@ import {
   Auth,
 } from "@firebase/auth";
 import { firebaseConfig } from "@/lib/firebase/firebase";
-//https://console.firebase.google.com/
-// プロジェクトを追加
-// Authetication -> Sign-in method -> Googleを有効にする
-// プロジェクトの概要 -> アプリの追加 -> ウェブ -> アプリの作成
-// firebaseConfig の内容を持ってくる
-
 import Header from "../../components/header/header";
 import style from "../../styles/google.module.css";
 import Footer from "../../components/footer/footer";
@@ -92,6 +86,7 @@ const provider = new GoogleAuthProvider();
 const Page = () => {
   const router = useRouter();
   const { state, dispatch, credential, error, logined } = useAuth(auth);
+  const [JSvalied, setJSvalied] = useState<boolean>(false);
 
   useEffect(() => {
     const token = sessionStorage.getItem("token");
@@ -119,29 +114,46 @@ const Page = () => {
     }
   }, [logined]);
 
-  return (
-    <main>
-      <Header children="LOGIN" />
-      <div className="container">
-        <div className="wrapper">
-          <button className={style.button} onClick={handleLogin}>
-            logIn
-          </button>
-          <ul>
-            <li className={style.text}>
-              UserName: {credential?.user.displayName}
-            </li>
-            <li className={style.text}>State: {state}</li>
-            <li className={style.text}>Error: {String(error)}</li>
-          </ul>
-          <button className={style.button} onClick={handleLogout}>
-            logOut
-          </button>
+  useEffect(() => {
+    setJSvalied(true);
+  }, []);
+
+  if (JSvalied) {
+    return (
+      <main>
+        <Header children="LOGIN" />
+        <div className="container">
+          <div className="wrapper">
+            <button className={style.button} onClick={handleLogin}>
+              logIn
+            </button>
+            <ul>
+              <li className={style.text}>
+                UserName: {credential?.user.displayName}
+              </li>
+              <li className={style.text}>State: {state}</li>
+              <li className={style.text}>Error: {String(error)}</li>
+            </ul>
+            <button className={style.button} onClick={handleLogout}>
+              logOut
+            </button>
+          </div>
         </div>
-      </div>
-      <Footer />
-    </main>
-  );
+        <Footer />
+      </main>
+    );
+  } else {
+    return (
+      <main>
+        <h1>Please enable javascript</h1>
+        <div>
+          Hey, bro!! 持ってきな! このログインにはjavascriptが必要なるだろう。
+          <br />
+          ということで、javascriptをオンにしてください。
+        </div>
+      </main>
+    );
+  }
 };
 
 export default Page;
