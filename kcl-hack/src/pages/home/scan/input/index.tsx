@@ -33,10 +33,10 @@ export default function Home() {
 
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [isError, setIsError] = useState<boolean>(false);
-  const [JSvalied, setJSvalied] = useState<boolean>(false);
+  const [JSvalid, setJSvalid] = useState<boolean>(false);
 
   useEffect(() => {
-    setJSvalied(true);
+    setJSvalid(true);
   }, []);
 
   function jan_get(jan: number) {
@@ -358,7 +358,7 @@ export default function Home() {
     setPri("");
   };
 
-  if (JSvalied) {
+  if (JSvalid) {
     if (UUID != undefined) {
       return (
         <main>

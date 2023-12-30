@@ -5,13 +5,13 @@ import Button from "../../components/button/button";
 import { useState, useEffect } from "react";
 
 export default function Home() {
-  const [JSvalied, setJSvalied] = useState<boolean>(false);
+  const [JSvalid, setJSvalid] = useState<boolean>(false);
 
   useEffect(() => {
-    setJSvalied(true);
+    setJSvalid(true);
   }, []);
 
-  if (JSvalied) {
+  if (JSvalid) {
     return (
       <main>
         <Header children="HOME" />

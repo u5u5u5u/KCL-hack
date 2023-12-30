@@ -72,7 +72,7 @@ export default function Home() {
   const [youWin, setYouWin] = useState<boolean>(false);
   const [youLose, setYouLose] = useState<boolean>(false);
   const [draw, setDraw] = useState<boolean>(false);
-  const [JSvalied, setJSvalied] = useState<boolean>(false);
+  const [JSvalid, setJSvalid] = useState<boolean>(false);
 
   const dbRef = ref(getDatabase());
   const db = getDatabase();
@@ -96,7 +96,7 @@ export default function Home() {
   });
 
   useEffect(() => {
-    setJSvalied(true);
+    setJSvalid(true);
   }, []);
 
   useEffect(() => {
@@ -1163,7 +1163,7 @@ export default function Home() {
     });
   }
 
-  if (JSvalied) {
+  if (JSvalid) {
     return (
       <main className={styles.main}>
         <h1 className={styles.tytle}>Room {roomId}</h1>

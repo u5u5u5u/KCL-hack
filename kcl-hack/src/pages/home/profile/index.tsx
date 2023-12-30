@@ -12,11 +12,11 @@ export default function Home() {
   const [userIntro, setIntro] = useState<string>("");
   const [userUUID, setUUID] = useState<string>("");
   const [redirect, setRedirect] = useState<boolean>(false);
-  const [JSvalied, setJSvalied] = useState<boolean>(false);
+  const [JSvalid, setJSvalid] = useState<boolean>(false);
   const dbRef = ref(getDatabase());
 
   useEffect(() => {
-    setJSvalied(true);
+    setJSvalid(true);
   }, []);
 
   useEffect(() => {
@@ -74,7 +74,7 @@ export default function Home() {
     }
   };
 
-  if (JSvalied) {
+  if (JSvalid) {
     return (
       <main>
         <Header children="PROFILE" />

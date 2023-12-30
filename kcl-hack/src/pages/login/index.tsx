@@ -86,7 +86,7 @@ const provider = new GoogleAuthProvider();
 const Page = () => {
   const router = useRouter();
   const { state, dispatch, credential, error, logined } = useAuth(auth);
-  const [JSvalied, setJSvalied] = useState<boolean>(false);
+  const [JSvalid, setJSvalid] = useState<boolean>(false);
 
   useEffect(() => {
     const token = sessionStorage.getItem("token");
@@ -115,10 +115,10 @@ const Page = () => {
   }, [logined]);
 
   useEffect(() => {
-    setJSvalied(true);
+    setJSvalid(true);
   }, []);
 
-  if (JSvalied) {
+  if (JSvalid) {
     return (
       <main>
         <Header children="LOGIN" />
