@@ -23,13 +23,13 @@ export default function Home() {
   const [characters, setCharacters] = useState(Object);
   const [redirect, setRedirect] = useState<boolean>(false);
   const [deleted, setDeleted] = useState<boolean>(false);
-  const [JSvalied, setJSvalied] = useState<boolean>(false);
+  const [JSvalid, setJSvalid] = useState<boolean>(false);
   const [UUID, setUUID] = useState<string>("");
 
   const dbRef = ref(getDatabase());
 
   useEffect(() => {
-    setJSvalied(true);
+    setJSvalid(true);
   }, []);
 
   async function getUid() {
@@ -192,7 +192,7 @@ export default function Home() {
     }
   };
 
-  if (JSvalied) {
+  if (JSvalid) {
     if (UUID != undefined) {
       return (
         <main>

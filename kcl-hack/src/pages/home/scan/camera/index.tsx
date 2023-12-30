@@ -36,10 +36,10 @@ export const Camera = () => {
 
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [isError, setIsError] = useState<boolean>(false);
-  const [JSvalied, setJSvalied] = useState<boolean>(false);
+  const [JSvalid, setJSvalid] = useState<boolean>(false);
 
   useEffect(() => {
-    setJSvalied(true);
+    setJSvalid(true);
   }, []);
 
   useEffect(() => {
@@ -405,7 +405,7 @@ export const Camera = () => {
     setPri("");
   };
 
-  if (JSvalied) {
+  if (JSvalid) {
     if (UUID != undefined) {
       return (
         <main>

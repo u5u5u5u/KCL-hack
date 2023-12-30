@@ -3,6 +3,8 @@ import { useRouter } from "next/router";
 import React, { ChangeEvent, useState, useEffect } from "react";
 import { getDatabase, ref, child, get, set, update } from "firebase/database";
 import { getAuth } from "firebase/auth";
+import Link from "next/link";
+import Button from "../../../../components/button/button";
 import Header from "../../../../components/header/header";
 import styles from "../../../../styles/matching.module.css";
 import Footer from "../../../../components/footer/footer";
@@ -18,6 +20,7 @@ export default function Home() {
   const [member1, setMember1] = useState<string>();
   const [member2, setMember2] = useState<string>();
   const [memberUUID, setMemberUUID] = useState<Member>();
+  const [charaIsNone, setCharaIsNone] = useState<boolean>(false);
   const [ownName, setOwnName] = useState<string>();
   const [roomStatus, setRoomStatus] = useState<string>();
   const [visible, setVisible] = useState<boolean>(false);
@@ -25,7 +28,7 @@ export default function Home() {
   const [userChara, setuserChara] = useState<string>("");
   const [sendStatus, setSendStatus] = useState<Object>();
   const [redirect, setRedirect] = useState<boolean>(false);
-  const [JSvalied, setJSvalied] = useState<boolean>(false);
+  const [JSvalid, setJSvalid] = useState<boolean>(false);
   const dbRef = ref(getDatabase());
 
   const changeNum = (event: ChangeEvent<HTMLInputElement>) => {
@@ -46,7 +49,7 @@ export default function Home() {
   }
 
   useEffect(() => {
-    setJSvalied(true);
+    setJSvalid(true);
   }, []);
 
   useEffect(() => {
@@ -62,6 +65,7 @@ export default function Home() {
             setUUID(UUid);
           } else {
             console.log("No data available");
+            setCharaIsNone(true);
             setRedirect(true);
           }
         })
@@ -232,47 +236,75 @@ export default function Home() {
   const handleClick = () => {
     router.push(`../battle/matching/room/${roomNum}`);
   };
-  if (JSvalied) {
-    return (
-      <main>
-        <Header children="MATCHING" />
-        <div
-          className="container"
-          style={{ visibility: JSvalied ? "visible" : "collapse" }}
-        >
-          <div className="wrapper">
-            <div>
-              <h2>ルームを探す</h2>
-            </div>
-            <div className="text-center">
-              <label>
-                <div className={styles.wrapper}>
-                  <input
-                    className={styles.input}
-                    value={number}
-                    onChange={changeNum}
-                    placeholder="ルーム番号を入力"
-                  />
+  if (JSvalid) {
+    if (!charaIsNone) {
+      return (
+        <main>
+          <Header children="MATCHING" />
+          <div
+            className="container"
+            style={{ visibility: JSvalid ? "visible" : "collapse" }}
+          >
+            <div className="wrapper">
+              <div>
+                <h2>ルームを探す</h2>
+              </div>
+              <div className="text-center">
+                <label>
+                  <div className={styles.wrapper}>
+                    <input
+                      className={styles.input}
+                      value={number}
+                      onChange={changeNum}
+                      placeholder="ルーム番号を入力"
+                    />
 
-                  <button className={styles.button} onClick={lookForRoom}>
-                    検索
-                  </button>
-                </div>
-              </label>
-            </div>
-            <div>
-              Member1:{member1}
-              <br />
-              Member2:{member2}
-            </div>
-            <div style={{ visibility: visible ? "visible" : "hidden" }}>
-              <button onClick={join}>PLAY</button>
+                    <button className={styles.button} onClick={lookForRoom}>
+                      検索
+                    </button>
+                  </div>
+                </label>
+              </div>
+              <div>
+                Member1:{member1}
+                <br />
+                Member2:{member2}
+              </div>
+              <div style={{ visibility: visible ? "visible" : "hidden" }}>
+                <button onClick={join}>PLAY</button>
+              </div>
             </div>
           </div>
-        </div>
-        <Footer />
-      </main>
-    );
+          <Footer />
+        </main>
+      );
+    } else {
+      return (
+        <main>
+          <Header children="MATCHING" />
+          <div
+            className="container"
+            style={{ visibility: JSvalid ? "visible" : "collapse" }}
+          >
+            <div className="wrapper">
+              <div>
+                <h2>キャラクターを選択してください</h2>
+              </div>
+              <div className="text-center">
+                <label>
+                  <div className={styles.wrapper}>
+                    <Link href="/home/battle/box">
+                      <Button label="Box" />
+                    </Link>
+                  </div>
+                </label>
+              </div>
+            </div>
+          </div>
+          <Footer />
+        </main>
+      );
+    }
   } else {
     return (
       <main>
