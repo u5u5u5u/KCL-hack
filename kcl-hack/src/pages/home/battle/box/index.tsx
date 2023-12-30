@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { getDatabase, ref, child, get, set } from "firebase/database";
+import { getDatabase, ref, child, get, set, remove } from "firebase/database";
 import { getAuth } from "firebase/auth";
 import Header from "../../../../components/header/header";
 import Footer from "../../../../components/footer/footer";
@@ -22,6 +22,7 @@ export default function Home() {
   const [selectedId, setSelectedId] = useState(null);
   const [characters, setCharacters] = useState(Object);
   const [redirect, setRedirect] = useState<boolean>(false);
+  const [deleted, setDeleted] = useState<boolean>(false);
   const [JSvalied, setJSvalied] = useState<boolean>(false);
   const [UUID, setUUID] = useState<string>("");
 
@@ -48,6 +49,8 @@ export default function Home() {
           if (snapshot.exists()) {
             const data = snapshot.val();
             setCharacters(data.Charadata);
+            setRedirect(false);
+            setDeleted(false);
           } else {
             console.log("No data available");
             setRedirect(true);
@@ -58,7 +61,7 @@ export default function Home() {
         });
     };
     fetchCharacters();
-  }, [redirect]);
+  }, [redirect, deleted]);
 
   useEffect(() => {
     Object.values(characters).forEach(function (val: any) {
@@ -169,7 +172,21 @@ export default function Home() {
       await set(ref(db, `User/${UUID}/SelectChara`), {
         SelectId: selectedId,
       });
+      setSelectedId(null);
       console.log("send");
+    } catch (error) {
+      console.error("エラーです:", error);
+    }
+  };
+
+  const deleteChara = async () => {
+    try {
+      const UUID = await getUid();
+      const db = getDatabase();
+      await remove(ref(db, `User/${UUID}/Charadata/${selectedId}`));
+      setDeleted(true);
+      setSelectedId(null);
+      console.log("deleted");
     } catch (error) {
       console.error("エラーです:", error);
     }
@@ -270,6 +287,15 @@ export default function Home() {
                   }}
                 >
                   決定
+                </button>
+                <button
+                  className={styles.button}
+                  onClick={() => {
+                    deleteChara();
+                    alert("キャラクターを削除しました");
+                  }}
+                >
+                  削除
                 </button>
               </div>
             </div>
