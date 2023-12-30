@@ -31,6 +31,10 @@ export default function Home() {
   const changeNum = (event: ChangeEvent<HTMLInputElement>) => {
     console.log(event);
     setNum(event.target.value);
+    setMember1("");
+    setMember2("");
+    setVisible(false);
+    setRoomStatus("");
   };
 
   async function getUid() {

@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { getDatabase, ref, child, get, set } from "firebase/database";
+import { getDatabase, ref, child, get, set, remove } from "firebase/database";
 import { getAuth } from "firebase/auth";
 import Header from "../../../../components/header/header";
 import Footer from "../../../../components/footer/footer";
@@ -22,7 +22,9 @@ export default function Home() {
   const [selectedId, setSelectedId] = useState(null);
   const [characters, setCharacters] = useState(Object);
   const [redirect, setRedirect] = useState<boolean>(false);
+  const [deleted, setDeleted] = useState<boolean>(false);
   const [JSvalied, setJSvalied] = useState<boolean>(false);
+  const [UUID, setUUID] = useState<string>("");
 
   const dbRef = ref(getDatabase());
 
@@ -34,6 +36,7 @@ export default function Home() {
     const auth = getAuth();
     const user = auth.currentUser;
     if (user !== null) {
+      setUUID(user.uid);
       return user.uid;
     }
   }
@@ -46,6 +49,8 @@ export default function Home() {
           if (snapshot.exists()) {
             const data = snapshot.val();
             setCharacters(data.Charadata);
+            setRedirect(false);
+            setDeleted(false);
           } else {
             console.log("No data available");
             setRedirect(true);
@@ -56,7 +61,7 @@ export default function Home() {
         });
     };
     fetchCharacters();
-  }, [redirect]);
+  }, [redirect, deleted]);
 
   useEffect(() => {
     Object.values(characters).forEach(function (val: any) {
@@ -167,111 +172,145 @@ export default function Home() {
       await set(ref(db, `User/${UUID}/SelectChara`), {
         SelectId: selectedId,
       });
+      setSelectedId(null);
       console.log("send");
     } catch (error) {
       console.error("エラーです:", error);
     }
   };
 
+  const deleteChara = async () => {
+    try {
+      const UUID = await getUid();
+      const db = getDatabase();
+      await remove(ref(db, `User/${UUID}/Charadata/${selectedId}`));
+      setDeleted(true);
+      setSelectedId(null);
+      console.log("deleted");
+    } catch (error) {
+      console.error("エラーです:", error);
+    }
+  };
+
   if (JSvalied) {
-    return (
-      <main>
-        <Header children="BOX" />
-        <div className={styles.wrapper}>
-          {Object.entries(characters).map(([id, chara]: any) => (
-            <button
-              className={styles.content}
-              key={id}
-              onClick={() => handleClick(id)}
-            >
-              <div className={styles.back}>
-                <ul className={styles.actions}>
-                  <li>
-                    <p className={styles["action-name"]}>
-                      {chara.Status.w00_name}
-                    </p>
-                    <p className={styles["action-description"]}>
-                      {chara.Status.w00_desc}
-                    </p>
-                  </li>
-                  <li>
-                    <p className={styles["action-name"]}>
-                      {chara.Status.w01_name}
-                    </p>
-                    <p className={styles["action-description"]}>
-                      {chara.Status.w01_desc}
-                    </p>
-                  </li>
-                  <li>
-                    <p className={styles["action-name"]}>
-                      {chara.Status.w02_name}
-                    </p>
-                    <p className={styles["action-description"]}>
-                      {chara.Status.w02_desc}
-                    </p>
-                  </li>
-                  <li>
-                    <p className={styles["action-name"]}>
-                      {chara.Status.w03_name}
-                    </p>
-                    <p className={styles["action-description"]}>
-                      {chara.Status.w03_desc}
-                    </p>
-                  </li>
-                </ul>
-              </div>
-              <div className={styles.front}>
-                <div className={styles.name}>
-                  <h1>{chara.Status.Name}</h1>
-                </div>
-                <div className={styles.image_box}>
-                  <img
-                    className={styles.image}
-                    src={chara.Status.CharaImage}
-                    alt={chara.Status.Name}
-                  />
-                </div>
-                <table className={styles.status}>
-                  <tr>
-                    <td className={styles.data1}>HP</td>
-                    <td className={styles.data2}>{chara.Status.HP}</td>
-                  </tr>
-                  <tr>
-                    <td className={styles.data1}>Attack</td>
-                    <td className={styles.data2}>{chara.Status.Attack}</td>
-                  </tr>
-                  <tr>
-                    <td className={styles.data1}>Defence</td>
-                    <td className={styles.data2}>{chara.Status.Defence}</td>
-                  </tr>
-                  <tr>
-                    <td className={styles.data1}>Speed</td>
-                    <td className={styles.data2}>{chara.Status.Speed}</td>
-                  </tr>
-                </table>
-              </div>
-            </button>
-          ))}
-        </div>
-        {selectedId && (
-          <div>
-            <div className={styles["select-id"]}>Selected ID: {selectedId}</div>
-            <div className={styles.button_box}>
+    if (UUID != undefined) {
+      return (
+        <main>
+          <Header children="BOX" />
+          <div className={styles.wrapper}>
+            {Object.entries(characters).map(([id, chara]: any) => (
               <button
-                className={styles.button}
-                onClick={() => {
-                  sendSelectedId();
-                  alert("キャラクターを選択しました");
-                }}
+                className={styles.content}
+                key={id}
+                onClick={() => handleClick(id)}
               >
-                決定
+                <div className={styles.back}>
+                  <ul className={styles.actions}>
+                    <li>
+                      <p className={styles["action-name"]}>
+                        {chara.Status.w00_name}
+                      </p>
+                      <p className={styles["action-description"]}>
+                        {chara.Status.w00_desc}
+                      </p>
+                    </li>
+                    <li>
+                      <p className={styles["action-name"]}>
+                        {chara.Status.w01_name}
+                      </p>
+                      <p className={styles["action-description"]}>
+                        {chara.Status.w01_desc}
+                      </p>
+                    </li>
+                    <li>
+                      <p className={styles["action-name"]}>
+                        {chara.Status.w02_name}
+                      </p>
+                      <p className={styles["action-description"]}>
+                        {chara.Status.w02_desc}
+                      </p>
+                    </li>
+                    <li>
+                      <p className={styles["action-name"]}>
+                        {chara.Status.w03_name}
+                      </p>
+                      <p className={styles["action-description"]}>
+                        {chara.Status.w03_desc}
+                      </p>
+                    </li>
+                  </ul>
+                </div>
+                <div className={styles.front}>
+                  <div className={styles.name}>
+                    <h1>{chara.Status.Name}</h1>
+                  </div>
+                  <div className={styles.image_box}>
+                    <img
+                      className={styles.image}
+                      src={chara.Status.CharaImage}
+                      alt={chara.Status.Name}
+                    />
+                  </div>
+                  <table className={styles.status}>
+                    <tr>
+                      <td className={styles.data1}>HP</td>
+                      <td className={styles.data2}>{chara.Status.HP}</td>
+                    </tr>
+                    <tr>
+                      <td className={styles.data1}>Attack</td>
+                      <td className={styles.data2}>{chara.Status.Attack}</td>
+                    </tr>
+                    <tr>
+                      <td className={styles.data1}>Defence</td>
+                      <td className={styles.data2}>{chara.Status.Defence}</td>
+                    </tr>
+                    <tr>
+                      <td className={styles.data1}>Speed</td>
+                      <td className={styles.data2}>{chara.Status.Speed}</td>
+                    </tr>
+                  </table>
+                </div>
               </button>
-            </div>
+            ))}
           </div>
-        )}
-        <Footer />
-      </main>
-    );
+          {selectedId && (
+            <div>
+              <div className={styles["select-id"]}>
+                Selected ID: {selectedId}
+              </div>
+              <div className={styles.button_box}>
+                <button
+                  className={styles.button}
+                  onClick={() => {
+                    sendSelectedId();
+                    alert("キャラクターを選択しました");
+                  }}
+                >
+                  決定
+                </button>
+                <button
+                  className={styles.button}
+                  onClick={() => {
+                    deleteChara();
+                    alert("キャラクターを削除しました");
+                  }}
+                >
+                  削除
+                </button>
+              </div>
+            </div>
+          )}
+          <Footer />
+        </main>
+      );
+    } else {
+      return (
+        <main>
+          <Header children="BOX" />
+          <h1>ログインをやり直してください</h1>
+        </main>
+      );
+    }
   } else {
     return (
       <main>
