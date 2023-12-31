@@ -1,13 +1,11 @@
 .player1 {
   color: red;
   float: left;
-  margin-left: 20%;
 }
 
 .player2 {
   color: blue;
   float: right;
-  margin-right: 10%;
 }
 
 .tytle {
@@ -105,9 +103,7 @@
 
 .parent {
   display: flex;
-  /* height: 30%; */
-  justify-content: space-between;
-  margin-right: 10%;
+  justify-content: space-around;
   flex-wrap: wrap;
 }
 
@@ -115,11 +111,18 @@
   position: absolute;
 } */
 
+.log_parent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 30%;
+}
+
 .log {
   /*  margin-top: 10%; */
-  height: 30%;
+  height: 100%;
   overflow-y: scroll;
-  text-align: center;
+  text-align: left;
 }
 
 .message {
