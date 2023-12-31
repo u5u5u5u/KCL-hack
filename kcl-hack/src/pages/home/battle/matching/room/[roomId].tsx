@@ -1203,8 +1203,6 @@ export default function Home() {
         <div className={styles.grandparent}>
           <div className={styles.parent}>
             <div className={styles.player1}>
-              <div>{whoIs}</div>
-
               <div>{member1Status}</div>
               <h2>{Member1Name}</h2>
               <img src={player1Img}></img>
@@ -1244,12 +1242,14 @@ export default function Home() {
           >
             ひきわけ
           </div>
-          <div className={styles.log}>
-            {ButtleLog &&
-              Object.keys(ButtleLog).length > 0 &&
-              Object.keys(ButtleLog).map((key, index) => {
-                return <div key={index}>{ButtleLog[key].Log}</div>;
-              })}
+          <div className={styles.log_parent}>
+            <div className={styles.log}>
+              {ButtleLog &&
+                Object.keys(ButtleLog).length > 0 &&
+                Object.keys(ButtleLog).map((key, index) => {
+                  return <div key={index}>{ButtleLog[key].Log}</div>;
+                })}
+            </div>
           </div>
 
           <div
