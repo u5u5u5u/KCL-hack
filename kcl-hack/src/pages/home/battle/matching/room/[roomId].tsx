@@ -934,7 +934,7 @@ export default function Home() {
           setPlayer1Attack(data.Attack);
           setPlayer1Defence(data.Defence);
           setPlayer1Speed(data.Speed);
-          setPlayer1Img(data.Img);
+          setPlayer1Img(data.CharaImage);
           fetchButtleStatus2();
         } else {
           console.log("No data available");
@@ -961,7 +961,7 @@ export default function Home() {
           setPlayer2Attack(data.Attack);
           setPlayer2Defence(data.Defence);
           setPlayer2Speed(data.Speed);
-          setPlayer2Img(data.Img);
+          setPlayer2Img(data.CharaImage);
           console.log(statusFetchDone);
           if (
             (member1Status == "foMember1Turn" &&
@@ -1032,7 +1032,16 @@ export default function Home() {
   }, [w00, w01, w02, w03]);
 
   window.addEventListener("popstate", function (e) {
-    if (member1Status != "ready" && member2Status != "ready") {
+    if (
+      member1Status != "ready" &&
+      member2Status != "ready" &&
+      member1Status != "win" &&
+      member2Status != "win" &&
+      member1Status != "lose" &&
+      member2Status != "lose" &&
+      member1Status != "draw" &&
+      member2Status != "draw"
+    ) {
       giveUp();
     } else {
       leftRoom();
@@ -1057,6 +1066,18 @@ export default function Home() {
   async function leftRoom() {
     const UUid = await getUid();
     const db = getDatabase();
+    if (
+      member1Status != "ready" &&
+      member2Status != "ready" &&
+      member1Status != "win" &&
+      member2Status != "win" &&
+      member1Status != "lose" &&
+      member2Status != "lose" &&
+      member1Status != "draw" &&
+      member2Status != "draw"
+    ) {
+      giveUp();
+    }
     get(child(dbRef, `Room/${roomId}/Member`))
       .then((snapshot) => {
         if (snapshot.exists()) {
@@ -1223,60 +1244,58 @@ export default function Home() {
           >
             ひきわけ
           </div>
-          <div className={styles.parent}>
-            <div className={styles.log}>
-              {ButtleLog &&
-                Object.keys(ButtleLog).length > 0 &&
-                Object.keys(ButtleLog).map((key, index) => {
-                  return <div key={index}>{ButtleLog[key].Log}</div>;
-                })}
-            </div>
+          <div className={styles.log}>
+            {ButtleLog &&
+              Object.keys(ButtleLog).length > 0 &&
+              Object.keys(ButtleLog).map((key, index) => {
+                return <div key={index}>{ButtleLog[key].Log}</div>;
+              })}
+          </div>
 
-            <div
-              className={styles.command}
+          <div
+            className={styles.command}
+            style={{ visibility: selectVisible ? "visible" : "hidden" }}
+          >
+            <h2>コマンドを選んでください</h2>
+          </div>
+          <button
+            onClick={start}
+            style={{ visibility: startVisible ? "visible" : "hidden" }}
+          >
+            Start
+          </button>
+          <div className={styles.leave}>
+            <button onClick={leftRoom}>退室</button>
+          </div>
+          <div className={styles.waza}>
+            <button
+              className={styles.button}
+              onClick={w0_cal}
               style={{ visibility: selectVisible ? "visible" : "hidden" }}
             >
-              <h2>コマンドを選んでください</h2>
-            </div>
-            <button
-              onClick={start}
-              style={{ visibility: startVisible ? "visible" : "hidden" }}
-            >
-              Start
+              {playerw00}
             </button>
-            <div className={styles.leave}>
-              <button onClick={leftRoom}>退室</button>
-            </div>
-            <div className={styles.waza}>
-              <button
-                className={styles.button}
-                onClick={w0_cal}
-                style={{ visibility: selectVisible ? "visible" : "hidden" }}
-              >
-                {playerw00}
-              </button>
-              <button
-                className={styles.button}
-                onClick={w1_cal}
-                style={{ visibility: selectVisible ? "visible" : "hidden" }}
-              >
-                {playerw01}
-              </button>
-              <button
-                className={styles.button}
-                onClick={w2_cal}
-                style={{ visibility: selectVisible ? "visible" : "hidden" }}
-              >
-                {playerw02}
-              </button>
-              <button
-                className={styles.button}
-                onClick={w3_cal}
-                style={{ visibility: selectVisible ? "visible" : "hidden" }}
-              >
-                {playerw03}
-              </button>
-            </div>
+            <button
+              className={styles.button}
+              onClick={w1_cal}
+              style={{ visibility: selectVisible ? "visible" : "hidden" }}
+            >
+              {playerw01}
+            </button>
+            <button
+              className={styles.button}
+              onClick={w2_cal}
+              style={{ visibility: selectVisible ? "visible" : "hidden" }}
+            >
+              {playerw02}
+            </button>
+            <button
+              className={styles.button}
+              onClick={w3_cal}
+              style={{ visibility: selectVisible ? "visible" : "hidden" }}
+            >
+              {playerw03}
+            </button>
           </div>
         </div>
       </main>
