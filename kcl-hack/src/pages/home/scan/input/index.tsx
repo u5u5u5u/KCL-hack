@@ -1,5 +1,5 @@
 "use client";
-import { useState, ChangeEvent } from "react";
+import { useState, useEffect, ChangeEvent } from "react";
 import { YAHOO_API_KEY } from "../../../../constant/env";
 import { getDatabase, ref, set } from "firebase/database";
 import { getAuth } from "firebase/auth";
@@ -15,6 +15,7 @@ export default function Home() {
   const [Defence, setDefence] = useState<number>();
   const [Speed, setSpeed] = useState<number>();
   const [Jan, setJan] = useState<number>();
+  const [UUID, setUUID] = useState<string>("");
 
   const [sendw0, setSendw0] = useState<number>();
   const [sendw1, setSendw1] = useState<number>();
@@ -32,6 +33,11 @@ export default function Home() {
 
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [isError, setIsError] = useState<boolean>(false);
+  const [JSvalid, setJSvalid] = useState<boolean>(false);
+
+  useEffect(() => {
+    setJSvalid(true);
+  }, []);
 
   function jan_get(jan: number) {
     var HP = 0;
@@ -316,6 +322,7 @@ export default function Home() {
     const auth = getAuth();
     const user = auth.currentUser;
     if (user !== null) {
+      setUUID(user.uid);
       return user.uid;
     }
   }
@@ -351,125 +358,147 @@ export default function Home() {
     setPri("");
   };
 
-  return (
-    <main>
-      <Header children="入力" />
-      <div className="container">
-        <div className={styles.wrapper}>
-          <div className="search">
-            <input
-              className={styles.input}
-              value={number}
-              onChange={changeNum}
-              placeholder="JANコード"
-            />
-            <button
-              className={styles.button}
-              onClick={() => {
-                sendNum();
-              }}
-            >
-              検索
-            </button>
-          </div>
-          <div className="accordion">この商品はありません</div>
-          <div className={styles["info-reg"]}>
-            <div className="accordion-body">
-              <div className={styles.information}>
-                <div className={styles["img-name-price"]}>
-                  <div className={styles.image}>
-                    <img src={image} />
-                  </div>
-                  <ul>
-                    <li className={styles.name}>{name}</li>
-                    <li className={styles.price}>{price}円</li>
-                  </ul>
-                </div>
-                <div className={styles["status-actions"]}>
-                  <table className={styles.status}>
-                    <tbody>
-                      <tr>
-                        <td className={styles.data1}>HP</td>
-                        <td className={styles.data2}>{Hp}</td>
-                      </tr>
-                      <tr>
-                        <td className={styles.data1}>Attack</td>
-                        <td className={styles.data2}>{Attack}</td>
-                      </tr>
-                      <tr>
-                        <td className={styles.data1}>Defence</td>
-                        <td className={styles.data2}>{Defence}</td>
-                      </tr>
-                      <tr>
-                        <td className={styles.data1}>Speed</td>
-                        <td className={styles.data2}>{Speed}</td>
-                      </tr>
-                    </tbody>
-                  </table>
-                  <div className={styles["actions-box"]}>
-                    <ul className={styles.actions}>
-                      <li>{w00}</li>
-                      <li>{w01}</li>
-                      <li>{w02}</li>
-                      <li>{w03}</li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-              <div className={styles.buttons}>
+  if (JSvalid) {
+    if (UUID != undefined) {
+      return (
+        <main>
+          <Header children="入力" />
+          <div className="container">
+            <div className={styles.wrapper}>
+              <div className="search">
+                <input
+                  className={styles.input}
+                  value={number}
+                  onChange={changeNum}
+                  placeholder="JANコード"
+                />
                 <button
-                  className={styles.registration_button}
+                  className={styles.button}
                   onClick={() => {
-                    sendStatus();
-                    setIsOpen(false);
-                    alert("登録しました");
+                    sendNum();
                   }}
                 >
-                  登録
+                  検索
                 </button>
-                <button
-                  className={styles.registration_button}
-                  onClick={() => setIsOpen(false)}
-                >
-                  戻る
-                </button>
+              </div>
+              <div className="accordion">この商品はありません</div>
+              <div className={styles["info-reg"]}>
+                <div className="accordion-body">
+                  <div className={styles.information}>
+                    <div className={styles["img-name-price"]}>
+                      <div className={styles.image}>
+                        <img src={image} />
+                      </div>
+                      <ul>
+                        <li className={styles.name}>{name}</li>
+                        <li className={styles.price}>{price}円</li>
+                      </ul>
+                    </div>
+                    <div className={styles["status-actions"]}>
+                      <table className={styles.status}>
+                        <tbody>
+                          <tr>
+                            <td className={styles.data1}>HP</td>
+                            <td className={styles.data2}>{Hp}</td>
+                          </tr>
+                          <tr>
+                            <td className={styles.data1}>Attack</td>
+                            <td className={styles.data2}>{Attack}</td>
+                          </tr>
+                          <tr>
+                            <td className={styles.data1}>Defence</td>
+                            <td className={styles.data2}>{Defence}</td>
+                          </tr>
+                          <tr>
+                            <td className={styles.data1}>Speed</td>
+                            <td className={styles.data2}>{Speed}</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                      <div className={styles["actions-box"]}>
+                        <ul className={styles.actions}>
+                          <li>{w00}</li>
+                          <li>{w01}</li>
+                          <li>{w02}</li>
+                          <li>{w03}</li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                  <div className={styles.buttons}>
+                    <button
+                      className={styles.registration_button}
+                      onClick={() => {
+                        sendStatus();
+                        setIsOpen(false);
+                        alert("登録しました");
+                      }}
+                    >
+                      登録
+                    </button>
+                    <button
+                      className={styles.registration_button}
+                      onClick={() => setIsOpen(false)}
+                    >
+                      戻る
+                    </button>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
+          <Footer />
+          <style jsx>{`
+            .search {
+              height: ${isOpen ? 0 : "auto"};
+              overflow: ${isOpen ? "hidden" : "visible"};
+              margin-top: ${isOpen ? "0" : "15%"};
+            }
+            .accordion {
+              height: ${isError ? "80%" : 0};
+              width: 100%;
+              font-size: 2rem;
+              text-align: center;
+              overflow: hidden;
+            }
+
+            .accordion-body {
+              height: ${isOpen ? "auto" : 0};
+              overflow: hidden;
+            }
+
+            @media screen and (max-width: 767px) {
+              .search {
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+                align-items: center;
+                width: 100%;
+                height: ${isOpen ? 0 : "45%"};
+                margin-top: ${isOpen ? "0" : "30%"};
+              }
+            }
+          `}</style>
+        </main>
+      );
+    } else {
+      return (
+        <main>
+          <Header children="入力" />
+          <h1>ログインをやり直してください</h1>
+        </main>
+      );
+    }
+  } else {
+    return (
+      <main>
+        <h1>please enable javascript</h1>
+        <div>
+          バーコードバトラーでなんで手入力なんだろうな。まあ手入力にもjsは必要だけど。
+          <br />
+          ということで、javascriptをオンにしてください。
         </div>
-      </div>
-      <Footer />
-      <style jsx>{`
-        .search {
-          height: ${isOpen ? 0 : "auto"};
-          overflow: ${isOpen ? "hidden" : "visible"};
-          margin-top: ${isOpen ? "0" : "15%"};
-        }
-        .accordion {
-          height: ${isError ? "80%" : 0};
-          width: 100%;
-          font-size: 2rem;
-          text-align: center;
-          overflow: hidden;
-        }
-
-        .accordion-body {
-          height: ${isOpen ? "auto" : 0};
-          overflow: hidden;
-        }
-
-        @media screen and (max-width: 767px) {
-          .search {
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            align-items: center;
-            width: 100%;
-            height: ${isOpen ? 0 : "45%"};
-            margin-top: ${isOpen ? "0" : "30%"};
-          }
-        }
-      `}</style>
-    </main>
-  );
+      </main>
+    );
+  }
 }

@@ -71,6 +71,8 @@ export default function Home() {
   const [deltaChanged, setDeltaChanged] = useState<boolean>(false);
   const [youWin, setYouWin] = useState<boolean>(false);
   const [youLose, setYouLose] = useState<boolean>(false);
+  const [draw, setDraw] = useState<boolean>(false);
+  const [JSvalid, setJSvalid] = useState<boolean>(false);
 
   const dbRef = ref(getDatabase());
   const db = getDatabase();
@@ -92,6 +94,10 @@ export default function Home() {
       console.log("changed2 to " + data);
     }
   });
+
+  useEffect(() => {
+    setJSvalid(true);
+  }, []);
 
   useEffect(() => {
     const auth = getAuth();
@@ -206,6 +212,14 @@ export default function Home() {
           setSelectVisible(false);
         }
       }
+
+      if (member1Status == "draw" && member2Status == "draw") {
+        fetchButtleStatus1();
+        fetchButtleStatus2();
+        setSelectVisible(false);
+        setDraw(true);
+      }
+
       console.log("check");
     }
   }, [member1Status, member2Status]);
@@ -252,97 +266,99 @@ export default function Home() {
   }, [calDone]);
 
   useEffect(() => {
+    const logName1 = Member1Name;
+    const logName2 = Member2Name;
     if (mathTrancDone) {
       setPlayer1HP(player1HP + player1deltaHP);
       setPlayer1deltaHP(0);
       if (player1deltaHP > 0) {
         if (whoIs == "Member1") {
-          pushButtlelog(Member1Name + "のHPが" + player1deltaHP + "回復した");
+          pushButtlelog(logName1 + "のHPが" + player1deltaHP + "回復した");
         }
         if (whoIs == "Member2") {
-          pushButtlelog(Member1Name + "のHPが" + player1deltaHP + "回復した");
+          pushButtlelog(logName1 + "のHPが" + player1deltaHP + "回復した");
         }
       }
       if (player1deltaHP < 0) {
-        pushButtlelog(Member1Name + "に" + -player1deltaHP + "のダメージ！");
+        pushButtlelog(logName1 + "に" + -player1deltaHP + "のダメージ！");
       }
       setPlayer1Attack(player1Attack + player1deltaAttack);
       if (player1deltaAttack > 0) {
         pushButtlelog(
-          Member1Name + "のこうげきが" + player1deltaAttack + "上がった"
+          logName1 + "のこうげきが" + player1deltaAttack + "上がった"
         );
       }
       if (player1deltaAttack < 0) {
         pushButtlelog(
-          Member1Name + "のこうげきが" + -player1deltaAttack + "下がった"
+          logName1 + "のこうげきが" + -player1deltaAttack + "下がった"
         );
       }
       setPlayer1deltaAttack(0);
       setPlayer1Defence(player1Defence + player1deltaDefence);
       if (player1deltaDefence > 0) {
         pushButtlelog(
-          Member1Name + "のぼうぎょが" + player1deltaDefence + "上がった"
+          logName1 + "のぼうぎょが" + player1deltaDefence + "上がった"
         );
       }
       if (player1deltaDefence < 0) {
         pushButtlelog(
-          Member1Name + "のぼうぎょが" + -player1deltaDefence + "下がった"
+          logName1 + "のぼうぎょが" + -player1deltaDefence + "下がった"
         );
       }
       setPlayer1deltaDefence(0);
       setPlayer1Speed(player1Speed + player1deltaSpeed);
       if (player1deltaSpeed > 0) {
         pushButtlelog(
-          Member1Name + "のすばやさが" + player1deltaSpeed + "上がった"
+          logName1 + "のすばやさが" + player1deltaSpeed + "上がった"
         );
       }
       if (player1deltaSpeed < 0) {
         pushButtlelog(
-          Member1Name + "のすばやさが" + -player1deltaSpeed + "下がった"
+          logName1 + "のすばやさが" + -player1deltaSpeed + "下がった"
         );
       }
       setPlayer1deltaSpeed(0);
       setPlayer2HP(player2HP + player2deltaHP);
       if (player2deltaHP > 0) {
-        pushButtlelog(Member2Name + "のHPが" + player2deltaHP + "回復した");
+        pushButtlelog(logName2 + "のHPが" + player2deltaHP + "回復した");
       }
       if (player2deltaHP < 0) {
-        pushButtlelog(Member2Name + "に" + -player2deltaHP + "のダメージ！");
+        pushButtlelog(logName2 + "に" + -player2deltaHP + "のダメージ！");
       }
       setPlayer2deltaHP(0);
       setPlayer2Attack(player2Attack + player2deltaAttack);
       if (player2deltaAttack > 0) {
         pushButtlelog(
-          Member2Name + "のこうげきが" + player2deltaAttack + "上がった"
+          logName2 + "のこうげきが" + player2deltaAttack + "上がった"
         );
       }
       if (player2deltaAttack < 0) {
         pushButtlelog(
-          Member2Name + "のこうげきが" + -player2deltaAttack + "下がった"
+          logName2 + "のこうげきが" + -player2deltaAttack + "下がった"
         );
       }
       setPlayer2deltaAttack(0);
       setPlayer2Defence(player2Defence + player2deltaDefence);
       if (player2deltaDefence > 0) {
         pushButtlelog(
-          Member2Name + "のぼうぎょが" + player2deltaDefence + "上がった"
+          logName2 + "のぼうぎょが" + player2deltaDefence + "上がった"
         );
       }
       if (player2deltaDefence < 0) {
         pushButtlelog(
-          Member2Name + "のぼうぎょが" + -player2deltaDefence + "下がった"
+          logName2 + "のぼうぎょが" + -player2deltaDefence + "下がった"
         );
       }
       setPlayer2deltaDefence(0);
       setPlayer2Speed(player2Speed + player2deltaSpeed);
       if (player2deltaSpeed > 0) {
         pushButtlelog(
-          Member2Name + "のすばやさが" + player2deltaSpeed + "上がった"
+          logName2 + "のすばやさが" + player2deltaSpeed + "上がった"
         );
       }
       if (player2deltaSpeed < 0) {
         pushButtlelog(
-          Member2Name + "のすばやさが" + -player2deltaSpeed + "下がった"
+          logName2 + "のすばやさが" + -player2deltaSpeed + "下がった"
         );
       }
       setPlayer2deltaSpeed(0);
@@ -412,16 +428,30 @@ export default function Home() {
         setDeltaChanged(false);
       } else {
         if (player1HP <= 0) {
-          update(ref(db, `Room/${roomId}/MemberStatus`), {
-            Member1: "lose",
-            Member2: "win",
-          });
+          if (player2HP > 0) {
+            update(ref(db, `Room/${roomId}/MemberStatus`), {
+              Member1: "lose",
+              Member2: "win",
+            });
+          } else {
+            update(ref(db, `Room/${roomId}/MemberStatus`), {
+              Member1: "draw",
+              Member2: "draw",
+            });
+          }
         }
         if (player2HP <= 0) {
-          update(ref(db, `Room/${roomId}/MemberStatus`), {
-            Member1: "win",
-            Member2: "lose",
-          });
+          if (player1HP > 0) {
+            update(ref(db, `Room/${roomId}/MemberStatus`), {
+              Member1: "win",
+              Member2: "lose",
+            });
+          } else {
+            update(ref(db, `Room/${roomId}/MemberStatus`), {
+              Member1: "draw",
+              Member2: "draw",
+            });
+          }
         }
       }
     }
@@ -477,13 +507,15 @@ export default function Home() {
   }
 
   function calDeltaStatus() {
+    const logName1 = Member1Name;
+    const logName2 = Member2Name;
     if (damageSetUped) {
       if (selectt == 0) {
         if (whoIs == "Member1") {
-          pushButtlelog(Member1Name + "の" + playerw00 + "!");
+          pushButtlelog(logName1 + "の" + playerw00 + "!");
         }
         if (whoIs == "Member2") {
-          pushButtlelog(Member2Name + "の" + playerw00 + "!");
+          pushButtlelog(logName2 + "の" + playerw00 + "!");
         }
         if (selectw == 0) {
           console.log("たたく");
@@ -512,10 +544,10 @@ export default function Home() {
       }
       if (selectt == 1) {
         if (whoIs == "Member1") {
-          pushButtlelog(Member1Name + "の" + playerw01 + "!");
+          pushButtlelog(logName1 + "の" + playerw01 + "!");
         }
         if (whoIs == "Member2") {
-          pushButtlelog(Member2Name + "の" + playerw01 + "!");
+          pushButtlelog(logName2 + "の" + playerw01 + "!");
         }
         if (selectw == 0) {
           console.log("ねる");
@@ -536,10 +568,10 @@ export default function Home() {
       }
       if (selectt == 2) {
         if (whoIs == "Member1") {
-          pushButtlelog(Member1Name + "の" + playerw02 + "!");
+          pushButtlelog(logName1 + "の" + playerw02 + "!");
         }
         if (whoIs == "Member2") {
-          pushButtlelog(Member2Name + "の" + playerw02 + "!");
+          pushButtlelog(logName2 + "の" + playerw02 + "!");
         }
         if (selectw == 0) {
           console.log("ちょうはつ");
@@ -564,10 +596,10 @@ export default function Home() {
       }
       if (selectt == 3) {
         if (whoIs == "Member1") {
-          pushButtlelog(Member1Name + "の" + playerw03 + "!");
+          pushButtlelog(logName1 + "の" + playerw03 + "!");
         }
         if (whoIs == "Member2") {
-          pushButtlelog(Member2Name + "の" + playerw03 + "!");
+          pushButtlelog(logName2 + "の" + playerw03 + "!");
         }
         if (selectw == 0) {
           console.log("ざんねんでしたー");
@@ -999,6 +1031,29 @@ export default function Home() {
     }
   }, [w00, w01, w02, w03]);
 
+  window.addEventListener("popstate", function (e) {
+    if (member1Status != "ready" && member2Status != "ready") {
+      giveUp();
+    } else {
+      leftRoom();
+    }
+  });
+
+  function giveUp() {
+    if (whoIs == "Member1") {
+      update(ref(db, `Room/${roomId}/MemberStatus`), {
+        Member1: "lose",
+        Member2: "win",
+      });
+    }
+    if (whoIs == "Member2") {
+      update(ref(db, `Room/${roomId}/MemberStatus`), {
+        Member1: "win",
+        Member2: "lose",
+      });
+    }
+  }
+
   async function leftRoom() {
     const UUid = await getUid();
     const db = getDatabase();
@@ -1108,7 +1163,8 @@ export default function Home() {
     });
   }
 
-  return (
+  if (JSvalid) {
+    return (
     <main className={styles.main}>
       <h1 className={styles.tytle}>Room {roomId}</h1>
       <div
@@ -1155,13 +1211,41 @@ export default function Home() {
             </div>
           </div>
         </div>
-        <div className={styles.log}>
-          {ButtleLog &&
-            Object.keys(ButtleLog).length > 0 &&
-            Object.keys(ButtleLog).map((key, index) => {
-              return <div key={index}>{ButtleLog[key].Log}</div>;
-            })}
+        <div
+          style={{ visibility: youLose ? "visible" : "hidden" }}
+          className={styles.message}
+        >
+          おっつー
         </div>
+        <div
+          style={{ visibility: draw ? "visible" : "hidden" }}
+          className={styles.message}
+        >
+          ひきわけ
+        </div>
+        <div className={styles.parent}>
+          <div className={styles.player1}>
+            <div>{whoIs}</div>
+
+            <div>{member1Status}</div>
+            <h2>{Member1Name}</h2>
+            <img src={player1Img}></img>
+            <div className={styles.ability}>
+              <h2>
+                HP {player1HP} / {player1HPmax}
+              </h2>
+              <h2>Attack {player1Attack}</h2>
+              <h2>Defence {player1Defence}</h2>
+              <h2>Speed {player1Speed}</h2>
+            </div>
+          </div>
+          <div className={styles.log}>
+            {ButtleLog &&
+              Object.keys(ButtleLog).length > 0 &&
+              Object.keys(ButtleLog).map((key, index) => {
+                return <div key={index}>{ButtleLog[key].Log}</div>;
+              })}
+          </div>
 
         <div className={styles.command}>
           <h2>コマンドを選んでください</h2>
@@ -1206,6 +1290,19 @@ export default function Home() {
           </button>
         </div>
       </div>
-    </main>
-  );
+      </main>
+    );
+  } else {
+    return (
+      <main>
+        <h1>please enable javascript</h1>
+        <div>
+          おいおい、javascriptがオフだとバトルシステムが動かないぜ!
+          <br />
+          ということで、javascriptをオンにしてください。
+          <br />
+        </div>
+      </main>
+    );
+  }
 }

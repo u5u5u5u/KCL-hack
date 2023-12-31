@@ -1,8 +1,7 @@
 "use client";
-import React, { useState } from "react";
 import { getDatabase, ref, set, child, get } from "firebase/database";
 import { getAuth } from "firebase/auth";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import "firebase/compat/database";
 import Header from "../../../components/header/header";
 import Footer from "../../../components/footer/footer";
@@ -13,7 +12,12 @@ export default function Home() {
   const [userIntro, setIntro] = useState<string>("");
   const [userUUID, setUUID] = useState<string>("");
   const [redirect, setRedirect] = useState<boolean>(false);
+  const [JSvalid, setJSvalid] = useState<boolean>(false);
   const dbRef = ref(getDatabase());
+
+  useEffect(() => {
+    setJSvalid(true);
+  }, []);
 
   useEffect(() => {
     const fetchProfile = async () => {
@@ -70,44 +74,57 @@ export default function Home() {
     }
   };
 
-  return (
-    <main>
-      <Header children="PROFILE" />
-      <div className="container">
-        <div className="wrapper">
-          <div className={styles.wrapper}>
-            <label className={styles.label}>ユーザーネーム</label>
-            <input
-              className={styles.user_name}
-              type="text"
-              value={userName}
-              onChange={changeUserName}
-            ></input>
-          </div>
-          <div className={styles.wrapper}>
-            <label className={styles.label}>コメント</label>
-            <input
-              className={styles.one_word}
-              placeholder="よろしくお願いします"
-              type="textarea"
-              value={userIntro}
-              onChange={changeUserIntro}
-            ></input>
-          </div>
-          <div>
-            <button
-              className={styles.button}
-              onClick={() => {
-                sendProfile();
-                alert("プロフィールを更新しました");
-              }}
-            >
-              決定
-            </button>
+  if (JSvalid) {
+    return (
+      <main>
+        <Header children="PROFILE" />
+        <div className="container">
+          <div className="wrapper">
+            <div className={styles.wrapper}>
+              <label className={styles.label}>ユーザーネーム</label>
+              <input
+                className={styles.user_name}
+                type="text"
+                value={userName}
+                onChange={changeUserName}
+              ></input>
+            </div>
+            <div className={styles.wrapper}>
+              <label className={styles.label}>コメント</label>
+              <input
+                className={styles.one_word}
+                placeholder="よろしくお願いします"
+                type="textarea"
+                value={userIntro}
+                onChange={changeUserIntro}
+              ></input>
+            </div>
+            <div>
+              <button
+                className={styles.button}
+                onClick={() => {
+                  sendProfile();
+                  alert("プロフィールを更新しました");
+                }}
+              >
+                決定
+              </button>
+            </div>
           </div>
         </div>
-      </div>
-      <Footer />
-    </main>
-  );
+        <Footer />
+      </main>
+    );
+  } else {
+    return (
+      <main>
+        <h1>Please enable javascript</h1>
+        <div>
+          あ？早くほかの人のプロフィール見れるようにしろって？そうだなぁ。お前がjavascriptをオンにしてくれたら考えてやるよ。
+          <br />
+          ということで、javascriptをオンにしてください。
+        </div>
+      </main>
+    );
+  }
 }
